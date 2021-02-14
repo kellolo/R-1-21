@@ -3,22 +3,27 @@ import Message from '@components/Message';
 import './style.scss';
 
 export default class MessageList extends Component {
+    
+    
     constructor (props) {
         super(props);
         this.state = {
             messages: [
-                { name: 'one', text: 'Hey'},
-                { name: 'one', text: 'How are you?' }
+                { name: 'Sasha', text: 'Hey'},
+                { name: 'Ananas', text: 'How are you?' }
             ],
         };
     }
 
+
     sendMessage = () => {
+        const aria = document.querySelector('textarea').value;
         this.setState({
             messages: [...this.state.messages, {
-                name: 'bot', text: 'fine'
+                name: 'bot', text: aria
             }]
         });
+        document.querySelector('textarea').value = '';
     }
 
     render() {
@@ -31,18 +36,11 @@ export default class MessageList extends Component {
             />)
 
         return <div>
+            <div>
+                <textarea></textarea>
+            </div>
             <button onClick={ this.sendMessage }>Add</button>
             { Messages }
         </div>;
     }
 };
-
-// const arr = [{ name: 'one', text: 'Hey'}, { name: 'one', text: 'How are you?' }];
-
-// export default () => {
-//     const Messages = arr.map((el, i) => <Massage key={ i } name={ el.name } text={ el.text } />)
-
-//     return <div>
-//         { Massage }
-//     </div>;
-// };
