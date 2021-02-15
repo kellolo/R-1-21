@@ -20,6 +20,10 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
+                test: /\.s[ac]ss$/i,
+                use: ["style-loader", "css-loader", "sass-loader"]
+            },
+            {
                 test: /\.jsx?$/i,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
@@ -34,6 +38,18 @@ module.exports = {
                 }
             }
         ]
+    },
+    resolve: {
+        alias: {
+            '@style': path.resolve(__dirname, 'src', 'style'),
+            '@components': path.resolve(__dirname, 'src', 'components'),
+            '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
+            '@pages': path.resolve(__dirname, 'src', 'pages'),
+            '@resources': path.resolve(__dirname, 'src', 'resources'),
+            '@functions': path.resolve(__dirname, 'src', 'resources', 'functions'),
+            '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
+            '@libraries': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({
