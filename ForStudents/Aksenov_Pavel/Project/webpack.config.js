@@ -23,6 +23,15 @@ module.exports = {
       chunkFilename: '[id].css'
     }),
   ],
+  resolve: {
+    alias: {
+      '@style': path.resolve(__dirname, 'src', 'styles'),
+      '@components': path.resolve(__dirname, 'src', 'components'),
+      '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
+      '@pages': path.resolve(__dirname, 'src', 'pages'),
+      '@media': path.resolve(__dirname, 'src', 'media')
+    }
+  },
   module: {
     rules: [
       {
