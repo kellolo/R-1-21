@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import List from '@material-ui/core/List';
 import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
@@ -9,8 +11,8 @@ export default class MessageList extends Component {
         super(props);
         this.state = {
             messages: [
-                { name: 'one', text: 'Hey!', styleName: 'msg__user'}, 
-                { name: 'two', text: 'How are you?', styleName: 'msg__companion' }
+                { name: 'Me', text: 'Hey!', avatar: null, styleName: 'msg__user'}, 
+                { name: 'two', text: 'How are you?', avatar: null, styleName: 'msg__companion' }
             ],
         };
     }
@@ -18,7 +20,7 @@ export default class MessageList extends Component {
     sendMessage = (value) => {
         this.setState({
             messages: [...this.state.messages, {
-                name: 'one', text: value, styleName: 'msg__user'
+                name: 'Me', text: value, styleName: 'msg__user'
             }]
         });
     }
@@ -27,18 +29,22 @@ export default class MessageList extends Component {
         const { messages } = this.state;
         const Messages = messages.map((el, i) => 
             <Message 
-                key={ 'msg_' + i } 
-                name={ el.name } 
+                key={ 'msg_' + i }
+                name={ el.name }
+                avatar={el.avatar}
                 text={ el.text }
                 styleName={el.styleName}
             />);
         
-        return <div className="msg__container">
-           <MsgInput sendMessage={ this.sendMessage }/>
-            <div className="msg__container_list">
-                { Messages }
-            </div>
-        </div>;
-
+        return (<Grid container direction="column">
+                <Grid item>
+                    <MsgInput sendMessage={ this.sendMessage }/>
+                </Grid>
+                <Grid item style={{overflow: "visible"}}>
+                    <List className="msg__list">
+                        { Messages }
+                    </List>
+                </Grid>
+            </Grid>);
     }
 };

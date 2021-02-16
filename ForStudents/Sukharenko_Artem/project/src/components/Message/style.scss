@@ -1,0 +1,20 @@
+@import '@styles/variables.scss';
+
+.msg__text {
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 5px 2px 5px 10px;
+}
+
+.msg__user {
+    background-color: $self-msg-color;
+}
+
+.msg__bot {
+    background-color: $bot-msg-color;
+}
+
+.msg__companion {
+    background-color: $companion-msg-color;
+}
