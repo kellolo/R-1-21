@@ -13,49 +13,53 @@ export default class MessageList extends Component {
             messages: [
                 { name: 'one', text: 'Hey!' }, 
                 { name: 'one', text: 'How are you?' }
-            ],  
+            ],
+            yourMessage: ''
         };
-        this.lastmessage = '';
     }
 
+    changeHandler = (event) => {
+        if (event.keyCode !== 13) {
+            this.setState({ yourMessage: event.target.value });
+        } else {
+            this.sendMessage();
+        }
+    }
 
     sendMessage = () => {
-        var yourMessage = document.getElementById("messageSender").value;
-        document.getElementById("messageSender").value = '';
-        var regexp = /[а-яё]/i;
-        this.setState({
-            messages: [...this.state.messages, 
-                {name: 'You', text: yourMessage},
-                // имитация раздумий
-                {name: 'Bot-Sociopath', text: '#$#$#$#$#$#'}
-            ]
-        });
-
-        
-        this.answer = regexp.test(yourMessage)?'Parle français?':'Ай донт спик инглиш';
+        if (this.state.yourMessage !== '') {
+            this.setState({
+                messages: [...this.state.messages, 
+                    { name: 'You', text: this.state.yourMessage },
+                    // имитация раздумий
+    //                { name: 'Bot-Sociopath', text: '#$#$#$#$#$#' }
+                ],
+                yourMessage: ''
+            });
+        }        
     }
 
-    componentDidUpdate () {
+/*    
+    componentDidUpdate() {
+        var regexp = /[а-яё]/i;
+        var answer = regexp.test( this.state.yourMessage ) ? 'Parle français?' : 'Ай донт спик инглиш';
         // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
-        const last = this.state.messages[this.state.messages.length-1];
+        const last = this.state.messages[ this.state.messages.length-1 ];
         if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
-            this.state.messages.pop()
+            this.state.messages.pop();
             setTimeout(() =>  
             this.setState({
                 messages: [...this.state.messages, 
-                    {name: 'Bot-Sociopath', text: this.answer}
+                    { name: 'Bot-Sociopath', text: answer }
                 ] 
             })
-            , 1000);
-            
+            , 1000);          
         }
-
     }
+*/
 
     render() {
-        const messageInput = <input type="text" id="messageSender"></input>;
         const { messages } = this.state;
-        
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
@@ -64,7 +68,11 @@ export default class MessageList extends Component {
             />);
 
         return <div>
-            {messageInput}
+            <input
+                 type="text"
+                 value = { this.state.yourMessage }
+                 onChange = { this.changeHandler }
+                 onKeyUp = { this.changeHandler }/>
             <button onClick={ this.sendMessage }>add</button>
             { Messages }
         </div>;
