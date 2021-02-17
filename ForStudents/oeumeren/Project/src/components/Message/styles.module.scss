@@ -1,0 +1,29 @@
+@import "@styles/colors.scss";
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.message__author {
+  margin-bottom: 10px;
+  font-size: 13px;
+  line-height: 17px;
+  color: $color-dark-blue;
+}
+
+.message__text {
+  display: inline-block;
+  margin: 0;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 20px;
+  color: $color-white;
+  background-color: $color-dark-blue;
+}
