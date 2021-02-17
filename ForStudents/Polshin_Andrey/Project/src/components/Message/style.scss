@@ -1,0 +1,14 @@
+.msg {
+    &_text {
+        // вломы пока что стилизовать :)
+        color: white;
+    }
+    &_btn-ansfer {
+        font-weight: 700;
+        color: wheat;
+        text-decoration: none;
+        text-transform: capitalize;
+        margin-right: 5px;
+    }
+
+}

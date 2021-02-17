@@ -1,0 +1,84 @@
+@import './variables.scss';
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: $main-color;
+    font-size: 14px;
+    overflow: hidden;
+}
+
+.container {
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    height: 90vh;
+}
+
+.user__list {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: max-content;
+    justify-content: end;
+    font-weight: 700;
+    margin-right: 15px;
+}
+
+.user__list_name {
+    display: block;
+    max-height: 1.2em;
+    margin-bottom: 10px;
+    border: 1px solid #cececc;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+    &:hover {
+        background-color: #cecece;
+    }
+}
+
+.active {
+    border-color: $active_companion-color;
+    background-color: $active_companion-color;
+}
+
+.msg__container {
+    display: grid;
+    grid-template-rows: 50px 1fr;
+    border-left: 1px solid #cececc;
+    padding-left: 1.2em;
+}
+
+.msg__container_list {
+    overflow-y: scroll;
+}
+
+.msg__container_input {
+    display: grid;
+    grid-template-columns: 7fr 1fr;
+    align-items: center;
+    & > div:first-child {
+        & > input {
+            width: 95%;
+        }
+    }
+}
+
+.msg__text {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    padding: 5px 2px 5px 10px;
+}
+
+.msg__user {
+    background-color: $self-msg-color;
+}
+
+.msg__bot {
+    background-color: $bot-msg-color;
+}
+
+.msg__companion {
+    background-color: $companion-msg-color;
+}

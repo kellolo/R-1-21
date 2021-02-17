@@ -1,0 +1,18 @@
+@import './variables.scss';
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: $main-color;
+    background-image: url("https://raw.githubusercontent.com/telegramdesktop/tdesktop/dev/Telegram/Resources/art/bg_initial.jpg");
+    background-position-y: -54px;
+    background-attachment: fixed;
+}
+
+.chat{
+    display: flex;
+    margin: 0 auto;
+    width: 90%;
+    min-height: 1000%;
+    padding: 10px;
+}
