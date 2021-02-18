@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
-
 import './style.scss';
 import Message from '@components/Message';
 //stateFull
@@ -16,6 +15,7 @@ export default class MessageList extends Component {
             ],
             yourMessage: ''
         };
+        this.textInput = React.createRef();
     }
 
     changeHandler = (event) => {
@@ -27,7 +27,9 @@ export default class MessageList extends Component {
     }
 
     sendMessage = () => {
+        console.log(this.textInput.current.disabled);
         if (this.state.yourMessage !== '') {
+//            this.textInput.current.disabled = true;
             this.setState({
                 messages: [...this.state.messages, 
                     { name: 'You', text: this.state.yourMessage },
@@ -36,17 +38,23 @@ export default class MessageList extends Component {
                 ],
                 yourMessage: ''
             });
+            this.textInput.current.focus();
         }        
     }
 
+
+    componentDidMount() {
+        this.textInput.current.focus();
+    }
 /*    
     componentDidUpdate() {
         var regexp = /[а-яё]/i;
         var answer = regexp.test( this.state.yourMessage ) ? 'Parle français?' : 'Ай донт спик инглиш';
         // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
-        const last = this.state.messages[ this.state.messages.length-1 ];
+        const last = this.state.messages[this.state.messages.length - 1];
         if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
             this.state.messages.pop();
+            this.textInput.current.disabled = false;
             setTimeout(() =>  
             this.setState({
                 messages: [...this.state.messages, 
@@ -67,18 +75,24 @@ export default class MessageList extends Component {
                 text={ el.text }
             />);
 
-        return <div>
-            <input
-                 type="text"
-                 value = { this.state.yourMessage }
-                 onChange = { this.changeHandler }
-                 onKeyUp = { this.changeHandler }/>
-            <button onClick={ this.sendMessage }>add</button>
-            { Messages }
-        </div>;
+        return <div className="messagelist">
+                    <div className="controls">
+                        <input
+                            type="text"
+                            value = { this.state.yourMessage }
+                            onChange = { this.changeHandler }
+                            onKeyUp = { this.changeHandler }
+                            className="messagebox"
+                            ref={ this.textInput }
+                            />
+                        <button className="sendbutton" onClick={ this.sendMessage }>Send</button>
+                    </div>
+                    <div className="messages">{ Messages }</div>
+                </div>;
 
     }
 };
+
 
 //stateLess
 // const arr = [{ name: 'one', text: 'Hey!' }, { name: 'one', text: 'How are you?' }];

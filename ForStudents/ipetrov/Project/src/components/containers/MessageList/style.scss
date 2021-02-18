@@ -1,0 +1,34 @@
+.messagelist {
+    background-color: rgb(240, 247, 186); 
+    width: 100%;
+    height: 800px;
+}
+
+.sendbutton {
+    width: 200px;
+    height: 50px;
+    border-radius: 0 20px 0 0;
+    outline: none;
+    font-size: 22px;
+}
+
+.messagebox {
+    width: 100%;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding: 0;
+    font-size: 18px;
+}
+
+.messages {
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 25px;
+    height: 700px;
+    overflow-y: scroll;
+}
+
+.controls {
+    display: flex;
+}
