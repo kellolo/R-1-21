@@ -1,6 +1,8 @@
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -28,6 +30,14 @@ import Modal from '@material-ui/core/Modal';
 //   },
 // }));
 
+const useStyles = makeStyles(() => ({
+  root: {
+    '& > *': {
+      margin: '51px',
+    },
+  },
+}));
+
 export default function SimpleModal() {
 //   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -52,11 +62,15 @@ export default function SimpleModal() {
     </div>
   );
 
+  const classes = useStyles();
+
   return (
     <div>
-      <button type="button" onClick={handleOpen} className="addContacts">
-        Добавить Контакты
-      </button>
+        <div className={classes.root}>
+        <Button variant="contained" color="primary" type="button" onClick={handleOpen} className="addContacts">
+          Primary
+        </Button>
+      </div>
       <Modal
         open={open}
         onClose={handleClose}
@@ -68,4 +82,3 @@ export default function SimpleModal() {
     </div>
   );
 };
-

@@ -17,7 +17,7 @@ export default class MessageList extends Component {
         };
         this.textInput = React.createRef();
     }
-
+    
     changeHandler = (event) => {
         if (event.keyCode !== 13) {
             this.setState({ yourMessage: event.target.value });
@@ -27,7 +27,6 @@ export default class MessageList extends Component {
     }
 
     sendMessage = () => {
-        console.log(this.textInput.current.disabled);
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
             this.setState({
