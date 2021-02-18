@@ -1,17 +1,12 @@
 import React from 'react';
-// import ReactDom from 'react-dom';
-
 import './style.scss';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
-// props === {
-//     name: 'some',
-//     text: 'lorem'
-// }
 
 export default props => {
-    const { name, text } = props;
-
-    return  <div>
-                <p><b>{ name }:</b> <span>{ text }</span></p>
-            </div>;
+    let { msgID, name, text, styleMsg } = props;
+    return <ListItem key={ msgID } className={ 'message ' + styleMsg }>
+        <ListItemText primary={ text } secondary={ name } />
+    </ListItem>;
 }

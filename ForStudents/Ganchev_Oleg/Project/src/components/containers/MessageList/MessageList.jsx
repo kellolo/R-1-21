@@ -1,57 +1,60 @@
 import React, { Component } from 'react';
-// import ReactDom from 'react-dom';
 
 import './style.scss';
 import Message from '@components/Message';
-//stateFull
-
+import MsgInput from '@components/MsgInput';
+import List from '@material-ui/core/List';
 
 export default class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
             messages: [
-                { name: 'one', text: 'Hey!' }, 
-                { name: 'one', text: 'How are you?' }
+                { name: 'user', text: 'Hey!', style: 'message__me' },
+                { name: 'user', text: 'How are you?', style: 'message__me' }
             ],
-            botAnswer: true,
+            userAnswer: false,
         };
     }
 
-    sendMessage = () => {
+    sendMessage = (text) => {
         this.setState({
             messages: [...this.state.messages, {
-                name: 'one', text: 'message'
+                name: 'user', text: text, style: 'message__me'
             }],
-            botAnswer: true,
+            userAnswer: true,
         });
-    }
+    };
 
     render() {
-        const { messages } = this.state;
-        const Messages = messages.map((el, i) => 
-            <Message 
-                key={ 'msg_' + i } 
+        const Messages = this.state.messages.map((el, i) =>
+            <Message
+                msgID={ 'msg_' + i }
                 name={ el.name } 
                 text={ el.text }
-            />);
+                styleMsg={ el.style }
+            />
+        );
         
-        return <div>
-            <button onClick={ this.sendMessage }>add</button>
-            { Messages }
+        return <div className="message-list">
+            <List className="message-list__msg">
+                { Messages }
+            </List>
+            <div className="message-list__input">
+                <MsgInput sendMessage={ this.sendMessage }/>
+            </div>
         </div>;
     }
 
     componentDidUpdate() {
-        let botState = this.state.botAnswer;
-        console.log(botState);
-        if (botState) {
-            setTimeout(() =>
+        setTimeout(() => {
+            if (this.state.userAnswer) {
                 this.setState({
-                    messages: [...this.state.messages, { name: 'bot', text: 'bot answer' }],
-                    botAnswer: false,
-                }),
-            1000);
-        }
+                    messages: [...this.state.messages, { name: 'bot', text: 'answer', style: 'message__bot' }],
+                    userAnswer: false,
+                    }
+                );
+            }
+        }, 2000);
     }
 };

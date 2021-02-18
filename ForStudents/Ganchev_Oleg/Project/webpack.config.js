@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const path = require('path');
@@ -41,14 +40,14 @@ module.exports = {
     },
     resolve: {
         alias: {
-            '@style': path.resolve(__dirname, 'src', 'style'),
+            '@styles': path.resolve(__dirname, 'src', 'styles'),
             '@components': path.resolve(__dirname, 'src', 'components'),
             '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
             '@pages': path.resolve(__dirname, 'src', 'pages'),
             '@resources': path.resolve(__dirname, 'src', 'resources'),
-            '@functions': path.resolve(__dirname, 'src', 'resources', 'functions'),
             '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
-            '@libraries': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+            '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
+            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
         }
     },
     plugins: [
@@ -62,8 +61,8 @@ module.exports = {
         })
     ],
     devServer: {
-        port: 3300,
+        port: 3301,
         hot: true,
         open: false
     }
-}
+};
