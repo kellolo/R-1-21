@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Message from '@components/Message';
 import './style.scss';
+import MessageInput from '@components/MessageInput';
 
 export default class MessageList extends Component {
     
@@ -12,34 +13,55 @@ export default class MessageList extends Component {
                 { name: 'Sasha', text: 'Hey'},
                 { name: 'Ananas', text: 'How are you?' }
             ],
+            ansferTo: ''
         };
     }
 
 
-    sendMessage = () => {
-        const aria = document.querySelector('textarea').value;
+    sendMessage = (name, text) => {
+        
         this.setState({
             messages: [...this.state.messages, {
-                name: 'bot', text: aria
-            }]
+                name: name, 
+                text: this.state.ansferTo ? `${this.state.ansferTo},${text}` : text
+            }],
+            ansferTo: ''
         });
-        document.querySelector('textarea').value = '';
+
+    }
+
+    ansferTo = (name) => {
+        this.setState({
+            ansferTo: name
+        });
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.state.messages !== nextState.messages) {
+            const newMsg = nextState.messages[nextState.messages.length - 1];
+            if (newMsg.name !== 'Bot') {
+                setTimeout(() => this.sendMessage('Bot', 'Я robot'), 1000);
+            }
+        }
+        return true;
+    }
+
+    componentDidUpdate() {
+        console.log('componentDidUpdate');
     }
 
     render() {
-        const { messages } = this.state;
+        const { messages, ansferTo } = this.state;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text } 
-            />)
+                ansferHandler={this.ansferTo}
+            />);
 
         return <div>
-            <div>
-                <textarea></textarea>
-            </div>
-            <button onClick={ this.sendMessage }>Add</button>
+            <MessageInput sendMsgHandler={this.sendMessage} to={ansferTo} />
             { Messages }
         </div>;
     }

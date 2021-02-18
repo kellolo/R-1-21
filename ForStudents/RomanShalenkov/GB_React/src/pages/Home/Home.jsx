@@ -8,6 +8,5 @@ import './style.scss';
 export default () => {
     return <div>
         <MessageList />
-        {/* <MessageInput /> */}
-    </div>;
+    </div>
 }
