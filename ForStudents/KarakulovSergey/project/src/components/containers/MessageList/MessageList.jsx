@@ -4,30 +4,65 @@ import ReactDom from 'react-dom';
 import './style.scss';
 import Message from '@components/Message';
 //const arr = [{name:'one',text:'Hey!'},{name:'one',text:'How are you?'}];
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+function mes(s){
+    var i=getRandomInt(1,7);
+    var str;
+    switch(i){
+        case 1:
+            str="Привет";
+            break;
+        case 2:
+            str="Я просто робот";
+            break;
+        case 3:
+            str="как дела?";
+            break;
+        case 4:
+            str="Отвечаю наобум";
+            break;
+        case 5:
+            str="Уже зима?";
+            break;   
+        case 6:
+            str="Знал я одного "+s;
+            break; 
+        default:
+            str='Не приставай ко мне я робот'
+    }
+    return str;
+}
+let n;
 export default class MessageList extends Component {
     constructor(props){
         super(props);
-        //this.state = {value:''}
         this.state={
-            messages:[{name:'one',text:'Hey!'},{name:'one',text:'How are you?'}]
+            messages:[{name:'bot',text:'Привет!'},{name:'bot',text:'Ты кто?'}],
+            value : ''
+        }
+    }
+
+    componentDidUpdate() {
+        if(this.state.messages.length % 2 === 1){
+        setTimeout(() =>
+        this.setState(
+            { messages: [ ...this.state.messages, {name:'bot',text:mes(n)} ] }), 1000);
+   
         }
     }
     sendMessage = () => {
-        /*
-        const old = [...this.state.messages];
-        old.push({name:'bot',text:'fine'});
-        this.setState(
-            {
-                messages:old
-            }
-        );*/
-        //this.setState({value: this.state.value});
-        console.log(this.inpt.value);
         this.setState({
+            value : '',
             messages:[...this.state.messages,{
-                name:'bot',text:this.inpt.value
+                name:'user',text:this.state.value
             }]
         });
+        n=this.state.value;
+    }
+    handleChange = (event) => {
+        this.setState({value: event.target.value});
     }
     render(){
         const {messages} = this.state;
@@ -36,7 +71,7 @@ export default class MessageList extends Component {
                                         text={el.text}
                                         />);
     return <div>
-        <input type="text" ref={ref => this.inpt = ref} />
+        <input type="text" value={this.state.value} onChange={this.handleChange} />
             <button onClick={this.sendMessage}>Отправить</button>
             {Messages}
         </div>;
