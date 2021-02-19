@@ -19,7 +19,7 @@ export default class MessageList extends Component {
 
     sendMessage = (text) => {
         this.setState({
-            messages: [...this.state.messages, { name: 'User', text: text }]
+            messages: [...this.state.messages, { name: 'Leia', text: text }],
         });
     }
 
@@ -41,7 +41,7 @@ export default class MessageList extends Component {
                 text={el.text}
             />);
         //MsgInput должен конечно быть в Home 
-        return <div className="msg-container">
+        return <div className="messageList">
             {Messages}
             <MsgInput userSend={this.sendMessage} />
         </div>;
