@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './style.scss';
 
 import Button from '@material-ui/core/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import AddChatWindow from '@containers/AddChatWindow';
 
 export default class ChatList extends React.Component {
 
@@ -16,10 +16,12 @@ export default class ChatList extends React.Component {
 
     render() {
         const { chatList } = this.state;
+
         const chats = chatList.map((el, i) =>
-            <li className='chats__item'>
+            <li
+                className='chats__item'
+                key={'chat_' + i}>
                 <Button
-                    key={'chat_' + i}
                     name={el}
                     className='item__btn'
                     variant="contained"
@@ -29,12 +31,7 @@ export default class ChatList extends React.Component {
             </li>);
 
         return <div className='chats'>
-            <Button
-                variant="contained"
-                color="primary"
-                endIcon={<AddCircleIcon />}>
-                Add
-            </Button>
+            <AddChatWindow />
             <ul className='chats__list'>
                 {chats}
             </ul>
