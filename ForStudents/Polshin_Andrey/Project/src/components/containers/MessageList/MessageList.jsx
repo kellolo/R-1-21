@@ -12,8 +12,7 @@ export default class MessageList extends Component {
             messages: [
                 { name: 'one', text: 'Hey!' },
                 { name: 'one', text: 'How are you?' }
-            ],
-            answerTo: ''
+            ]
         };
     }
 
@@ -21,15 +20,8 @@ export default class MessageList extends Component {
         this.setState({
             messages: [...this.state.messages, {
                 name: name,
-                text: this.state.answerTo ? `${this.state.answerTo},${text}` : text
-            }],
-            ansferTo: ''
-        });
-    }
-
-    answerTo = (name) => {
-        this.setState({
-            answerTo: name
+                text: text
+            }]
         });
     }
 
@@ -37,32 +29,26 @@ export default class MessageList extends Component {
         if (this.state.messages !== nextState.messages) {
             const newMsg = nextState.messages[nextState.messages.length - 1];
             if (newMsg.name !== 'BOT') {
-                setTimeout(() => this.sendMessage('BOT', 'Zadolbal :)'), 1000);
+                setTimeout(() => this.sendMessage('BOT', 'Zadolbal :)'), 250);
             }
         }
         return true;
     }
 
-    componentDidUpdate() {
-        console.log('componentDidUpdate');
-    }
-
     render() {
-        const { messages, answerTo } = this.state;
+        const { messages } = this.state;
         const Messages = messages.map((el, i) =>
             <Message
                 key={'msg_' + i}
                 name={el.name}
                 text={el.text}
-                answerHandler={this.answerTo}
             />);
 
-        return <div>
-            <ul className='msg-list'>
+        return <div className='chat'>
+            <ul className='chat__msg-list'>
                 {Messages}
             </ul>
-            <MsgInput sendMsgHandler={this.sendMessage}
-                to={answerTo} />;
+            <MsgInput sendMsgHandler={this.sendMessage} />
         </div>
 
     }

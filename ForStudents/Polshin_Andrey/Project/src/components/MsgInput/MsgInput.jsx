@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-//import ReactDom from 'react-dom';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import SendIcon from '@material-ui/icons/Send';
 
 import './style.scss';
-
 export default class MsgInput extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -11,31 +14,55 @@ export default class MsgInput extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSend = this.handleSend.bind(this);
+        this.textInput = React.createRef();
     }
+
+    //Ставим фокус на<input> при монтировании компонента
+    componentDidMount() {
+        this.textInput.current.focus();
+    }
+
     handleChange(e) {
         this.setState({
             msgText: e.target.value
         })
     }
     handleSend(e) {
-        this.props.sendMsgHandler('User', this.state.msgText);
+        if (e.target.name !== 'input' || e.keyCode === 13) {
+            this.send();
+        }
+    }
+
+    send() {
+        const { msgText } = this.state;
+        if (!msgText) {
+            return;
+        }
+        this.props.sendMsgHandler('User', msgText);
         this.setState({
             msgText: ''
         })
     }
 
     render() {
-        const { to } = this.props;
         const { msgText } = this.state;
         return <div className="sendmsg">
-            <input
+            <TextField
+                name='input'
                 className='sendmsg-input'
-                placeholder="Enter your message"
-                value={to ? `${to},${msgText}` : msgText}
                 onChange={this.handleChange}
-                type="text" />
-            <button className='sendmsg-btn' onClick={this.handleSend}>Send</button>
-        </div>;
+                value={msgText}
+                onKeyUp={(e) => this.handleSend(e)}
+                ref={this.textInput}
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={this.handleSend}
+                endIcon={<SendIcon />} >
+                Send
+            </Button>
+        </div>
     }
 
 }

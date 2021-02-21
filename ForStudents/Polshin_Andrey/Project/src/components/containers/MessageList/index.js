@@ -1,3 +1,3 @@
-import page from './MessageList.jsx';
+import MessageList from './MessageList.jsx';
 
-export default page;
+export default MessageList;

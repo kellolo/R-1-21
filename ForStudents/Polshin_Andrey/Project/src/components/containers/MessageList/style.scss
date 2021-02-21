@@ -1,3 +1,11 @@
-.msg-list {
-    list-style: none;
+.chat {
+    width: 100%;
+    &__msg-list {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
 }

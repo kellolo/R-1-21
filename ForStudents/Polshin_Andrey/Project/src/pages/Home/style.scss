@@ -2,22 +2,8 @@
     max-width: 1024px;
     margin: 10px auto;
 }
-
-.header {
-    margin-bottom: 50px;
-    &_title {
-        text-align: center;
-    }
-}
-
 .main {
     padding: 20px;
-    border: 2px solid lightgray;
-}
-
-.footer {
-    &_copyright {
-        padding: 10px;
-        text-align: center;
-    }
+    //border: 2px solid lightgray;
+    display: flex;
 }

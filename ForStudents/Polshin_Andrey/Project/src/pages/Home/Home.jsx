@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import MessageList from '@containers/MessageList';
+import Header from '@components/Header';
+import ChatList from '@containers/ChatList';
+import Footer from '@components/Footer';
 
 import './style.scss';
 
 export default () => {
 
     return <div className='wrapper' >
-        <header className='header'>
-            <h1 className="header_title">Lesson 2</h1>
-        </header>
+        <Header />
         <main className='main'>
+            <ChatList />
             <MessageList />
         </main>
-        <footer className='footer'>
-            <h2 className="footer_copyright">@ by AndrewKolovrat</h2>
-        </footer>
+        <Footer />
     </div >;
 }

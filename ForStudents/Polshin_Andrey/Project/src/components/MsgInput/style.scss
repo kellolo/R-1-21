@@ -1,17 +1,12 @@
 .sendmsg {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
-    border: 1px solid gray;
     padding: 5px;
 
     &-input {
         flex-grow: 1;
-        margin-right: 10px;
-    }
-
-    &-btn {
-        // вломы пока что стилизовать :)
     }
 
 }

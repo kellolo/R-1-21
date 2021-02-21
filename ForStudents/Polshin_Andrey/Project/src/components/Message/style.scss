@@ -1,14 +1,22 @@
 .msg {
-    &_text {
-        // вломы пока что стилизовать :)
-        color: white;
-    }
-    &_btn-answer {
+    background-color: lightblue;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 18px;
+    margin: 5px;
+
+    &__sender {
         font-weight: 700;
-        color: wheat;
         text-decoration: none;
         text-transform: capitalize;
         margin-right: 5px;
+        color: gray;
+        font-size: 14px;
+    }
+
+    &__text {
+        // вломы пока что стилизовать :)
+        color: white;
     }
 
 }
