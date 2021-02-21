@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import Message from '@components/Message';
+import IconButton from '@material-ui/core/IconButton';
+import SendIcon from '@material-ui/icons/Send';
 
 import './style.scss';
-import Message from '@components/Message';
 
 export default class MessageList extends Component {
 
@@ -10,47 +11,73 @@ export default class MessageList extends Component {
     super(props);
 
     this.state = {
-      messages: [
-      ],
+      messages: [],
+      text: ''
     };
+  };
+
+  handleChange = evnt => {
+    if (evnt.keyCode !== 13) {
+      this.setState({ text: evnt.target.value });
+    } else {
+      this.sendMessage();
+    };
+  };
+
+  currentTime = () => {
+    const curDate = new Date();
+    const curHours = curDate.getHours() < 10 ? "0" + curDate.getHours() : curDate.getHours();
+    const curMinutes = curDate.getMinutes() < 10 ? "0" + curDate.getMinutes() : curDate.getMinutes();
+    return `${ curHours }:${ curMinutes }`;
   };
 
   sendMessage = () => {
-    const msgInput = document.querySelector('input');
-    const msgDate = new Date();
-    const msgHours = msgDate.getHours() < 10 ? "0" + msgDate.getHours() : msgDate.getHours();
-    const msgMinutes = msgDate.getMinutes() < 10 ? "0" + msgDate.getMinutes() : msgDate.getMinutes();
-
-    if (msgInput.value) {
+    if(this.state.text) {
       this.setState({
-        messages: [...this.state.messages, { 
-          name: 'BotNaoborot', 
-          text: `${ msgInput.value }`, 
-          time: `${ msgHours }:${ msgMinutes }` 
+        text: '',
+        messages: [...this.state.messages, {
+          name: 'Крыска Лариска',
+          text: `${ this.state.text }`,
+          time: `${ this.currentTime() }`
         }]
       });
-      msgInput.value = '';
     };
   };
 
-  render () {
+  render() {
     const { messages } = this.state;
     const Messages = messages.map((el, i) =>
       <Message
-        key={ i } 
-        name={ el.name } 
-        text={ el.text } 
-        time={ el.time } 
+        key = { i }
+        name = { el.name }
+        text = { el.text }
+        time = { el.time }
       />
     );
 
     return (
       <div className="message-list">
-        <div className="message-input">
-          <input className="message-input__input" type="text" placeholder="Inter your message..."/>
-          <button className="message-input__button" onClick={ this.sendMessage }>Send</button>
+        <div className="message-area">
+          { Messages }
         </div>
-        { Messages }
+        <div className="message-input">
+          <input
+            className="message-input__input"
+            type="text"
+            placeholder="Введите сообщение..."
+            value = { this.state.text }
+            onChange = { this.handleChange }
+            onKeyUp = { this.handleChange }
+          />
+          <IconButton
+            className="message-input__button"
+            onClick = { this.sendMessage }
+          >
+            <SendIcon
+              htmlColor="#ffffff"
+            />
+          </IconButton>
+        </div>
       </div>
     );
   };
