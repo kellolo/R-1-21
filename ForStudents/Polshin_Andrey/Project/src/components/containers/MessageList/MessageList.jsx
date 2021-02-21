@@ -13,7 +13,7 @@ export default class MessageList extends Component {
                 { name: 'one', text: 'Hey!' },
                 { name: 'one', text: 'How are you?' }
             ],
-            ansferTo: ''
+            answerTo: ''
         };
     }
 
@@ -21,15 +21,15 @@ export default class MessageList extends Component {
         this.setState({
             messages: [...this.state.messages, {
                 name: name,
-                text: this.state.ansferTo ? `${this.state.ansferTo},${text}` : text
+                text: this.state.answerTo ? `${this.state.answerTo},${text}` : text
             }],
             ansferTo: ''
         });
     }
 
-    ansferTo = (name) => {
+    answerTo = (name) => {
         this.setState({
-            ansferTo: name
+            answerTo: name
         });
     }
 
@@ -48,13 +48,13 @@ export default class MessageList extends Component {
     }
 
     render() {
-        const { messages, ansferTo } = this.state;
+        const { messages, answerTo } = this.state;
         const Messages = messages.map((el, i) =>
             <Message
                 key={'msg_' + i}
                 name={el.name}
                 text={el.text}
-                ansferHandler={this.ansferTo}
+                answerHandler={this.answerTo}
             />);
 
         return <div>
@@ -62,7 +62,7 @@ export default class MessageList extends Component {
                 {Messages}
             </ul>
             <MsgInput sendMsgHandler={this.sendMessage}
-                to={ansferTo} />;
+                to={answerTo} />;
         </div>
 
     }

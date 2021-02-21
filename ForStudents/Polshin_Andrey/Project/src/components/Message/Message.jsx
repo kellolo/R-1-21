@@ -4,14 +4,14 @@ import React from 'react';
 import './style.scss';
 
 export default props => {
-    const { name, text, ansferHandler } = props;
+    const { name, text, answerHandler } = props;
 
     return <li className='msg'>
         <p className='msg_text'>
             <a
-                className='msg_btn-ansfer'
+                className='msg_btn-answer'
                 href='#'
-                onClick={ansferHandler.bind(this, name)}>
+                onClick={answerHandler.bind(this, name)}>
                 {name}:
             </a>
             {text}
