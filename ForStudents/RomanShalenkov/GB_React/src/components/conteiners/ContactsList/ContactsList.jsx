@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './style.scss';
 import Modal from '@components/Modal';
 
@@ -12,7 +12,7 @@ export default class ContactsList extends Component {
     }
 
     render() { 
-        return <div className="chatslist">
+        return <div className="contactslist">
                     <Modal />
         </div>;
     }

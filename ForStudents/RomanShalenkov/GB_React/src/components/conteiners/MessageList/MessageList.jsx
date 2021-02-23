@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Message from '@components/Message';
 import './style.scss';
-import MessageInput from '@components/MessageInput';
+// import MessageInput from '@components/MessageInput';
+import ChatsList from '@conteiners/ChatsList';
 
 export default class MessageList extends Component {
     
@@ -13,56 +14,55 @@ export default class MessageList extends Component {
                 { name: 'Sasha', text: 'Hey'},
                 { name: 'Ananas', text: 'How are you?' }
             ],
-            ansferTo: ''
+            text: ''
         };
     }
 
-
-    sendMessage = (name, text) => {
-        
-        this.setState({
-            messages: [...this.state.messages, {
-                name: name, 
-                text: this.state.ansferTo ? `${this.state.ansferTo},${text}` : text
-            }],
-            ansferTo: ''
-        });
-
-    }
-
-    ansferTo = (name) => {
-        this.setState({
-            ansferTo: name
-        });
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.messages !== nextState.messages) {
-            const newMsg = nextState.messages[nextState.messages.length - 1];
-            if (newMsg.name !== 'Bot') {
-                setTimeout(() => this.sendMessage('Bot', 'Я robot'), 1000);
-            }
+    handleChange = evt => {
+        if (evt.keyCode !== 13) {
+            this.setState({ text: evt.target.value });
+        } else {
+            this.sendMessage();
         }
-        return true;
-    }
+    };
+
+    sendMessage = () => {
+        this.setState({
+            text: '',
+            messages: [...this.state.messages, {
+                name: 'User', 
+                text: this.state.text
+            }]
+        });
+    };
 
     componentDidUpdate() {
-        console.log('componentDidUpdate');
-    }
+        // console.log('изменение');
+    };
 
     render() {
-        const { messages, ansferTo } = this.state;
+        const { messages } = this.state;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text } 
-                ansferHandler={this.ansferTo}
             />);
 
-        return <div>
-            <MessageInput sendMsgHandler={this.sendMessage} to={ansferTo} />
-            { Messages }
+        return <div className="messageList">
+            <div className="message-lt--wrap">
+                <ChatsList />
+            </div>
+            <div className="message-bg--wrap">
+                <div className="message">
+                    { Messages }
+                </div>
+                <div className="form-wrap">
+                    <input className="input-send" type="text" value={ this.state.text } onChange={ this.handleChange } onKeyUp={ this.handleChange } />
+                    <button className="btn-send" onClick={ this.sendMessage }>Send</button>
+                </div>
+                
+            </div>        
         </div>;
-    }
+    };
 };

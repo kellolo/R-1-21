@@ -2,6 +2,7 @@ import React from 'react';
 import './style.scss';
 // import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
+import ListContact from '@conteiners/ListContact';
 
 // function rand() {
 //     return Math.round(Math.random() * 20) - 10;
@@ -45,18 +46,16 @@ export default function SimpleModal() {
 
     const body = (
         // <div style={modalStyle} className={classes.paper}>
-        <div>
-            <h2 id="simple-modal-title">Text in a modal</h2>
-            <p id="simple-modal-description">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </p>
+        <div className="modal-wrap">
+            <h2 id="simple-modal-title">Список контактов</h2>
+            <ListContact />
         </div>
     );
 
     return (
         <div>
             <button type="button" onClick={handleOpen}>
-                Контакты
+                Add contact +
             </button>
             <Modal
                 open={open}
@@ -68,4 +67,4 @@ export default function SimpleModal() {
             </Modal>
         </div>
     );
-}
+};

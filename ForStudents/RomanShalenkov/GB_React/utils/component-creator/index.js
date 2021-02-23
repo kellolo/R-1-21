@@ -18,7 +18,7 @@ fs.mkdirSync(
 
 fs.writeFileSync(
     path.resolve(__dirname, '..', '..', 'src', 'components', componentName, 'style.scss'),
-    `.${componentName.toLowerCase} {}`
+    `.${componentName.toLowerCase()} {}`
 );
 
 fs.writeFileSync(
