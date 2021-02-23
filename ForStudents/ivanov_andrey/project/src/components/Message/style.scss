@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+.message {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    background-color: rgba(204,204,204, .5);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin: 15px;
+    padding-right: 40px;
+    padding-left: 40px;
+    box-sizing: border-box;
+    min-height: 100px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    font-weight: semibold;
+
+}
+
+.message__username {
+    margin: 0;
+    font-weight: bold;
+    background: linear-gradient(#3f51b5, rgba(69, 69, 69, 0.9));
+    background-clip: text;
+    text-emphasis-color: transparent;
+    border-radius: 20px;
+    padding: 10px 30px;
+    color: white;
+}
+
+.message__text {
+    margin: 0;
+}
