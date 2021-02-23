@@ -1,20 +1,25 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+
 import MessageList from '@containers/MessageList';
 import Header from '@components/Header';
 import ChatList from '@containers/ChatList';
 import Footer from '@components/Footer';
 
+import { StylesProvider } from '@material-ui/core/styles';
+
 import './style.scss';
 
-export default () => {
+export default (props) => {
 
-    return <div className='wrapper' >
-        <Header />
+    const { name = '1' } = props;
+
+    return <StylesProvider>
+        <Header chat={name} user={''} />
         <main className='main'>
-            <ChatList />
-            <MessageList />
+            <ChatList name />
+            <MessageList name />
         </main>
         <Footer />
-    </div >;
+    </StylesProvider>;
+
 }

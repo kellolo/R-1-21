@@ -1,11 +1,24 @@
 .chat {
+
     width: 100%;
+    height: 95%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    padding: 10px;
+    background-color: lightcyan;
+    border-radius: 5%;
+
     &__msg-list {
+        height: 100%;
         list-style: none;
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
-    }
 
+        overflow-y: auto ;
+    }
 }

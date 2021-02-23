@@ -53,7 +53,7 @@ export default () => {
 
     const body = (
         <div style={modalStyle} className={classes.paper}>
-            <h2 className={classes.title}>Text in a modal</h2>
+            <h2 className={classes.title}>Choise contact</h2>
             <ul className={classes.list}>
                 <li className={classes.item}>Chat 0</li>
                 <li className={classes.item}>Chat 1</li>

@@ -49,15 +49,16 @@ export default class MsgInput extends Component {
         return <div className="sendmsg">
             <TextField
                 name='input'
-                className='sendmsg-input'
+                className='sendmsg__input'
                 onChange={this.handleChange}
                 value={msgText}
                 onKeyUp={(e) => this.handleSend(e)}
-                ref={this.textInput}
+                inputRef={this.textInput}
             />
             <Button
                 variant="contained"
                 color="primary"
+                className='sendmsg__btn'
                 onClick={this.handleSend}
                 endIcon={<SendIcon />} >
                 Send

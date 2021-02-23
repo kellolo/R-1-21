@@ -14,6 +14,7 @@ export default class MessageList extends Component {
                 { name: 'one', text: 'How are you?' }
             ]
         };
+        this.msgList = React.createRef();
     }
 
     sendMessage = (name, text) => {
@@ -23,6 +24,10 @@ export default class MessageList extends Component {
                 text: text
             }]
         });
+    }
+
+    componentDidUpdate() {
+        this.msgList.current.scrollTop = this.msgList.current.scrollHeight;
     }
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -45,11 +50,13 @@ export default class MessageList extends Component {
             />);
 
         return <div className='chat'>
-            <ul className='chat__msg-list'>
+            <ul
+                className='chat__msg-list'
+                ref={this.msgList}>
                 {Messages}
             </ul>
             <MsgInput sendMsgHandler={this.sendMessage} />
-        </div>
+        </div >
 
     }
 };
