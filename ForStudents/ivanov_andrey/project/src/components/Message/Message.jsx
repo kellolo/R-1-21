@@ -10,8 +10,14 @@ export default class Message extends Component {
     
     render(){
         return  <div className="message">
-                    <p className="message__username"><b>{ this.name }</b></p>
-                    <p className="message__text">{ this.text }</p>
+                    <p 
+                        className="message__username"
+                        style={ { alignSelf: this.props.name === 'Собеседник' ? 'flex-start' : 'flex-end' } }
+                    ><b>{ this.name }</b></p>
+                    <p 
+                        className="message__text"
+                        style={ { alignSelf: this.props.name === 'Собеседник' ? 'flex-start' : 'flex-end' } }
+                    >{ this.text }</p>
                 </div>; 
     }
 }

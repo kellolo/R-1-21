@@ -1,18 +1,11 @@
 import React, { Component } from 'react';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import SendIcon from '@material-ui/icons/Send';
+import IconButton from '@material-ui/core/IconButton';
+
 
 import './style.scss';
-
-// export default () => {
-//     return <div className="msg__container_input">
-//         <div>
-//             <input type="text"/>
-//         </div>
-//         <div>
-//             <button onClick={ this.sendMessage }>add</button>
-//         </div>
-//     </div>;
-// };
-
 
 export default class MsgInput extends Component {
     constructor (props) {
@@ -20,14 +13,10 @@ export default class MsgInput extends Component {
     }
 
     sendMessage = (event) => {
-        let userMsgInput = null;
-        if(event.type === 'keyup' && event.key === 'Enter') {
-            userMsgInput = event.target;
-        } else if (event.type === 'click') {
-            userMsgInput = document.querySelector('#user-msg');
-        } else {
+        if(event.type === 'keyup' && event.key !== 'Enter') {
             return;
-        }
+        } 
+        const userMsgInput = document.querySelector('#user-msg');
         const msg = userMsgInput.value.trim();
         if (msg === '') return;
         this.props.sendMessage(msg);
@@ -35,13 +24,15 @@ export default class MsgInput extends Component {
     }
 
     render() {
-        return <div className="msg__container_input">
-        <div>
-            <input id='user-msg' onKeyUp={ this.sendMessage } type="text"/>
-        </div>
-        <div>
-            <button onClick={ this.sendMessage } >send</button>
-        </div>
-    </div>;
+        return (<Grid container>
+            <Grid item xs={10}>
+                <TextField fullWidth onKeyUp={ this.sendMessage } id="user-msg" label="Послание..." />
+            </Grid>
+            <Grid item xs={2}>
+                <IconButton aria-label="delete" onClick={ this.sendMessage }>
+                    <SendIcon />
+                </IconButton>
+            </Grid>
+        </Grid>);
     }
 };

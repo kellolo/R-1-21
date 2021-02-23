@@ -1,48 +1,25 @@
 import React, { Component } from 'react';
 import './style.scss';
 import Message from '@components/Message';
+import MsgInput from '@components/MsgInput';
+import Header from '@components/Header';
+import ChatsList from '@components/containers/ChatsList';
 
 export default class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
             messages: [
-                { name: 'Андрей', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
-                { name: 'Андрей', text: 'Как дела?' }
+                { name: 'Собеседник', text: 'Привет! Это очень длинный текс для проверки верстки в компоненте!!!!11' }, 
+                { name: 'Собеседник', text: 'Как дела?' }
             ],
         };
     }
 
-    sendMessage = () => {
+    sendMessage = (msg) => {
         this.setState({
-            messages: [...this.state.messages, {
-                name: 'Аноним', text: 'Норм'
-            }]
+            messages: [...this.state.messages, { ...msg }]
         });
-    }
-    componentWillMount() {
-        console.log('MessageList componentWillMount');
-    }
- 
-    componentDidMount() {
-        console.log('MessageList componentDidMount');
-        
-    }
-     componentDidUpdate() {
-        console.log('MessageList componentDidUpdate');
-        let msgArr = [...this.state.messages];
-        let msgArrLength = msgArr.length;
-
-        if (msgArr[msgArrLength-1].name != 'Бот'){
-
-            setTimeout(() => {
-                this.setState({
-                    messages: [...this.state.messages, {
-                        name: 'Бот', text: 'Ответ от бота через 1 секунду'
-                    }]
-                }); 
-            }, 1000);
-        }
     }
 
     render() {
@@ -54,9 +31,15 @@ export default class MessageList extends Component {
                 text={ el.text }
             />);
         
-        return <div className="message-list">
-                 { Messages }
-                 <button className="message-list__btn" onClick={ this.sendMessage }>Отправить сообщение</button>
+        return <div className="messagelist-wrapper">
+                <Header />
+                <div className="chatslist-wrapper">
+                    <ChatsList />
+                </div>
+                    <div className="message-list1">
+                     { Messages }
+                     <MsgInput sendMessage = { this.sendMessage }/>
+                    </div>
                </div>;
 
     }

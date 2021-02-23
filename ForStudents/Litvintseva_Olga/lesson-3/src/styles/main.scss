@@ -1,0 +1,15 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@import 'variables.scss';
+
+@import '@pages/Home/style.scss';
+@import '@containers/ChatList/style.scss';
+@import '@containers/MessageList/style.scss';
+@import '@components/Message/style.scss';
+@import '@components/Modal/style.scss';
+@import '@containers/ContactList/style.scss';
