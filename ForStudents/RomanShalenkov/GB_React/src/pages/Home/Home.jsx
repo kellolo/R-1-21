@@ -4,13 +4,17 @@ import MessageList from '@conteiners/MessageList';
 // import MessageInput from '@components/MessageInput';
 // import ChatsList from '@conteiners/ChatsList';
 import Headers from '@components/Headers';
+import { StylesProvider } from '@material-ui/core/styles';
 
 import './style.scss';
 
 export default () => {
-    return <div>
-        <Headers />
-        <MessageList />
-        {/* <ChatsList /> */}
-    </div>
+    return <StylesProvider>
+                <div>
+                    <Headers />
+                    <MessageList />
+                    {/* <ChatsList /> */}
+                </div>
+            </StylesProvider>
+    
 }

@@ -2,15 +2,20 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import App from '@pages/Home';
 import '@styles/main.scss';
-import { StylesProvider } from '@material-ui/core/styles';
+
+import Router from './router';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <StylesProvider>
-        <div>
-            <App />
-        </div>
-    </StylesProvider>,
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>,
+    // <StylesProvider>
+    //     <div>
+    //         <App />
+    //     </div>
+    // </StylesProvider>,
     container
 );
