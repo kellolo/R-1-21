@@ -1,82 +1,73 @@
 import React from 'react';
 import './style.scss';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import Typography from '@material-ui/core/Typography';
+import { blue } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme) => ({
-    paper: {
-        position: 'absolute',
-        width: 400,
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
-    title: {
-        textAlign: 'center'
-    },
-    list: {
-        padding: 0,
-        listStyle: 'none'
-    },
-    item: {
-        margin: '5px'
-    },
-}));
+function AddChat(props) {
 
-const getModalStyle = () => {
-    const top = 70;
-    const left = 100;
+    const emails = ['username@gmail.com', 'user02@gmail.com', 'test@lol.net'];
+    const { onClose, selectedValue, open } = props;
 
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
+    const handleClose = () => {
+        onClose(selectedValue);
     };
+
+    const handleListItemClick = (value) => {
+        onClose(value);
+    };
+
+    return (
+        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+            <DialogTitle id="simple-dialog-title">Add contacts</DialogTitle>
+            <List>
+                {emails.map((email) => (
+                    <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+                        <ListItemAvatar>
+                            <Avatar>
+                                <PersonIcon />
+                            </Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary={email} />
+                    </ListItem>
+                ))}
+            </List>
+        </Dialog>
+    );
 }
 
-export default () => {
-
-    const classes = useStyles();
-    const [modalStyle] = React.useState(getModalStyle);
+export default (props) => {
     const [open, setOpen] = React.useState(false);
+    const { addChat } = props;
 
-    const handleOpen = () => {
+    const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
+    const handleClose = (value) => {
         setOpen(false);
+        addChat(value);
     };
-
-    const body = (
-        <div style={modalStyle} className={classes.paper}>
-            <h2 className={classes.title}>Choise contact</h2>
-            <ul className={classes.list}>
-                <li className={classes.item}>Chat 0</li>
-                <li className={classes.item}>Chat 1</li>
-                <li className={classes.item}>Chat 2</li>
-            </ul>
-        </div>
-    );
 
     return (
         <div>
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleOpen}
-                endIcon={<AddCircleIcon />}>
+                onClick={handleClickOpen}>
                 Add
             </Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                className='add-chat-window'>
-                {body}
-            </Modal>
+            <AddChat open={open} onClose={handleClose} />
         </div>
     );
 }

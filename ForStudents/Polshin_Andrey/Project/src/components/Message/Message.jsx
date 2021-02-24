@@ -4,15 +4,15 @@ import React from 'react';
 import './style.scss';
 
 export default props => {
-    const { name, text } = props;
+    const { sender, text } = props;
 
     return <li
         className='msg'
         style={{
-            alignSelf: name === 'BOT' ? 'flex-start' : 'flex-end'
+            alignSelf: sender === 'BOT' ? 'flex-start' : 'flex-end'
         }}>
         <p className="msg__sender">
-            {name}
+            {sender}
         </p>
         <p className='msg__text'>
             {text}

@@ -9,44 +9,48 @@ export default class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'one', text: 'Hey!' },
-                { name: 'one', text: 'How are you?' }
-            ]
+            messages: {
+                0: { text: "Привет!", sender: 'BOT' },
+                1: { text: "Здравствуйте!", sender: 'BOT' },
+            }
         };
+
         this.msgList = React.createRef();
     }
 
-    sendMessage = (name, text) => {
+    handleSendMessage = (sender, message) => {
+        const { messages } = this.state;
+        const { chat, addMsgToChat } = this.props;
+        const messageId = Object.keys(messages).length + 1;
+
         this.setState({
-            messages: [...this.state.messages, {
-                name: name,
-                text: text
-            }]
-        });
-    }
-
-    componentDidUpdate() {
-        this.msgList.current.scrollTop = this.msgList.current.scrollHeight;
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.messages !== nextState.messages) {
-            const newMsg = nextState.messages[nextState.messages.length - 1];
-            if (newMsg.name !== 'BOT') {
-                setTimeout(() => this.sendMessage('BOT', 'Zadolbal :)'), 250);
+            messages: {
+                ...messages,
+                [messageId]: { text: message, sender: sender }
             }
+        });
+        addMsgToChat(chat.id, messageId);
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        const { messages } = this.state;
+        if (Object.keys(prevState.messages).length < Object.keys(messages).length &&
+            Object.values(messages)[Object.values(messages).length - 1].sender !== 'BOT') {
+            setTimeout(() =>
+                this.handleSendMessage('BOT', 'Не приставай ко мне, я робот!'), 150);
         }
-        return true;
+        this.msgList.current.scrollTop = this.msgList.current.scrollHeight;
     }
 
     render() {
         const { messages } = this.state;
-        const Messages = messages.map((el, i) =>
+        const { chat } = this.props;
+
+        const Messages = chat.messageList.map((messageId, index) =>
             <Message
-                key={'msg_' + i}
-                name={el.name}
-                text={el.text}
+                key={index}
+                sender={messages[messageId].sender}
+                text={messages[messageId].text}
             />);
 
         return <div className='chat'>
@@ -55,7 +59,7 @@ export default class MessageList extends Component {
                 ref={this.msgList}>
                 {Messages}
             </ul>
-            <MsgInput sendMsgHandler={this.sendMessage} />
+            <MsgInput sendMsgHandler={this.handleSendMessage} />
         </div >
 
     }

@@ -21,6 +21,9 @@ export default class MsgInput extends Component {
     componentDidMount() {
         this.textInput.current.focus();
     }
+    componentDidUpdate() {
+        this.textInput.current.focus();
+    }
 
     handleChange(e) {
         this.setState({

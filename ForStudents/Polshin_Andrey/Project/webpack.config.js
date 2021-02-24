@@ -19,6 +19,28 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
+                test: /\.jsx?$/,
+                enforce: "pre",
+                use: [
+                    {
+                        loader: "source-map-loader",
+                        options: {
+                            filterSourceMappingUrl: (url, resourcePath) => {
+                                if (/broker-source-map-url\.js$/i.test(url)) {
+                                    return false;
+                                }
+
+                                if (/keep-source-mapping-url\.js$/i.test(resourcePath)) {
+                                    return "skip";
+                                }
+
+                                return true;
+                            },
+                        },
+                    }
+                ]
+            },
+            {
                 test: /\.s[ac]ss$/i,
                 use: ["style-loader", "css-loader", "sass-loader"]
             },
@@ -61,6 +83,9 @@ module.exports = {
     devServer: {
         port: 3300,
         hot: true,
-        open: false
-    }
+        open: false,
+        historyApiFallback: {
+            index: 'index.html'
+        }
+    },
 };
