@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 @import 'variables.scss';
@@ -11,3 +12,4 @@
 @import '@containers/ChatList/style.scss';
 @import '@containers/MessageList/style.scss';
 @import '@components/Message/style.scss';
+@import '@containers/ContactList/style.scss';

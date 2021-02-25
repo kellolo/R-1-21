@@ -1,16 +1,18 @@
-.chat{
-    &_field{
-        width: 30%;
-        padding: 10px;
-        background-color: $color1;
-        border-right: 1px solid $color2;
-    }
+.modal{
+    min-width: 300px;
+}
+.contact{
     &_list{
-        list-style: none;
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
     }
     &_item{
         display: flex;
         align-items: center;
+        &:nth-last-child(n+2){
+            margin-bottom: 10px;
+        }
     }
     &_avatar{
         width: 40px;
