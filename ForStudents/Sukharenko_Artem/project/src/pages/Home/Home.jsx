@@ -7,23 +7,23 @@ import MessageList from '@containers/MessageList';
 import DialogList from '@containers/DialogList';
 import './style.scss';
 
-export default function FixedContainer() {
+export default props => {
     return (
-      <React.Fragment>
-        <CssBaseline />
-        <Container fixed>
-            <Grid container justify="space-around">
-                <Grid container item xs={12} justify="center" >
-                    <Header />
+        <React.Fragment>
+            <CssBaseline />
+            <Container fixed>
+                <Grid container justify="space-around">
+                    <Grid container item xs={12} justify="center" >
+                        <Header />
+                    </Grid>
+                    <Grid item xs={3}>
+                        <DialogList userID={ props.userID } />
+                    </Grid>
+                    <Grid item xs={8}>
+                        <MessageList />
+                    </Grid>
                 </Grid>
-                <Grid item xs={3}>
-                    <DialogList />
-                </Grid>
-                <Grid item xs={8}>
-                    <MessageList />
-                </Grid>
-            </Grid>
-        </Container>
-      </React.Fragment>
+            </Container>
+        </React.Fragment>
     );
-  }
+}
