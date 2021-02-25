@@ -6,12 +6,12 @@ import Header from '@components/Header';
 
 import './style.scss';
 
-export default () => {
+export default (props) => {
+    const { chatId } = props;
 
     return <div className="home">
-        <Header />
+        <Header chatId={ chatId } />
         <div className="home__chats">
-
             <ChatsList />
             <MessageList />
         </div>
