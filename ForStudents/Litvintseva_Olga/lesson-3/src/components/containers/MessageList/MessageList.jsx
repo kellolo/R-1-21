@@ -1,5 +1,4 @@
 
-import React, { Component } from 'react';
 import Message from '@components/Message';
 
 export default class MessageList extends Component {
@@ -8,11 +7,7 @@ export default class MessageList extends Component {
         this.state = { messages: [], text: '' };
     }
 
-    handleChange = (e) => {
-        if (e.keyCode !== 13) {
-            this.setState({ text: e.target.value });
-        } else {
-            this.handleSubmit(e);   
+
         }        
     }
     
@@ -28,12 +23,7 @@ export default class MessageList extends Component {
         this.setState(state => ({
             messages: state.messages.concat(newMessage),
             text: ''
-        }));  
-    }
 
-    componentDidUpdate () {
-        let messageScroll = document.querySelector('.message_list');
-        messageScroll.scrollTop = messageScroll.scrollHeight;
     }
 
     render() {

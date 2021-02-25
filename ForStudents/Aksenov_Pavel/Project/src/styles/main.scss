@@ -1,0 +1,120 @@
+@import './variables.scss';
+
+body { background-color: $color-theme; }
+
+.chat-wrap {
+  font-family: monospace;
+  display: flex;
+  justify-content: center;
+  height: calc(100vh - 16px);
+  &_display {
+    &__message {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }  
+    &__text {
+      background-color: #b4d8f2;
+      padding: 15px 0;
+      border-top: 1px solid $color-theme;
+      border-bottom: 1px solid $color-theme;
+      border-left: 1px solid $color-theme;
+      border-radius: 5px;
+      position: relative;
+      min-width: 40%;
+      max-width: 70%;
+      span {
+        color: #818193;
+        font-size: 12px;
+      }
+      p {
+        margin: 0 15px;
+        font-size: 12px;
+        display: inline-block;
+        overflow-wrap: anywhere;
+      }
+      time {
+        font-size: 10px;
+        text-align: end;
+        flex-grow: 2;
+        position: absolute;
+        bottom: 0;
+        right: 5px;
+        font-family: system-ui;
+        color: #6b6e77
+      }
+    }
+    &__contacts {
+      outline: 1px solid $color-theme;
+      background-color: #FFF;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-width: 20%;
+      &-search {
+        input[type="text"] {
+          width: 88%;
+          background-color: #eceeef;
+          outline: none;
+          border: 1px solid #eceeef;
+          border-radius: 5px;
+          padding: 8px;
+          margin: 10px;
+          font-family: monospace;
+          font-size: 14px;
+        }
+      }
+      &-list {
+        padding: 20px;
+      }
+    }
+    &__content {
+      height: 100%;
+      flex-basis: 100%;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin-left: 1px;
+    }
+    &__messages {
+      max-height: calc(100vh - 119px);
+      overflow-y: auto;
+    }
+    &__user {
+      margin: 10px;
+      padding: 6px;
+      border-radius: 50%;
+    }
+  }
+  &_header {
+    background-color: #FFF;
+    padding: 15px;
+    border-bottom: 1px solid $color-theme;
+  }
+  &_input {
+    background-color: $color-theme;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    &__button {
+      margin-left: 10px;
+      border-radius: 5px;
+      border: none;
+      color: #FFF;
+      background-color: #8b808d;
+      padding: 10px 10px;
+      text-align: center;
+      font-family: monospace;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      width: 90%;
+      outline: none;
+      border: none;
+      padding: 15px;
+      font-family: monospace;
+      font-size: 14px;
+    }
+  }
+}

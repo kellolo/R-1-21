@@ -8,20 +8,5 @@
     height: 100%;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-}
-.header {
-    width: 100%;
-    min-height: 50px;
-    padding: 10px 26px;
-    display: flex;
-    align-items: center;
-    color: $color2;
-    background-color: $color1;
-    border-bottom: 1px solid $color2;
-}
-.messenger_container{
-    width: 100%;
-    height: calc(100% - 50px);
-    display: flex;
+
 }

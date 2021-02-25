@@ -1,0 +1,15 @@
+.telegraph {
+	display: flex;
+	flex-direction: column;
+	button {
+		width: 50px;
+	}
+}
+
+.message-list {
+	height: 600px;
+	padding: 20px 20px;
+	background-color: #b2d9fa;
+	overflow: auto;
+	margin-bottom: 10px;
+}
