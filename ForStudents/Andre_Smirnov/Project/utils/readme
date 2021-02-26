@@ -1,0 +1,3 @@
+utils
+ create component - "cr-comp": "node utils/component-creator --s --n"
+ create container - "cr-cont": "node utils/component-creator --n"

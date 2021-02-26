@@ -3,7 +3,10 @@ import React, { Component } from 'react';
 
 import './style.scss';
 import Message from '@components/Message';
+import MsgInput from '@components/MsgInput';
 //stateFull
+import Paper from '@material-ui/core/Paper';
+import List from "@material-ui/core/List";
 
 
 export default class MessageList extends Component {
@@ -14,22 +17,22 @@ export default class MessageList extends Component {
                 { name: 'one', text: 'Hey!' }, 
                 { name: 'one', text: 'How are you?' }
             ],
-            inputMsg: '',
+            
             
         };
     }
 
-    sendMessage = (e) => {        
+    addMessage = (msg) => {        
         this.setState({
             messages: [...this.state.messages, {
-                name: 'User1', text: this.state.inputMsg
+                name: 'User1', text: msg
             }]
         });
-        e.preventDefault();        
+        const LastMsg = document.getElementById( 'msgList' ).lastElementChild;
+        LastMsg.scrollIntoView( { block: "end", behavior: "smooth" } );
+                
     }
-    handleChangeInputMsg = (e) => {
-        this.setState({ inputMsg: e.target.value });
-    }
+    
 
     render() {
         const { messages } = this.state;
@@ -40,17 +43,29 @@ export default class MessageList extends Component {
                 text={ el.text }
             />);
         
-        return <div className="message__wrapper">
-            <div className="message__items">
-                {Messages}
-            </div>
+        return (
+            <React.Fragment>
+                <Paper className="message__wrapper">
+                    
+                    <List className="message__items" id='msgList'>
+                        {Messages}  
+                    </List> 
+                    <MsgInput addMsg={ this.addMessage } />
+                </Paper>
+                </React.Fragment>
+        );
+        
+        // return <div className="message__wrapper">
+        //     <div className="message__items">
+        //         
+        //     </div>
             
-            <form action="#" onSubmit={this.sendMessage} >
-                <input type="text" name="textMessage" id="" placeholder="Введите текст сообщения" value={this.state.inputMsg} onChange={this.handleChangeInputMsg} />
-                <input type="submit" value="add" />
+        //     <form action="#" onSubmit={this.sendMessage} >
+        //         <input type="text" name="textMessage" id="" placeholder="Введите текст сообщения" value={this.state.inputMsg} onChange={this.handleChangeInputMsg} />
+        //         <input type="submit" value="add" />
                
-            </form>
-        </div>;
+        //     </form>
+        // </div>;
 
     }
 };
