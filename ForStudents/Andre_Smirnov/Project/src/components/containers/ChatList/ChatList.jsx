@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import './style.scss';
 import Chat from '@components/Chat';
-import { Link } from 'react-router-dom';
+
 import ChatsDialog from '@components/ChatsDialog';
 //stateFull
 
@@ -34,7 +34,7 @@ class ChatList extends Component {
     addChat = (userName) => {
 
         this.setState({
-            chats: [...this.state.chats, {  id: this.state.chats.length, userName, lastMessage: {} }]
+            chats: [...this.state.chats, { id: this.state.chats.length, userName, lastMessage: {} }]
         });
     }
 
@@ -46,8 +46,9 @@ class ChatList extends Component {
                 key={'cht_' + i}
                 userName={el.userName}
                 lastMessage={el.lastMessage}
-                
-            />);
+                userId={el.id}
+            />
+        );
         const { classes } = this.props;
         return (
             <React.Fragment>

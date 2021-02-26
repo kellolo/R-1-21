@@ -55,18 +55,7 @@ export default class MessageList extends Component {
                 </React.Fragment>
         );
         
-        // return <div className="message__wrapper">
-        //     <div className="message__items">
-        //         
-        //     </div>
-            
-        //     <form action="#" onSubmit={this.sendMessage} >
-        //         <input type="text" name="textMessage" id="" placeholder="Введите текст сообщения" value={this.state.inputMsg} onChange={this.handleChangeInputMsg} />
-        //         <input type="submit" value="add" />
-               
-        //     </form>
-        // </div>;
-
+       
     }
 };
 

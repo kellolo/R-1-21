@@ -24,8 +24,5 @@ export default props => {
             </ListItem>
         </React.Fragment>
     );
-    return  <div>
-                <p><b>{ name }</b></p>
-                <p>{ text }</p>
-            </div>;
+    
 }
