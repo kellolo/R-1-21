@@ -7,15 +7,18 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import AddIcon from '@material-ui/icons/Add';
 import Modal from "@components/Modal";
+import { Link } from "react-router-dom";
 
-import styles from "./styles.module.scss"
+import styles from "./styles.module.scss";
 
-const ChatList = () => {
+const ChatList = (props) => {
+    const {chatId} = props;
     const [list, setList] = useState([
-        { name: "Чат 1" }, { name: "Чат 2" }, { name: "Чат 3" }
+        { id: "1", name: "Чат 1" },
+        { id: "2", name: "Чат 2" },
+        { id: "3", name: "Чат 3" }
     ]);
     const [contacts, setContacts] = useState(['Контакт 1', 'Контакт 2', 'Контакт 3']);
-    const [selected, setSelected] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -23,12 +26,13 @@ const ChatList = () => {
 
             <List component="nav">
                 {list.map((item, i) => (
-                    <ListItem key={i}
-                              button
-                              selected={selected === i}
-                              onClick={() => setSelected(i)}>
-                        <ListItemText primary={`${item.name}`}/>
-                    </ListItem>
+                    <Link to={`/chat/${item.id}`} key={i}>
+                        <ListItem button
+                                  selected={chatId === item.id}>
+
+                            <ListItemText primary={`${item.name}`}/>
+                        </ListItem>
+                    </Link>
                 ))}
 
                 {contacts.length > 0 && (
@@ -55,7 +59,7 @@ const ChatList = () => {
                    contacts={contacts}
                    onSelect={(value) => {
                        setIsOpen(false);
-                       setList([...list, { name: value }])
+                       setList([...list, { id: `${list.length + 1}`, name: value }])
                        setContacts(contacts.filter((item) => item !== value))
                    }} />
 

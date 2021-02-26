@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from 'react-dom';
 
-import Home from "@pages/Home";
+import { BrowserRouter } from 'react-router-dom';
+import Router from "./router";
 
-import { StylesProvider, createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import "@styles/main.scss";
 
 const theme = createMuiTheme({
@@ -18,10 +19,10 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-        <StylesProvider>
-            <Home />
-        </StylesProvider>
-    </ThemeProvider>,
+    <BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <Router />
+        </ThemeProvider>
+    </BrowserRouter>,
     document.getElementById("app")
 )
