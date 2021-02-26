@@ -1,10 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
-.message-list {
+.message-list1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
+
+/* .message_list {
+  background-color:red;
+} */
 
 .message-list__btn {
     outline: none;
@@ -34,4 +37,18 @@
           inset 8px 8px 16px rgba(0, 0, 0, 0.1);
         color: black;
       }
+}
+
+.messagelist-wrapper {
+  position: relative;
+  padding: 100px 20px 10px 260px;
+}
+
+.chatslist-wrapper {
+  position: absolute;
+  top: 115px;
+  left: 5px;
+  height: 300px;
+  display: flex;
+  flex-direction: inherit;
 }

@@ -1,0 +1,14 @@
+@import '@styles/variables.scss';
+
+.modal {
+    top: 20%;
+    left: 40%;
+    transform: translate(-55%, -42%);
+    background-color: $modal-color;
+    border-radius: 5px;
+    width: 400px;
+    border: 2px solid #000;
+    padding: 16px 32px 24px;
+    position: absolute;
+    box-shadow: 0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12);
+}

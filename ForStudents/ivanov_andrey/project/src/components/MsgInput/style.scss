@@ -5,7 +5,7 @@
     border-radius: 1rem;
     background-color: rgba(204,204,204, .5);
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin: 15px auto;
     box-sizing: border-box;
@@ -13,16 +13,7 @@
     font-family: "Montserrat", sans-serif;
     font-size: 14px;
     font-weight: semibold;
-}
-.message-input__text {
-    margin: 0;
-    padding: 5px;
-    box-sizing: border-box;
-    word-break: break-all;;
-    width: 70%;
-    align-self: stretch;
-    margin: 15px 0;
-    outline: none;
+    padding: 0 40px;
 }
 .message-input__btn {
     outline: none;
@@ -32,6 +23,7 @@
     background: #f3f0f1;
     justify-self: flex-end;
     padding: 10px 30px;
+    margin-top: 20px;
     border-radius: 14px;
     text-align: center;
     cursor: pointer;
@@ -51,4 +43,13 @@
           inset 8px 8px 16px rgba(0, 0, 0, 0.1);
         color: black;
       }    
+}
+
+.message-input__form {
+  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 100%;
+  align-items: center;
 }

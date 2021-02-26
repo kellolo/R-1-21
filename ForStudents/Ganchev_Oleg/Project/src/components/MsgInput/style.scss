@@ -1,0 +1,14 @@
+@import "@styles/variables";
+.msg-input {
+
+  & input {
+    width: 500px;
+  }
+
+  & button {
+    background-color: $main-color;
+    padding: 14px 12px 10px 16px;
+    border-radius: 50%;
+  }
+
+}
