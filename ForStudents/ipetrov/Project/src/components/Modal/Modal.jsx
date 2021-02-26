@@ -1,8 +1,18 @@
 import React from 'react';
 // import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import Avatar from '@material-ui/core/Avatar';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemText from '@material-ui/core/ListItemText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Dialog from '@material-ui/core/Dialog';
+import PersonIcon from '@material-ui/icons/Person';
+import AddIcon from '@material-ui/icons/Add';
+import { blue } from '@material-ui/core/colors';
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -29,56 +39,73 @@ import Button from '@material-ui/core/Button';
 //     padding: theme.spacing(2, 4, 3),
 //   },
 // }));
-
-const useStyles = makeStyles(() => ({
-  root: {
-    '& > *': {
-      margin: '51px',
-    },
+const contactName = ['Вась Васич', 'Дим Димыч', 'Оль Олич', 'Халк Халкыч'];
+const useStyles = makeStyles({
+  avatar: {
+    backgroundColor: blue[100],
+    color: blue[600],
   },
-}));
+});
 
-export default function SimpleModal() {
-//   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-//   const [modalStyle] = React.useState(getModalStyle);
+function SimpleDialog(props) {
+  const classes = useStyles();
+  const { onClose, selectedValue, open, inactiveChats } = props;
+
+  const handleClose = () => {
+    onClose(selectedValue);
+  };
+
+  const handleListItemClick = (value) => {
+    props.addContact(value);
+    onClose(value);
+  };
+
+  return (
+    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+      <DialogTitle id="simple-dialog-title">Add new chat</DialogTitle>
+      <List>
+        {inactiveChats.map((el) => (
+          <ListItem button onClick={() => handleListItemClick(el.name)} key={el.name}>
+            <ListItemAvatar>
+              <Avatar className={classes.avatar}>
+                <PersonIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={el.name} />
+          </ListItem>
+        ))}
+      </List>
+    </Dialog>
+  );
+}
+
+SimpleDialog.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  selectedValue: PropTypes.string.isRequired,
+};
+
+export default function SimpleDialogDemo(props) {
   const [open, setOpen] = React.useState(false);
+  const { inactiveChats } = props;
+  console.log(React.useState(inactiveChats[0].name));
+  const [selectedValue, setSelectedValue] = React.useState(inactiveChats[0].name);
 
-  const handleOpen = () => {
+  const handleClickOpen = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (value) => {
     setOpen(false);
+    setSelectedValue(value);
   };
-
-  const body = (
-    // <div style={modalStyle} className={classes.paper}>
-    <div>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-    </div>
-  );
-
-  const classes = useStyles();
 
   return (
     <div>
-        <div className={classes.root}>
-        <Button variant="contained" color="primary" type="button" onClick={handleOpen} className="addContacts">
-          Primary
-        </Button>
-      </div>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen} className="addContacts">
+        Add Contacts
+      </Button>
+      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats}/>
     </div>
   );
-};
+}

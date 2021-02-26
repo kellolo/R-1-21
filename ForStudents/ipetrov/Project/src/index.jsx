@@ -3,13 +3,17 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import App from '@pages/Home';
+import { BrowserRouter } from 'react-router-dom';
+import Router from './router';
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <div>
-        <App />
-    </div>,
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>,
+//    <div>
+//        <App />
+//    </div>,
     container
 );

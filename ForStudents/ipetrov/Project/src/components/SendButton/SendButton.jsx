@@ -21,11 +21,9 @@
             },
           },
         }));
-      
-    
  
 
-    export const SendButton = () => {
+  export const SendButton = props => {
         const classes = useStylesButton();
 
         return (
@@ -35,14 +33,15 @@
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick = { props.onClick }
                 >
                 Отправить
                 </Button>            
             </div>
             );
     };
-    
-
+  
+/*
  export const TextInput = () => {
         const classesInput = useStylesInput();
       
@@ -52,3 +51,4 @@
           </form>
         );
       }
+*/

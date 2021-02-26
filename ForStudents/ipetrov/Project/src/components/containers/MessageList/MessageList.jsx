@@ -15,7 +15,7 @@ export default class MessageList extends Component {
             ],
             yourMessage: ''
         };
-        this.textInput = React.createRef();
+        this.chatContainer = React.createRef();
     }
     
     changeHandler = (event) => {
@@ -25,6 +25,8 @@ export default class MessageList extends Component {
             this.sendMessage();
         }
     }
+
+
 
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
@@ -36,15 +38,21 @@ export default class MessageList extends Component {
     //                { name: 'Bot-Sociopath', text: '#$#$#$#$#$#' }
                 ],
                 yourMessage: ''
-            });
-            this.textInput.current.focus();
+            },
+                
+                () => this.scrollToMyRef()
+                
+            );
         }        
     }
 
 
+
+
+/*
     componentDidMount() {
-        this.textInput.current.focus();
     }
+*/
 /*    
     componentDidUpdate() {
         var regexp = /[а-яё]/i;
@@ -65,6 +73,13 @@ export default class MessageList extends Component {
     }
 */
 
+    scrollToMyRef = () => {
+        const scroll =
+        this.chatContainer.current.scrollHeight -
+        this.chatContainer.current.clientHeight;
+        this.chatContainer.current.scrollTo(0, scroll);
+    };
+
     render() {
         const { messages } = this.state;
         const Messages = messages.map((el, i) => 
@@ -82,11 +97,10 @@ export default class MessageList extends Component {
                             onChange = { this.changeHandler }
                             onKeyUp = { this.changeHandler }
                             className="messagebox"
-                            ref={ this.textInput }
                             />
                         <button className="sendbutton" onClick={ this.sendMessage }>Send</button>
                     </div>
-                    <div className="messages">{ Messages }</div>
+                    <div className="messages" ref={this.chatContainer}>{ Messages }</div>
                 </div>;
 
     }
