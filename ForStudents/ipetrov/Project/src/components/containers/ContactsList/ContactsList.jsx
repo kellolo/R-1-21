@@ -38,7 +38,7 @@ export default class ContactsList extends Component {
 
         const { activeChats } = this.state;
         const Contacts = activeChats.map((el, i) => 
-            <Link to = { '/chat/${el.id}' }>
+            <Link to = { `/chat/${el.id}` }>
                 <Contact 
                     key={ 'contact_' + i } 
                     name={ el.name }
