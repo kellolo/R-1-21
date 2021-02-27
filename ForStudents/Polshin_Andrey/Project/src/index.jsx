@@ -3,8 +3,14 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import App from '@pages/Home';
+import Router from './router/';
+import { BrowserRouter } from 'react-router-dom';
 
 const container = document.querySelector('#app');
 
-ReactDom.render(<App />, container);
+ReactDom.render(
+    <BrowserRouter>
+        <Router />
+    </BrowserRouter>,
+    container
+);
