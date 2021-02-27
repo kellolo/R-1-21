@@ -29,6 +29,8 @@ class ContactsList extends Component {
         ]});
     }
 
+
+/* до перехода на объект
     render() {
         const { activeChats } = this.props;
         const Contacts = activeChats.map((el, i) => 
@@ -46,7 +48,30 @@ class ContactsList extends Component {
             />
         </div>;
     }
+*/
+    // перепишу на объекты
+    render() {
+        const { activeChats } = this.props;
+        const Contacts = Object.keys(activeChats).map((el) => 
+            <Link to = { `/chat/${el}` } key={ 'contact_' + el }>
+                <Contact 
+                    name={ activeChats[el].name }
+                />
+            </Link>);
+
+        return <div className="contactslist">
+            <div>{ Contacts }</div>
+            <Modal  removeContact={ this.removeContact }
+                    add={ this.props.addContact } 
+                    inactiveChats={ this.props.inactiveChats }
+            />
+        </div>;
+}
+
+
+
 };
+
 
 const mapState = ({ contactsReducer }) => ({
     inactiveChats: contactsReducer.inactiveChats
