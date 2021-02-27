@@ -1,6 +1,6 @@
 #app {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);;
+    grid-template-rows: 1fr 6fr;
+    height: 100vh;
 }

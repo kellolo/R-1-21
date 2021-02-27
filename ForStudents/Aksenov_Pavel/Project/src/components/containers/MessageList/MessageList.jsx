@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 
 import './style.scss';
 
+import { Button, IconButton, Icon } from '@material-ui/core';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import SendIcon from '@material-ui/icons/Send';
+
 import userIcon from '@media/man.png';
 import roboIcon from '@media/robo.png';
 
@@ -85,8 +89,19 @@ export default class MessageList extends Component {
       { messagesContent }
       </div>
       <div className="chat-wrap_input">
-        <input ref={ this.textInput } type="text" value={ values } onChange={ this.handleChange } onKeyUp={ this.handleChange }/>
-        <button className="chat-wrap_input__button" onClick={ this.sendMessage } >Отправить</button>
+        <div className="chat-wrap_input__content">
+          <input 
+            ref={ this.textInput } 
+            type="text" 
+            value={ values } 
+            onChange={ this.handleChange } 
+            onKeyUp={ this.handleChange }
+            placeholder="Введите сообщение"
+          />
+          <IconButton color="primary" aria-label="send" className="chat-wrap_input__button" onClick={ this.sendMessage }>
+            <SendIcon />
+          </IconButton>
+        </div>
       </div>
       {/* <MessageInput className="chat-wrap_input"/> */}
     </div>

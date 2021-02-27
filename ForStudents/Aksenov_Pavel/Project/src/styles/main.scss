@@ -1,12 +1,17 @@
 @import './variables.scss';
 
-body { background-color: $color-theme; }
+body { 
+  background-color: $color-theme;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
 .chat-wrap {
-  font-family: monospace;
   display: flex;
   justify-content: center;
-  height: calc(100vh - 16px);
+  height: calc(100vh - 3px);
+  overflow: hidden;
   &_display {
     &__message {
       display: flex;
@@ -22,7 +27,7 @@ body { background-color: $color-theme; }
       border-radius: 5px;
       position: relative;
       min-width: 40%;
-      max-width: 70%;
+      max-width: 75%;
       span {
         color: #818193;
         font-size: 12px;
@@ -47,24 +52,27 @@ body { background-color: $color-theme; }
     &__contacts {
       outline: 1px solid $color-theme;
       background-color: #FFF;
-      overflow-y: auto;
-      overflow-x: hidden;
-      min-width: 20%;
+      overflow: hidden;
+      min-width: 25%;
       &-search {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        background-color: $header-color;
         input[type="text"] {
-          width: 88%;
-          background-color: #eceeef;
+          width: 100%;
+          background-color: #8992a2;
           outline: none;
-          border: 1px solid #eceeef;
           border-radius: 5px;
           padding: 8px;
           margin: 10px;
-          font-family: monospace;
           font-size: 14px;
         }
       }
       &-list {
-        padding: 20px;
+        height: calc(100vh - 115px);
+        overflow-x: hidden;
+        overflow-y: auto;
       }
     }
     &__content {
@@ -73,7 +81,6 @@ body { background-color: $color-theme; }
       display: flex;
       flex-direction: column;
       position: relative;
-      margin-left: 1px;
     }
     &__messages {
       max-height: calc(100vh - 119px);
@@ -86,34 +93,29 @@ body { background-color: $color-theme; }
     }
   }
   &_header {
-    background-color: #FFF;
-    padding: 15px;
-    border-bottom: 1px solid $color-theme;
+    background-color: $header-color;
+    padding: 17.3px;
+    color: #d0e0ee;
   }
   &_input {
-    background-color: $color-theme;
-    display: flex;
     position: absolute;
     bottom: 0;
-    right: 0;
-    width: 100%;
+    left: 0;
+    width: 98%;
+    padding: 10px;
+    background-color: #d9d9d9;
+    &__content {
+      display: flex;
+    }
     &__button {
-      margin-left: 10px;
-      border-radius: 5px;
-      border: none;
-      color: #FFF;
-      background-color: #8b808d;
-      padding: 10px 10px;
-      text-align: center;
-      font-family: monospace;
-      cursor: pointer;
+      margin-left: 10px!important;
     }
     input[type="text"] {
-      width: 90%;
+      width: 95%;
       outline: none;
-      border: none;
+      border: 1px solid #FFF;
+      border-radius: 5px;
       padding: 15px;
-      font-family: monospace;
       font-size: 14px;
     }
   }

@@ -13,21 +13,26 @@ export default class MessageList extends Component {
                 { name: 'one', text: 'Hey!' },
                 { name: 'one', text: 'How are you?' }
             ],
+            text: ''
         };
     }
 
+    handleChange = evt => {
+        if (evt.keyCode !== 13) {
+            this.setState({ text: evt.target.value });
+        } else {
+            this.sendMessage();
+        }
+    }
+
     sendMessage = () => {
-        // this.state.messages.push({ name: 'bot', text: 'fine' }) not working
-        // const old = [...this.state.messages];
-        // old.push({ name: 'bot', text: 'fine' });
-        // this.setState(
-        //     {
-        //         messages: old
-        //     }
-        // );
+
         this.setState({
-            messages: [...this.state.messages, {
-                name: 'bot', text: 'fine'
+            text: '',
+            messages: [...this.state.messages,
+            {
+                name: 'User',
+                text: this.state.text
             }]
         });
     }
@@ -43,6 +48,11 @@ export default class MessageList extends Component {
 
         return <div>
             <button onClick={this.sendMessage}>add</button>
+            <input type="text"
+                value={this.state.text}
+                onChange={this.handleChange}
+                onKeyUp={this.handleChange}
+            />
             {Messages}
         </div>;
 
