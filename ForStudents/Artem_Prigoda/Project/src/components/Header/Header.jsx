@@ -6,7 +6,7 @@ export default props => {
   const { name, text } = props;
 
   return <div className="header">
-    <h2>чат</h2>
-    <p>{text}</p>
+    <h2>чат с {name}</h2>
+    <p></p>
   </div>;
 }

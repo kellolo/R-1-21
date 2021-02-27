@@ -4,15 +4,18 @@ import MessageList from '@containers/MessageList';
 import ChatsList from '@containers/ChatsList';
 import Header from '@components/Header';
 import MsgInput from '@components/MsgInput';
+import { StylesProvider } from '@material-ui/core/styles';
 
 import './style.scss';
 
-export default () => {
+export default props => {
 
-    return <div className="container">
-        {/* <MsgInput /> */}
-        <Header />
-        <ChatsList />
-        <MessageList />
-    </div>;
+    return <StylesProvider>
+        <div className="container">
+            <Header name={props.name} />
+            <ChatsList />
+            <MessageList />
+        </div>
+    </StylesProvider>
+
 }
