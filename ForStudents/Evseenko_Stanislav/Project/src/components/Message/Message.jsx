@@ -1,12 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import './style.scss';
 
 export default props => {
   const { name, text, time } = props;
   
-
   return (
     <div className="message message-list__message">
       <div className="message__header">

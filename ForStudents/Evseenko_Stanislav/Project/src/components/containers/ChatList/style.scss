@@ -1,0 +1,20 @@
+@import '@styles/variables.scss';
+
+.chat-list {
+  width: 25%;
+  box-sizing: border-box;
+  border-right: 1px solid $light-grey;
+}
+.chats {
+  .MuiListItem-root {
+    padding: 0 16px !important;
+    .MuiListItemText-root {
+      .MuiListItemText-primary {
+        color: #ffffff;
+      }
+      .MuiListItemText-secondary {
+        color: $light;
+      }
+    }
+  }
+}
