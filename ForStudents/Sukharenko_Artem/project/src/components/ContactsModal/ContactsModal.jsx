@@ -8,15 +8,10 @@ import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import './style.scss';
 
-const contacts = [
-    {'userID': 3, 'name': 'Иваныч', 'avatar': null},
-    {'userID': 4, 'name': 'Серега', 'avatar': null},
-    {'userID': 5, 'name': 'Андрюха Череп', 'avatar': null},
-    {'userID': 6, 'name': 'ДашкаРеактер', 'avatar': null},
-]
 
-export default function SimpleModal() {
+export default function SimpleModal(props) {
     const [open, setOpen] = React.useState(false);
+    const contacts = props.contacts;
 
     const handleOpen = () => {
         setOpen(true);
@@ -26,13 +21,14 @@ export default function SimpleModal() {
         setOpen(false);
     };
 
-    const handleUser = (event) => {
-        console.log(event.target);
+    const handleUser = (userID) => {
+        props.addChat(userID);
+        handleClose();
     }
 
     const Сontacts = contacts.map(user => (
         <div key={ user.userID }>
-            <ListItem button onClick={ handleUser } dataset-userid={ user.userID }>
+            <ListItem button onClick={ () => handleUser(user.userID) }>
                 <ListItemAvatar>
                     <Avatar alt={ user.name } src={ user.avatar } />
                 </ListItemAvatar>
