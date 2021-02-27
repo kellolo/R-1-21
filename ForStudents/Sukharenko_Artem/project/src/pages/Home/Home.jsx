@@ -1,18 +1,29 @@
 import React from 'react';
-// import ReactDom from 'react-dom';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Header from '@containers/Header';
 import MessageList from '@containers/MessageList';
-import MsgInput from '@components/MsgInput';
-
+import DialogList from '@containers/DialogList';
 import './style.scss';
 
-export default () => {
-
-    return <div className="container"> 
-        {/* <MsgInput /> */}
-        <div className="user__list">
-            <div className="user__list_name active">two</div>
-            <div className="user__list_name">bot</div>
-        </div>
-        <MessageList />
-    </div>;
+export default props => {
+    return (
+        <React.Fragment>
+            <CssBaseline />
+            <Container fixed>
+                <Grid container justify="space-around">
+                    <Grid container item xs={12} justify="center" >
+                        <Header />
+                    </Grid>
+                    <Grid item xs={3}>
+                        <DialogList userID={ props.userID } />
+                    </Grid>
+                    <Grid item xs={8}>
+                        <MessageList />
+                    </Grid>
+                </Grid>
+            </Container>
+        </React.Fragment>
+    );
 }

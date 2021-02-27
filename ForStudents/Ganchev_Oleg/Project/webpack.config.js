@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const path = require('path');
@@ -20,6 +19,10 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
+                test: /\.s[ac]ss$/i,
+                use: ["style-loader", "css-loader", "sass-loader"]
+            },
+            {
                 test: /\.jsx?$/i,
                 exclude: /node_modules/,
                 loader: 'babel-loader',
@@ -35,6 +38,18 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            '@styles': path.resolve(__dirname, 'src', 'styles'),
+            '@components': path.resolve(__dirname, 'src', 'components'),
+            '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
+            '@pages': path.resolve(__dirname, 'src', 'pages'),
+            '@resources': path.resolve(__dirname, 'src', 'resources'),
+            '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
+            '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
+            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+        }
+    },
     plugins: [
         new MiniCssExtractPlugin({
             filename: path.join('style', '[name].css'),
@@ -46,8 +61,11 @@ module.exports = {
         })
     ],
     devServer: {
-        port: 3300,
+        port: 3301,
         hot: true,
-        open: false
-    }
-}
+        open: false,
+        historyApiFallback: {
+            index: 'index.html'
+        }
+    },
+};

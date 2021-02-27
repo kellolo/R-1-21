@@ -1,0 +1,29 @@
+@import '@styles/variables.scss';
+
+.modal {
+  width: 400px;
+  height: 300px;
+  margin: auto;
+  padding: 20px;
+  box-sizing: border-box;
+  border: none;
+  background: $gray;
+  &__heading {
+    color: #ffffff !important;
+  }
+  &__button {
+    width: 100%;
+    height: 64px;
+    border-bottom: 1px solid $light-grey !important;
+    box-sizing: border-box;
+    padding: 0 20px;
+    text-transform: uppercase;
+    .MuiTypography-root {
+      color: $app-green;
+    }
+    .MuiSvgIcon-root {
+      color: $app-green;
+      margin: auto 10px auto 0;
+    }
+  }
+}

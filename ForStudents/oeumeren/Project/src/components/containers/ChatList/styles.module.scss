@@ -1,0 +1,9 @@
+@import "@styles/colors.scss";
+@import "@styles/variables.scss";
+
+.chat__list {
+  width: $chat-list-width;
+  height: calc(100vh - #{$header-height});
+  border-right: 2px solid $color-dark-blue;
+  overflow-y: auto;
+}

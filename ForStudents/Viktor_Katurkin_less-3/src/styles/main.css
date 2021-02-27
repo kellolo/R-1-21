@@ -1,0 +1,179 @@
+* {
+  -webkit-box-sizing: content-box;
+          box-sizing: content-box;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+  font-family: roboto;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 400px;
+  height: 600px;
+  border: 1px solid silver;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+}
+
+.home {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.message-page {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.message-page .container-message-page {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.message-page .message-header {
+  width: 100%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  background-color: rgba(148, 148, 228, 0.493);
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.message-page .message-header .message-header-btn {
+  width: 30px;
+  height: 30px;
+  margin-right: 30px;
+}
+
+.message-page .message-header .message-header-avatar {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: silver;
+  margin-right: 30px;
+}
+
+.message-page .message-header .message-header-name {
+  color: slateblue;
+}
+
+.message-page .message-list .messege-container {
+  width: 70%;
+  margin-bottom: 10px;
+  max-width: 50%;
+}
+
+.message-page .message-list .messege-container .message-box {
+  background-color: tan;
+  margin-bottom: 10px;
+  display: inline;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.message-page .message-list .messege-container .message-box .message {
+  border-radius: 3px;
+  padding: 3px;
+  margin: 3px;
+}
+
+.message-page .message-input {
+  width: 350px;
+  resize: none;
+  background-color: #f9f9f9;
+  font-family: roboto;
+}
+
+.modal-container {
+  color: blue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-container .modal-header {
+  background-color: rgba(148, 148, 228, 0.493);
+  padding: 10px;
+  margin-top: 20px;
+}
+
+.modal-container .modal-header .btn-menu {
+  margin-right: 50px;
+}
+
+.modal-container .contact-avatar {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: silver;
+  margin-left: 10px;
+  margin-right: 30px;
+}
+
+.modal-container .contact-details {
+  list-style-type: none;
+  background-color: #fff;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(87, 87, 90, 0.062);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=main.css.map */
