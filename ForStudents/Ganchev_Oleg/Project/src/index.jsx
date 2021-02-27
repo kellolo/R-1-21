@@ -1,18 +1,18 @@
 import React from 'react';
-import ReactDom from 'react-dom';
-
 import '@styles/main.scss';
-
-import App from '@pages/Home';
-
+import Router from '@containers/Router';
+import ReactDom from 'react-dom';
 import { StylesProvider } from '@material-ui/core/styles';
+import { BrowserRouter } from "react-router-dom";
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <StylesProvider>
-        <App />
-    </StylesProvider>,
+    <BrowserRouter>
+        <StylesProvider>
+            <Router />
+        </StylesProvider>
+    </BrowserRouter>,
     container
 );
 

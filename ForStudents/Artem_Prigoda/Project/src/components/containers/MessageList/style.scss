@@ -1,15 +1,30 @@
-.telegraph {
+.layout {
+	height: 100%;
+	width: 70%;
 	display: flex;
+	align-items: center;
+	justify-content: center;
 	flex-direction: column;
+
 	button {
 		width: 50px;
+		border-radius: 50%;
+		background-color: #71b8f7;
 	}
 }
 
 .message-list {
-	height: 600px;
-	padding: 20px 20px;
-	background-color: #b2d9fa;
-	overflow: auto;
-	margin-bottom: 10px;
+	display: flex;
+	flex-direction: column;
+	background-color: #e2e2e2;
+	height: 100%;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	overflow-y: scroll;
+	&--input {
+		width: 100%;
+		display: flex;
+		color: #e2e2e2;
+	}
 }

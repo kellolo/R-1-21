@@ -13,7 +13,7 @@ export default props => {
                     color="default"
                     startIcon={<Avatar />}
                 >
-                    Me
+                    Профиль
                 </Button>
             </Grid>
             <Grid item xs={6}>

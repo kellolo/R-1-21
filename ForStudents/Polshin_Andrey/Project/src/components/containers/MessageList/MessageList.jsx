@@ -9,61 +9,58 @@ export default class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'one', text: 'Hey!' },
-                { name: 'one', text: 'How are you?' }
-            ],
-            ansferTo: ''
-        };
-    }
-
-    sendMessage = (name, text) => {
-        this.setState({
-            messages: [...this.state.messages, {
-                name: name,
-                text: this.state.ansferTo ? `${this.state.ansferTo},${text}` : text
-            }],
-            ansferTo: ''
-        });
-    }
-
-    ansferTo = (name) => {
-        this.setState({
-            ansferTo: name
-        });
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.messages !== nextState.messages) {
-            const newMsg = nextState.messages[nextState.messages.length - 1];
-            if (newMsg.name !== 'BOT') {
-                setTimeout(() => this.sendMessage('BOT', 'Zadolbal :)'), 1000);
+            messages: {
+                0: { text: "Привет!", sender: 'BOT' },
+                1: { text: "Здравствуйте!", sender: 'BOT' },
             }
-        }
-        return true;
+        };
+
+        this.msgList = React.createRef();
     }
 
-    componentDidUpdate() {
-        console.log('componentDidUpdate');
+    handleSendMessage = (sender, message) => {
+        const { messages } = this.state;
+        const { chat, addMsgToChat } = this.props;
+        const messageId = Object.keys(messages).length + 1;
+
+        this.setState({
+            messages: {
+                ...messages,
+                [messageId]: { text: message, sender: sender }
+            }
+        });
+        addMsgToChat(chat.id, messageId);
+    };
+
+    componentDidUpdate(prevProps, prevState) {
+        const { messages } = this.state;
+        if (Object.keys(prevState.messages).length < Object.keys(messages).length &&
+            Object.values(messages)[Object.values(messages).length - 1].sender !== 'BOT') {
+            setTimeout(() =>
+                this.handleSendMessage('BOT', 'Не приставай ко мне, я робот!'), 150);
+        }
+        this.msgList.current.scrollTop = this.msgList.current.scrollHeight;
     }
 
     render() {
-        const { messages, ansferTo } = this.state;
-        const Messages = messages.map((el, i) =>
+        const { messages } = this.state;
+        const { chat } = this.props;
+
+        const Messages = chat.messageList.map((messageId, index) =>
             <Message
-                key={'msg_' + i}
-                name={el.name}
-                text={el.text}
-                ansferHandler={this.ansferTo}
+                key={index}
+                sender={messages[messageId].sender}
+                text={messages[messageId].text}
             />);
 
-        return <div>
-            <ul className='msg-list'>
+        return <div className='chat'>
+            <ul
+                className='chat__msg-list'
+                ref={this.msgList}>
                 {Messages}
             </ul>
-            <MsgInput sendMsgHandler={this.sendMessage}
-                to={ansferTo} />;
-        </div>
+            <MsgInput sendMsgHandler={this.handleSendMessage} />
+        </div >
 
     }
 };

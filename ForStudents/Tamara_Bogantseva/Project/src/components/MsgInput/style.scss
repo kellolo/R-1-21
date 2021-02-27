@@ -1,14 +1,11 @@
-input[type=text] {
-    padding: 6px;
-    border-radius: 8px;
-    border: none;
-    width: 300px;
-}
-.msg-btn {
-    padding: 5px 5px;
-    border: 0;
-    font-size: 30px;
-    color: white;
-    background: transparent;
-    outline: none;
+
+.msg {
+    &-user {
+        width: 100%;
+        display: flex;
+    }
+    &-input {
+        background-color: #fff;
+        flex: 1;
+    }
 }
