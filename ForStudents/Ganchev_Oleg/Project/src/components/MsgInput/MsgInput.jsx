@@ -4,30 +4,32 @@ import SendIcon from '@material-ui/icons/Send';
 import TextField from '@material-ui/core/TextField';
 
 export default (props) => {
-    const { sendMessage } = props;
+    const sendMessage = (inputText) => {
+        props.sendMessage(inputText);
+    };
 
-    let inputTarget = '';
-    let inputText = '';
+    const handleKeyUp = (evt) => {
+        if (evt.keyCode !== 13 || evt.target.value === '') return;
+        sendMessage(evt.target.value);
+        evt.target.value = '';
+    };
 
-    const handleChange = evt => {
-        if (evt.keyCode !== 13 && evt.type === 'keyup') {
-            inputTarget = evt.target;
-            inputText = inputTarget.value;
-            return;
-        }
-        if (inputText === '') return;
-        sendMessage(inputText);
+    const handleClick = () => {
+        let inputTarget = document.getElementById('msgInput');
+        if (inputTarget.value === '') return;
+        sendMessage(inputTarget.value);
         inputTarget.value = '';
     };
 
     return <div className="msg-input">
         <TextField
+            id = "msgInput"
             type = "text"
             variant="filled"
-            onKeyUp={ handleChange }
+            onKeyUp={ handleKeyUp }
         />
 
-        <button onClick={ handleChange }>
+        <button onClick={ handleClick }>
             <SendIcon />
         </button>
     </div>;
