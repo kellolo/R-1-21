@@ -1,0 +1,18 @@
+.modal-wrap {
+    position: relative;
+    top: 30%;
+    background-color: azure;
+    width: 300px;
+    margin: 0 auto;
+    padding: 30px;
+    outline: none;
+
+    h2 {
+        font-size: 21px;
+        font-weight: 600;
+        text-transform: uppercase;
+        text-align: center;
+        margin: 0 0 20px;
+        text-decoration: underline;
+    }
+}
