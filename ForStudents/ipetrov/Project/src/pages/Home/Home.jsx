@@ -6,15 +6,18 @@ import Header from '@components/Header';
 import MsgInput from '@components/MsgInput';
 
 import './style.scss';
+import { StylesProvider } from '@material-ui/core';
 
-export default () => {
+export default props => {
 
-    return <div className="content">
-        <Header />
-        <div className="interactive">
-        {/* <MsgInput /> */}
-         <ChatsList />
-        <MessageList />
+    return <StylesProvider>
+        <div className="content">
+            <Header name={props.name}/>
+            <div className="interactive">
+            {/* <MsgInput /> */}
+            <ChatsList />
+            <MessageList />
+            </div>
         </div>
-    </div>;
+    </StylesProvider>;
 }
