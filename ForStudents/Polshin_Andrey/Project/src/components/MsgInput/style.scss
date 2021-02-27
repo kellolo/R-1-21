@@ -1,0 +1,16 @@
+.sendmsg {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 5px;
+
+    &__input {
+        flex-grow: 1;
+    }
+
+    .MuiFormControl-root {
+        margin: 0 10px;
+    }
+
+}

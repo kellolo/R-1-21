@@ -1,0 +1,27 @@
+.chat{
+    &_field{
+        width: 30%;
+        padding: 10px;
+        background-color: $color1;
+        border-right: 1px solid $color2;
+    }
+    &_list{
+        list-style: none;
+    }
+    &_item{
+        display: flex;
+        align-items: center;
+    }
+    &_avatar{
+        width: 40px;
+        height: 40px;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+        color: $color1;
+        background-color: $color2;
+        border-radius: 50%;
+    }
+}
