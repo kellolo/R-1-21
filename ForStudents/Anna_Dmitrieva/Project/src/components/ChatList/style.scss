@@ -1,5 +1,25 @@
-.makeStyles-root-1 {
+.chat-list {
     width: 30%;
-    max-width: 360px;
-    background-color: #fff;
+    display: flex;
+    flex-flow: column;
+    margin-left: 30px;
+    background-color: #f7a985fb;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    align-items: center;
+}
+
+.list-item-icon {
+    display: flex;
+    justify-content: space-between;
+}
+
+a {
+    text-decoration: none;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: normal;
+    margin-left: 10px;
+    color: #e7e3e3;
 }
