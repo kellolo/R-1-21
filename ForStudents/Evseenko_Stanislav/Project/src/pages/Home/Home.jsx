@@ -1,18 +1,21 @@
 import React from 'react';
-import Header from '@containers/Header';
+import Header from '@components/Header';
 import ChatList from '@containers/ChatList';
 import MessageList from '@containers/MessageList';
+import { StylesProvider } from '@material-ui/core/styles';
 
 import './style.scss';
 
-export default () => {
+export default (props) => {
   return (
-    <div className="layout">
-      <Header />
-      <div className="main">
-        <ChatList />
-        <MessageList />
+    <StylesProvider>
+      <div className="layout">
+        <Header heading={ props.chatId } />
+        <div className="main">
+          <ChatList />
+          <MessageList chatId={ props.chatId } />
+        </div>
       </div>
-    </div>
+    </StylesProvider>
   );
 };
