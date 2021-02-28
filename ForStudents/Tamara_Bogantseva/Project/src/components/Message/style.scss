@@ -1,7 +1,21 @@
 .msg-new {
     max-width: 150px;
     background-color: paleturquoise;
-    padding: 10px;
+    padding: 5px 10px;
     margin: 5px;
     border-radius: 20px;
+    position: relative;
+
+    // &::after {
+    //     content: ''; 
+    //     position: absolute;
+    //     right: 170px;
+    //     top: 19px;
+    //     border: 20px solid transparent; 
+    //     border-right: 20px solid paleturquoise;
+    // }
+}
+
+.user-answer {
+    background-color: #fff;
 }

@@ -1,65 +1,92 @@
-import React, { Component } from "react";
+import React, {Component, useEffect, useRef, useState} from "react";
 
 import Message from "@components/Message/";
+import IconButton from '@material-ui/core/Button';
+import SendIcon from '@material-ui/icons/Send';
+import TextField from '@material-ui/core/TextField';
 
-import styles from "./styles.module.scss"
+import {makeStyles} from '@material-ui/core/styles';
+import styles from "./styles.module.scss";
 
-class MessageList extends Component {
-    messagesWindow = null;
+const useStyles = makeStyles((theme) => ({
+    button: {
+        width: "44px",
+        height: "44px",
+        minWidth: "44px",
+        marginLeft: "10px"
+    }
+}));
 
-    constructor(props) {
-        super(props);
+const MessageList = (props) => {
+    const {chatId} = props;
+    const [messages, setMessages] = useState({
+        "1": [{author: "Оксана", text: "Привет чату 1!"}],
+        "2": [{author: "Оксана", text: "Привет чату 2!"}],
+        "3": [{author: "Оксана", text: "Привет чату 3!"}]
+    });
+    const [text, setText] = useState('');
+    const messagesWindow = useRef();
+    const classes = useStyles();
 
-        this.messagesWindow = React.createRef()
+    useEffect(() => {
+        messagesWindow.current.scrollTop = messagesWindow.current.scrollHeight;
+    }, [messages])
 
-        this.state = {
-            messages: [{ author: "Оксана", text: "Привет!" }]
+    const handleChange = (ev) => {
+        if (ev.keyCode !== 13) {
+            setText(ev.target.value)
+        } else {
+            handleSubmit();
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.messages[this.state.messages.length - 1].author !== "Robot") {
-            setTimeout(() => {
-                this.setState({
-                    messages: [...this.state.messages, { author: "Robot", text: "Нормально." }]
-                })
-            }, 1000)
+    const handleSubmit = () => {
+        let temp = messages;
+
+        if (temp[chatId]) {
+            temp[chatId] = [...temp[chatId], {author: "Оксана", text: text}];
+        } else {
+            temp[chatId] = [{author: "Оксана", text: text}];
         }
 
-        if (prevState.messages.length < this.state.messages.length) {
-            this.messagesWindow.current.scrollTop = this.messagesWindow.current.scrollHeight
+        if (text.length > 0) {
+            setMessages(temp);
+            setText('');
         }
     }
 
-    handleClick = () => {
-        this.setState({
-            messages: [...this.state.messages, { author: "Оксана", text: "Как дела?" }]
-        })
-    }
+    return (
+        <div className={styles.wrapper}>
 
-    render() {
-        const {messages} = this.state;
+            <div className={styles.message__list}
+                 ref={messagesWindow}
+            >
+                {messages[chatId] ? messages[chatId].map((message, i) => (
+                    <Message message={message} key={i}/>
+                )) : <p style={{ margin: "0" }}>Начните диалог</p>}
+            </div>
 
-        return (
-            <div className={styles.wrapper}>
+            <div className={styles.form__wrapper}>
 
-                <div className={styles.message__list}
-                     ref={this.messagesWindow}
-                >
-                    {messages.map((message, i) => (
-                        <Message message={message} key={i} />
-                    ))}
-                </div>
+                <TextField id="text" label=""
+                           variant="outlined"
+                           className={styles.input}
+                           value={text}
+                           onChange={(ev) => handleChange(ev)}
+                           onKeyUp={(ev) => handleChange(ev)}
+                />
 
-                <button className={styles.btn__send}
-                        onClick={() => this.handleClick()}
-                >
-                    Спросить, как дела
-                </button>
+                <IconButton variant="contained"
+                            color="primary"
+                            className={classes.button}
+                            onClick={() => handleSubmit()}>
+                    <SendIcon>send</SendIcon>
+                </IconButton>
 
             </div>
-        )
-    }
+
+        </div>
+    )
 }
 
 export default MessageList;

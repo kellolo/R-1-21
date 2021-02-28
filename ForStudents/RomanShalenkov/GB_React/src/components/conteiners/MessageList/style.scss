@@ -1,0 +1,44 @@
+.messageList {
+    
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.message-lt--wrap {
+    width: 30%;
+    padding: 30px;
+    background-color: #161a1b;
+    border: 1px solid #1a2122;
+    height: calc(100vh - 133px);
+}
+.message-bg--wrap {
+    position: relative;
+    width: 70%;
+
+    .message {
+        padding: 30px;
+    }
+}
+.form-wrap {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    .btn-send {
+        border: none;
+        padding: 9px 20px;
+        font-weight: 800;
+        font-size: 17px;
+        outline: none;
+    }
+    .input-send {
+        width: calc(100% - 130px);
+        padding: 14px 20px;
+        margin: 0;
+        outline: none;
+        border: none;
+        color: #fff;
+        background-color: #161a1b;
+    }
+}

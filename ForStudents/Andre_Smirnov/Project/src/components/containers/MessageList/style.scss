@@ -1,0 +1,12 @@
+.message__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80vw;
+  box-sizing: border-box;
+}
+.message__items {
+  height: 90vh;
+  overflow-y: auto;
+  padding-bottom: 60px;
+}

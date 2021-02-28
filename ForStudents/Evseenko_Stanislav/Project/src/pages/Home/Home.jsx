@@ -1,14 +1,18 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Header from '@containers/Header';
+import ChatList from '@containers/ChatList';
 import MessageList from '@containers/MessageList';
-import MessageInput from '@components/MessageInput';
 
 import './style.scss';
 
 export default () => {
   return (
-    <div>
-      <MessageList />
+    <div className="layout">
+      <Header />
+      <div className="main">
+        <ChatList />
+        <MessageList />
+      </div>
     </div>
   );
 };
