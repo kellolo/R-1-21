@@ -1,27 +1,32 @@
+import update from 'react-addons-update';
+
 const storeMessages = {
-    messages: [
-      { name: 'one', text: 'Hey!' },
-      { name: 'one', text: 'How are you?' }
-    ]
-  };
-  
-  export default (store = storeMessages, action) => {
-    switch(action.type) {
-      case 'LOAD_MSG': {
-        // store.messages = [
-        //   { name: 'one', text: 'Hey!' },
-        //   { name: 'one', text: 'How are you?' }
-        // ];
-        return store;
-      }
-  
-      // case 'FILTER_MSG': {
-      //   reg = new RegExp(action.searchWord, 'i');
-      //   return store.messages.filter(msg => reg.test(msg.text));
-      // }
-  
-      default: {
-        return store;
-      }
+  messages: {
+    0: { text: "Привет!", sender: 'BOT' },
+    1: { text: "Здравствуйте!", sender: 'BOT' },
+  }
+};
+
+export default (store = storeMessages, action) => {
+  switch (action.type) {
+    case 'LOAD_MSG': {
+      return store;
     }
-  };
+    case 'CREATE_MESSAGE': {
+      return update(store, {
+        messages: {
+          $merge: {
+            [action.id]: {
+              sender: action.sender,
+              text: action.text
+            }
+          }
+        }
+      });
+    }
+    default: {
+      return store;
+    }
+  }
+
+};
