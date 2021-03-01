@@ -39,19 +39,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ButtonAppBar() {
+export default function ButtonAppBar(props) {
   const classes = useStyles(theme);
+  const { heading } = props;
 
   return (
     <div className="header">
       <AppBar
         position="static"
-        className = { classes.noshadow }
+        className={ classes.noshadow }
       >
         <Toolbar>
           <IconButton
             edge="start"
-            className = { classes.menuButton }
+            className={ classes.menuButton }
             color="inherit"
             aria-label="menu"
           >
@@ -59,9 +60,9 @@ export default function ButtonAppBar() {
           </IconButton>
           <Typography
             variant="h5"
-            className = { classes.title }
+            className={ classes.title }
           >
-            Messanger
+            { heading ? heading : 'Messanger' }
           </Typography>
         </Toolbar>
       </AppBar>
