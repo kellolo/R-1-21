@@ -15,6 +15,7 @@ export default class MessageList extends Component {
                 { name: 'Bot', text: 'How are you?' }
             ],
         };
+        this.newMsg = React.createRef();
     }
 
     sendMessage = (text) => {
@@ -23,13 +24,21 @@ export default class MessageList extends Component {
         });
     }
 
+    // componentDidUpdate() {
+    //     if (this.state.messages.length % 2 === 1) {  // Решение из методички, ничего пока не придумала. Надо бы через lastIndexOf как-то проверять, но пока все зацикливается
+    //         setTimeout(() =>
+    //             this.setState(
+    //                 { messages: [...this.state.messages, { name: 'Bot', text: 'Не приставай ко мне, я робот!' }] }),
+    //             1000);
+    //     }
+    // }
+
     componentDidUpdate() {
-        if (this.state.messages.length % 2 === 1) {  // Решение из методички, ничего пока не придумала. Надо бы через lastIndexOf как-то проверять, но пока все зацикливается
-            setTimeout(() =>
-                this.setState(
-                    { messages: [...this.state.messages, { name: 'Bot', text: 'Не приставай ко мне, я робот!' }] }),
-                1000);
-        }
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        this.newMsg.current.scrollIntoView(false);
     }
 
     render() {
@@ -40,10 +49,16 @@ export default class MessageList extends Component {
                 name={el.name}
                 text={el.text}
             />);
-        //MsgInput должен конечно быть в Home 
-        return <div className="messageList">
-            {Messages}
-            <MsgInput userSend={this.sendMessage} />
+        return <div className="message-list">
+            <div className="message-list__chat">
+                <div className="message-list__chat_wrapper">
+                    {Messages}
+                </div>
+                <div ref={this.newMsg}></div>
+            </div>
+            <div className="message-list__input">
+                <MsgInput userSend={this.sendMessage} />
+            </div>
         </div>;
 
     }
