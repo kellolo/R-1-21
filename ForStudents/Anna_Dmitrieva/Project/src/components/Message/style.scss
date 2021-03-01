@@ -2,18 +2,12 @@
     font-family: "Helvetica Neue", Helvetica, sans-serif;
     font-size: 20px;
     font-weight: normal;
-    // max-width: 1000px;
-    // margin: 50px auto;
     display: flex;
     flex-direction: column;
 }
 
 .msg-name {
-    max-width: 255px;
-    word-wrap: break-word;
-    // margin-bottom: 10px;
     line-height: 24px;
-    // position: relative;
     padding: 10px 10px;
     border-radius: 25px;
     margin: 0;
@@ -23,8 +17,9 @@
 .msg-text {
     margin: 0;
 }
+
 .msg-me {
-    background: #0b93f6;
+    background: #f7a269;
     align-self: flex-end;
     margin-top: 5px;
     padding-top: 5px;
@@ -32,10 +27,11 @@
     border-radius: 45px;
     padding-right: 30px;
     padding-left: 30px;
-    color: white;
+    color: #e7e3e3;
 }
+
 .msg-bot {
-    background: #d3d3d3;
+    background: #e09166;
     align-self: flex-start;
     margin-top: 5px;
     padding-top: 5px;
@@ -43,5 +39,5 @@
     border-radius: 45px;
     padding-right: 30px;
     padding-left: 30px;
-    color: #5865c3;
+    color: #e7e3e3;
 }
