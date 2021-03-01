@@ -17,10 +17,9 @@ export default props => {
                 </Button>
             </Grid>
             <Grid item xs={6}>
-                Импортозаместительный чат!        
+                Импортозаместительный чат!
             </Grid>
           </Grid>
     </div>
   );
 };
-    
