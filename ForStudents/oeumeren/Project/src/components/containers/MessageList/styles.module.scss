@@ -34,7 +34,8 @@
 }
 
 .input {
-  width: 300px;
+  flex-grow: 1;
+  max-width: 500px;
 
   input {
     padding: 10px 20px;
