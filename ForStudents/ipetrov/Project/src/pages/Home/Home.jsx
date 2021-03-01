@@ -9,10 +9,9 @@ import './style.scss';
 import { StylesProvider } from '@material-ui/core';
 
 export default props => {
-
     return <StylesProvider>
         <div className="content">
-            <Header name={props.name}/>
+            <Header id={props.id} />
             <div className="interactive">
             {/* <MsgInput /> */}
             <ChatsList />

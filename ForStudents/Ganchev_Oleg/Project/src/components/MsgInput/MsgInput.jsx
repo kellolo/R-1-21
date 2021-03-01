@@ -5,7 +5,7 @@ import TextField from '@material-ui/core/TextField';
 
 export default (props) => {
     const sendMessage = (inputText) => {
-        props.sendMessage(inputText);
+        props.sendMessage('me', inputText);
     };
 
     const handleKeyUp = (evt) => {
@@ -23,6 +23,7 @@ export default (props) => {
 
     return <div className="msg-input">
         <TextField
+            ref={ props.textInput }
             id = "msgInput"
             type = "text"
             variant="filled"

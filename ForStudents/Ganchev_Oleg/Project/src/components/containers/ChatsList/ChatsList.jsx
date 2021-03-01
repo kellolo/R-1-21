@@ -7,26 +7,23 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import SendIcon from '@material-ui/icons/Send';
 import { Link } from "react-router-dom";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { addChat } from "@actions/chats";
 
-export default class ChatsList extends Component {
+class ChatsList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            chatName: [
-                { id: '1000', name: 'Admin', avatar: null },
-                { id: '1001', name: 'User1', avatar: null },
-                { id: '1002', name: 'User2', avatar: null },
-            ],
             selectedIndex: 0,
         };
     }
 
-    addChat = (id, name, avatar) => {
-        const check = this.state.chatName.filter( (el) => el.id === id);
+    addChat = (userId, name) => {
+        const check = this.props.chats.filter( (el) => el.userId === userId);
         if (check.length === 0) {
-            this.setState({
-                chatName: [...this.state.chatName, { id, name, avatar }]
-            });
+            const title = 'Chat with ' + name;
+            this.props.addChat(title, userId);
         }
     }
 
@@ -43,9 +40,9 @@ export default class ChatsList extends Component {
     render() {
         const chatsList = (
             <List>
-                { this.state.chatName.map( (el, i) =>
-                    <Link to={`/chat/${el.id}`}
-                          key={ 'userID' + i }
+                { this.props.chats.map( (el, i) =>
+                    <Link to={`/chat/${i}`}
+                          key={ 'chatID' + i }
                           className="chats-list__link"
                     >
                         <ListItem
@@ -55,7 +52,7 @@ export default class ChatsList extends Component {
                             <ListItemIcon>
                                 <SendIcon />
                             </ListItemIcon>
-                            <ListItemText primary={ el.name } />
+                            <ListItemText primary={ el.title } />
                         </ListItem>
                     </Link>
                 ) }
@@ -67,5 +64,13 @@ export default class ChatsList extends Component {
             <ContactsList add={ this.addChat } />
         </div>;
     }
+}
 
-};
+const mapState = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+
+const mapAction = dispatch => bindActionCreators({ addChat }, dispatch);
+
+export default connect(mapState, mapAction)(ChatsList);
+

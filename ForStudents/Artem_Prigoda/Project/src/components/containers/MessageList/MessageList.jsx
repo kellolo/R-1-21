@@ -4,18 +4,24 @@ import React, { Component } from 'react';
 import './style.scss';
 
 import TextField from '@material-ui/core/TextField';
+import Fab from '@material-ui/core/Fab';
+import SendIcon from '@material-ui/icons/Send';
+
 import Message from '@components/Message';
-//stateFull
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadMessages } from '@actions/messages';
+import redux from 'redux';
 
 
-export default class MessageList extends Component {
+class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'owner', text: 'Hey!' },
-                { name: 'owner', text: 'How are you?' }
-            ],
+            // messages: [
+            //     { name: 'owner', text: 'Hey!' },
+            //     { name: 'owner', text: 'How are you?' }
+            // ],
             value: ''
         };
         this.owner = 'owner';
@@ -38,17 +44,17 @@ export default class MessageList extends Component {
         });
     };
     componentDidUpdate = () => {
-        if (this.state.messages[this.state.messages.length - 1].name !== 'bot') {
-            this.setState({
-                messages: [...this.state.messages, {
-                    name: 'bot', text: 'welcome'
-                }]
-            });
+        if (this.props.messages[this.props.messages.length - 1].name !== 'bot') {
+            // this.setState({
+            //     messages: [...this.state.messages, {
+            //         name: 'bot', text: 'welcome'
+            //     }]
+            // });
         }
     };
 
     render() {
-        const { messages } = this.state;
+        const { messages } = this.props;
         const Messages = messages.map((el, i) =>
             <Message
                 key={'msg_' + i}
@@ -62,35 +68,35 @@ export default class MessageList extends Component {
             </div>
             <div className="message-list--input">
                 {/* <TextField
-                    name="input"
-                    fullWidth={true}
-                    hintText="Введите сообщение"
-                    style={{ fontSize: '22px' }}
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                    onKeyUp={this.handleChange}
-                /> */}
+                            name="input"
+                            fullWidth={true}
+                            hintText="Введите сообщение"
+                            style={{ fontSize: '22px' }}
+                            onChange={this.handleChange}
+                            value={this.state.value}
+                            onKeyUp={this.handleChange}
+                        /> */}
                 <TextField
                     name="input"
                     id="standard-basic"
-
                     fullWidth={true}
                     style={{ fontSize: '22px' }}
                     onChange={this.handleChange}
                     value={this.state.value}
                     onKeyUp={this.handleChange}
                 />
-                <button onClick={this.sendMessage}>send</button>
+                {/* <button onClick={this.sendMessage}>send</button> */}
+                <Fab color="primary" aria-label="add" onClick={this.sendMessage} className="message-list--button" >
+                    <SendIcon />
+                </Fab>
             </div>
-            {/* <input
-                type="text"
-                value={this.state.value}
-                onChange={this.handleChange}
-                onKeyUp={this.handleChange}
-            />
-            <button onClick={this.sendMessage}>send</button> */}
-
         </div>;
 
     }
 };
+
+const mapStateToProps = ({ messagesReducer }) => ({
+    messages: messagesReducer.messages
+});
+const mapActions = dispatch => bindActionCreators({ loadMessages }, dispatch);
+export default connect(mapStateToProps, mapActions)(MessageList);

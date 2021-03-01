@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+
+import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
 import './style.scss';
 
 import ChatsDialog from '@components/ChatsDialog';
 
-function ListItemLink(props) {
-    return <ListItem button component="a" {...props} />;
-}
+
 
 export default class Chatslist extends Component {
     constructor(props) {
@@ -40,16 +40,23 @@ export default class Chatslist extends Component {
     }
     render() {
         const { activeChats } = this.state;
-        const ActiveChats = activeChats.map(item =>
-            <ListItemLink href={`/chat/${item.id}`} key={item.id}>
-                <ListItemText primary={item.name} />
-            </ListItemLink>
+        const ActiveChats = activeChats.map(chat =>
+            <Link to={`/chat/${chat.id}`} key={chat.id}>
+                <ListItemText primary={chat.name} />
+                <Divider />
+            </Link>
 
         );
         return <div className="chatslist">
 
             {/* <List component="nav" aria-label="secondary mailbox folders"> */}
-            {ActiveChats}
+
+            <List className="chatlist--items">
+                {ActiveChats}
+            </List>
+
+
+
 
             {/* </List> */}
 
