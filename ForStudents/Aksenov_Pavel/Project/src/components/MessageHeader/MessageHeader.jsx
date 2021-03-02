@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import './style.scss';
 
 
-export default (props) => {
+export default ({userId}) => {
   return <div className="chat-wrap_header">
-   Заголовок чата <span></span>
+   Чат с именем <span>{ userId }</span>
   </div>
 }

@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 
 import './style.scss';
 
-import { Button, IconButton, Icon } from '@material-ui/core';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
 import userIcon from '@media/man.png';
@@ -18,7 +17,7 @@ import MessageHeader from '@components/MessageHeader';
 const nowTime = new Date().toLocaleTimeString();
 
 export default class MessageList extends Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       dataMessages: [],
@@ -29,9 +28,11 @@ export default class MessageList extends Component {
 
   static propTypes = {
     dataMessages: PropTypes.array,
-    values: PropTypes.string
+    values: PropTypes.string,
+    chatId: PropTypes.number,
   };
 
+  
   sendMessage = () => {
     if (this.state.values !== '' ) {
       this.setState(
@@ -58,7 +59,7 @@ export default class MessageList extends Component {
   };
 
   handleChange = (event) => {
-    if (event.keyCode !==13) {
+    if (event.keyCode !== 13) {
       this.setState({
         values: event.target.value
       })
@@ -84,7 +85,7 @@ export default class MessageList extends Component {
     );
 
     return <div className="chat-wrap_display__content">
-      <MessageHeader />
+      <MessageHeader userId = { this.props.userId }/>
       <div className="chat-wrap_display__messages">
       { messagesContent }
       </div>

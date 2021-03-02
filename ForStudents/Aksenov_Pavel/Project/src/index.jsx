@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { HashRouter, BrowserRouter } from 'react-router-dom';
 
 import '@style/main.scss';
-import App from '@pages/Home';
+import Router from './routes/routes';
 
 import { StylesProvider } from '@material-ui/core/styles';
 
-ReactDOM.render(
-   <StylesProvider>
-      <App />
-   </StylesProvider>,
-   document.getElementById('root')
-);
+const app = (
+   <BrowserRouter>
+      <StylesProvider>
+         <Router />
+      </StylesProvider>
+   </BrowserRouter>
+)
+
+ReactDOM.render(app, document.getElementById('root'));

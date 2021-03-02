@@ -83,7 +83,10 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    historyApiFallback: true,
+    // historyApiFallback: true,
+    historyApiFallback: {
+      index: 'index.html'
+    },
     contentBase: path.join(__dirname, 'dist'),
     open: true,
     compress: true,
