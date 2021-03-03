@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 // import ReactDom from 'react-dom';
 
 import './style.scss';
@@ -16,36 +17,34 @@ export default class ChatsList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            activeChats: [
+                { name: 'Darth Vader', text: 'I am your father', id: '1', img: `${avatarsPath}darth_vader.jpeg` },
+                { name: 'Chewbacca', text: 'Arrrrw', id: '2', img: `${avatarsPath}chewbacca.jpg` },
+                { name: 'Luke Skywalker', text: 'I am Here To Rescue You.', id: '3', img: `${avatarsPath}luke.jpg` }
+            ]
         };
     }
 
+    addChat = (name, text = '') => {
+        this.setState({ activeChats: [...this.state.activeChats, { name, text, id: Date.now() }] });
+    }
+
     render() {
+        const { activeChats } = this.state;
+        const Chats = activeChats.map((el, i) => <ListItem key={i}>
+            <ListItemAvatar>
+                <Avatar alt={el.name} src={el.img}>
+                </Avatar>
+            </ListItemAvatar>
+            <Link to={`/chat/${el.id}`} className="chats-link">
+                <ListItemText primary={el.name} secondary={el.text} />
+            </Link>
+        </ListItem>)
         return <div className="chatsList">
             <List>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar alt="Darth Vader" src={`${avatarsPath}darth_vader.jpeg`}>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Darth Vader" secondary="I am your father" />
-                </ListItem>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar alt="Chewbacca" src={`${avatarsPath}chewbacca.jpg`}>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Chewbacca" secondary="Arrrrw" />
-                </ListItem>
-                <ListItem>
-                    <ListItemAvatar>
-                        <Avatar alt="Luke" src={`${avatarsPath}luke.jpg`}>
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary="Luke Skywalker" secondary="I'm Here To Rescue You." />
-                </ListItem>
+                {Chats}
             </List>
-            <ContactsList />
+            <ContactsList add={this.addChat} />
         </div >;
     }
 }

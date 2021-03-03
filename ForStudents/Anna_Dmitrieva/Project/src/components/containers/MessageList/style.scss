@@ -1,3 +1,8 @@
 .msg-list {
-    background-color: rgb(209, 178, 208);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    height: 70vh;
+    overflow-y: scroll;
+    margin-bottom: 10px;
 }
