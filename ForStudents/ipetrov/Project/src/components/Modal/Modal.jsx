@@ -57,6 +57,7 @@ function SimpleDialog(props) {
 
   const handleListItemClick = (value) => {
     props.addContact(value);
+    props.removeContact(value);
     onClose(value);
   };
 
@@ -88,7 +89,6 @@ SimpleDialog.propTypes = {
 export default function SimpleDialogDemo(props) {
   const [open, setOpen] = React.useState(false);
   const { inactiveChats } = props;
-  console.log(React.useState(inactiveChats[0].name));
   const [selectedValue, setSelectedValue] = React.useState(inactiveChats[0].name);
 
   const handleClickOpen = () => {
@@ -105,7 +105,7 @@ export default function SimpleDialogDemo(props) {
       <Button variant="outlined" color="primary" onClick={handleClickOpen} className="addContacts">
         Add Contacts
       </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats}/>
+      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats} removeContact={props.removeContact}/>
     </div>
   );
 }

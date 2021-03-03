@@ -4,15 +4,15 @@ import './style.scss';
 import Message from '@components/Message';
 //stateFull
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class MessageList extends Component {
+import { loadMessages } from '@actions/messages';
+
+class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'one', text: 'Hey!' }, 
-                { name: 'one', text: 'How are you?' }
-            ],
             yourMessage: ''
         };
         this.chatContainer = React.createRef();
@@ -25,8 +25,6 @@ export default class MessageList extends Component {
             this.sendMessage();
         }
     }
-
-
 
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
@@ -46,13 +44,6 @@ export default class MessageList extends Component {
         }        
     }
 
-
-
-
-/*
-    componentDidMount() {
-    }
-*/
 /*    
     componentDidUpdate() {
         var regexp = /[а-яё]/i;
@@ -81,7 +72,7 @@ export default class MessageList extends Component {
     };
 
     render() {
-        const { messages } = this.state;
+        const { messages } = this.props;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
@@ -106,18 +97,8 @@ export default class MessageList extends Component {
     }
 };
 
+const mapState = ({ messagesReducer }) => ({ 
+    messages: messagesReducer.messages
+})
 
-//stateLess
-// const arr = [{ name: 'one', text: 'Hey!' }, { name: 'one', text: 'How are you?' }];
-
-// export default () => {
-//     const Messages = arr.map((el, i) => <Message 
-//                                             key={ 'msg_' + i } 
-//                                             name={ el.name } 
-//                                             text={ el.text }
-//                                         />);
-
-//     return <div>
-//         { Messages }
-//     </div>;
-// };
+export default connect(mapState, null)(MessageList);

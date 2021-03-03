@@ -1,19 +1,4 @@
-.msg-list {
-    display: flex;
-    flex-direction: column;
-    background-color: #dcdcdc;
-    padding: 20px;
-    overflow-y: scroll;
-}
-
-.layout {
-    max-height: 500px;
-    width: 70%;
-    display: flex;
-    flex-direction: column;
-}
-
-.main_list {
-    display: flex;
-    flex-wrap: wrap;
+* {
+    margin: 0;
+    padding: 0;
 }

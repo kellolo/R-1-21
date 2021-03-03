@@ -7,9 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 
-export default function SimpleModal(prors) {
-    const { userName, addChat } = prors;
-
+export default function SimpleModal(props) {
     const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
@@ -20,18 +18,18 @@ export default function SimpleModal(prors) {
         setOpen(false);
     };
 
-    const handleListItemClick = (el) => {
-        addChat(el.id, el.name, el.avatar);
+    const handleListItemClick = (el, i) => {
+        props.addChat(i, el.name);
         handleClose();
     }
 
-    const userNameList = (
+    const usersList = (
         <List>
-            { userName.map( (el,i) =>
+            { props.users.map( (el, i) =>
             <ListItem
                 button
-                key={ el.id }
-                onClick={ () => handleListItemClick(el) }
+                key={ i }
+                onClick={ () => handleListItemClick(el, i) }
             >
                 <ListItemAvatar>
                     <Avatar alt={ el.name} src={ el.avatar } />
@@ -54,7 +52,7 @@ export default function SimpleModal(prors) {
                 <div className="modal">
                     <h2>Contact List</h2>
                     <div>
-                        { userNameList }
+                        { usersList }
                     </div>
                 </div>
             </Modal>

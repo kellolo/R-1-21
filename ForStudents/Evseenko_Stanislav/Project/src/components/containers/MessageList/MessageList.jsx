@@ -11,6 +11,14 @@ export default class MessageList extends Component {
     super(props);
 
     this.state = {
+      chats: {
+        1: { title: 'Чат 1', messageList: [] },
+        2: { title: 'Чат 2', messageList: [] },
+        3: { title: 'Чат 3', messageList: [] },
+        4: { title: 'Чат 4', messageList: [] },
+        5: { title: 'Чат 5', messageList: [] },
+        6: { title: 'Чат 6', messageList: [] },
+      },
       messages: [],
       text: ''
     };
@@ -32,46 +40,64 @@ export default class MessageList extends Component {
   };
 
   sendMessage = () => {
-    if(this.state.text) {
+    const { messages, chats, text } = this.state;
+    const { chatId } = this.props;
+
+    if(text) {
+      const messageId = messages.length + 1;
+
       this.setState({
         text: '',
-        messages: [...this.state.messages, {
-          name: 'Крыска Лариска',
-          text: `${ this.state.text }`,
-          time: `${ this.currentTime() }`
-        }]
+        messages: [...messages,
+          {
+            id: messageId,
+            name: 'Я',
+            text: text,
+            time: `${ this.currentTime() }`
+          }
+        ],
+        chats: {...chats,
+          [chatId]: {...chats[chatId],
+            messageList: [...chats[chatId]['messageList'], messageId]
+          }
+        }
       });
     };
   };
 
   render() {
-    const { messages } = this.state;
-    const Messages = messages.map((el, i) =>
-      <Message
-        key = { i }
-        name = { el.name }
-        text = { el.text }
-        time = { el.time }
-      />
-    );
+    const { messages, chats, text } = this.state;
+    const { chatId } = this.props;
+    let messagesList = null;
 
+    if (chatId) {
+      messagesList = chats[chatId].messageList.map((el, i) =>
+        <Message
+          key={ i }
+          name={ messages[el - 1].name }
+          text={ messages[el - 1].text }
+          time={ messages[el - 1].time }
+        />
+      );
+    };
+    
     return (
       <div className="message-list">
         <div className="message-area">
-          { Messages }
+          { messagesList != null ? messagesList : <div></div> }
         </div>
         <div className="message-input">
           <input
             className="message-input__input"
             type="text"
             placeholder="Введите сообщение..."
-            value = { this.state.text }
-            onChange = { this.handleChange }
-            onKeyUp = { this.handleChange }
+            value={ text }
+            onChange={ this.handleChange }
+            onKeyUp={ this.handleChange }
           />
           <IconButton
             className="message-input__button"
-            onClick = { this.sendMessage }
+            onClick={ this.sendMessage }
           >
             <SendIcon
               htmlColor="#ffffff"

@@ -4,8 +4,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addMsgToChat } from '@actions/chats';
+import { craeteMsg } from '@actions/messages';
+
 import './style.scss';
-export default class MsgInput extends Component {
+export class MsgInput extends Component {
 
     constructor(props) {
         super(props);
@@ -41,7 +46,12 @@ export default class MsgInput extends Component {
         if (!msgText) {
             return;
         }
-        this.props.sendMsgHandler('User', msgText);
+        const { chatID, messages, craeteMsg, addMsgToChat } = this.props;
+
+        const msgID = (Object.keys(messages).length + 1).toString();
+        craeteMsg(msgID, 'User', msgText);
+        addMsgToChat(chatID, msgID);
+
         this.setState({
             msgText: ''
         })
@@ -70,3 +80,10 @@ export default class MsgInput extends Component {
     }
 
 }
+
+const mapStateToProps = ({ chatsReducer, messagesReducer }) => ({
+    chats: chatsReducer.chats,
+    messages: messagesReducer.messages
+});
+const mapDispatchToProps = dispatch => bindActionCreators({ craeteMsg, addMsgToChat }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(MsgInput);
