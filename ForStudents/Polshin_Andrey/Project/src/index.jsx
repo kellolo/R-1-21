@@ -3,14 +3,18 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import Router from './router/';
+import Router from '@core/Router/';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import ourStore from '@core/Store';
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <BrowserRouter>
-        <Router />
-    </BrowserRouter>,
+    <Provider store={ ourStore() }>
+        <BrowserRouter>
+                <Router />
+        </BrowserRouter>
+    </Provider>,
     container
 );

@@ -1,0 +1,17 @@
+.home-page {
+    height: 100vh;
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.home-page-messenger {
+    display: flex;
+    flex-wrap: wrap;
+    min-height: 100%;
+}
+
+.home-page-chat-name {
+    margin: 0 10px 0 10px;
+    background-color: rgb(147, 155, 161);
+}

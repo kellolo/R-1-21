@@ -1,10 +1,15 @@
 import React from 'react';
 import './style.scss';
+import { connect } from "react-redux";
 
-export default props => {
-    const { chatId } = props;
-
+function Header(props) {
     return <div className="header">
-        <h1>MyMessenger (chat Id: { chatId || 0 })</h1>
+        <h1>MyMessenger - { props.chats[props.chatId].title }</h1>
     </div>;
-};
+}
+
+const mapState = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+
+export default connect(mapState, null)(Header);

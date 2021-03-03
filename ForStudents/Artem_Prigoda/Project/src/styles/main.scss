@@ -7,6 +7,7 @@ body {
     padding: 0;
     background: $main-color;
     height: 100%;
+    font-family: sans-serif;
 }
 
 #app {
@@ -16,5 +17,4 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
 }
