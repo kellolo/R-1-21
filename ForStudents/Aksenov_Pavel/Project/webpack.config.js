@@ -9,7 +9,7 @@ module.exports = {
   entry: './index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    publicPath: '',
+    publicPath: '/',
     filename: 'js/main.js'
   },
   plugins: [
@@ -29,7 +29,8 @@ module.exports = {
       '@components': path.resolve(__dirname, 'src', 'components'),
       '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
       '@pages': path.resolve(__dirname, 'src', 'pages'),
-      '@media': path.resolve(__dirname, 'src', 'media')
+      '@media': path.resolve(__dirname, 'src', 'media'),
+      '@store': path.resolve(__dirname, 'src', 'store')
     }
   },
   module: {
@@ -83,10 +84,7 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    // historyApiFallback: true,
-    historyApiFallback: {
-      index: 'index.html'
-    },
+    historyApiFallback: true,
     contentBase: path.join(__dirname, 'dist'),
     open: true,
     compress: true,

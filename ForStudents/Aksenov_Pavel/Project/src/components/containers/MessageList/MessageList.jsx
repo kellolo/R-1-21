@@ -1,114 +1,102 @@
-import React, { Component, createRef } from 'react';
+import React, { Component, createRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './style.scss';
 
 import { IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-import userIcon from '@media/man.png';
-import roboIcon from '@media/robo.png';
-
 import Message from '@components/Message';
 //import MessageInput from '@components/MessageInput';
 import MessageHeader from '@components/MessageHeader';
 
-const nowTime = new Date().toLocaleTimeString();
+import { addMessage } from '@store/chats/actions';
 
-export default class MessageList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataMessages: [],
-      values: ''
-    };
-    this.textInput = createRef();
-  }
+export default ({ userId }) => {
+  const dispatch = useDispatch();
 
-  static propTypes = {
-    dataMessages: PropTypes.array,
-    values: PropTypes.string,
-    chatId: PropTypes.number,
-  };
+  const [value, setValue] = useState('');
 
+  const dataMessages = useSelector(state => state.chatContainer.messages);
+  const currentUser = useSelector(state => state.chatContainer.active_user);
+  const active_chat = dataMessages.filter(f => f.id == userId);
+  const chats = useSelector(state => state.chatContainer.chats);
+  const get_user = chats.filter(f => f.id == userId);
   
-  sendMessage = () => {
-    if (this.state.values !== '' ) {
-      this.setState(
-        {
-          dataMessages: [
-            ...this.state.dataMessages, 
-            { name: "User", text: this.state.values, datetime: nowTime, icon: userIcon }
-          ],
-          values: ''
-        }
-      );
-      this.textInput.current.focus();
-      setTimeout(() =>
-        this.setState(
-          { 
-            dataMessages: [ 
-              ...this.state.dataMessages, 
-              { name: "Robot", text: "Не приставай ко мне, я робот!", datetime: nowTime, icon: roboIcon }
-            ]
-          }
-        ), 1000
-      );
-    }
+  const nowTime = new Date().toLocaleTimeString();
+  //  const textInput = createRef();
+
+  let current_user = '';
+  if (get_user.length > 0) {
+    current_user = get_user[0].name;
   };
 
-  handleChange = (event) => {
+  let messagesContent;
+  if (active_chat.length > 0) {
+    messagesContent = active_chat.map((item, index) => {
+      return <Message key={ index } name={ item.user } text={ item.text } datetime={ item.datetime } />
+    });
+  };
+ 
+  const sendMessage = () => {
+    if (value !== '' ) {
+      const dataOutput = {
+        id: userId,
+        user: "User",
+        text: value,
+        datetime: nowTime
+      };
+      dispatch(addMessage(dataOutput));
+      setValue('');
+
+      setTimeout(() => {
+        const dataOutput = {
+          id: userId,
+          user: current_user,
+          text: "Не приставай ко мне, я робот!",
+          datetime: nowTime
+        };
+        
+        dispatch(addMessage(dataOutput));
+        }, 1000
+      );
+    };
+  };
+
+  const handleChange = (event) => {
     if (event.keyCode !== 13) {
-      this.setState({
-        values: event.target.value
-      })
+      setValue(event.target.value);
     }
     else {
-      this.sendMessage();
+      sendMessage();
     }
-  };
+  };  
 
-  //componentDidUpdate() {}
-  componentDidMount() {
-    this.textInput.current.focus();
-  }
-
-  render() {
-    const { dataMessages, values } = this.state;
-    const messagesContent = dataMessages.map((item, index) => {
-      if (item.name !=='User') {
-        return <Message key={ index } name={ item.name } text={ item.text } datetime={ item.datetime } color="#FFF" icon={ item.icon }/>
-      }
-      return <Message key={ index } name={ item.name } text={ item.text } datetime={ item.datetime } icon={ item.icon} />
-    }
-    );
-
-    return <div className="chat-wrap_display__content">
-      <MessageHeader userId = { this.props.userId }/>
+  return (
+    currentUser == 0 ? <div></div> :
+    <div className="chat-wrap_display__content">
+      <MessageHeader username={ current_user }/>
       <div className="chat-wrap_display__messages">
-      { messagesContent }
+        { messagesContent }
       </div>
       <div className="chat-wrap_input">
         <div className="chat-wrap_input__content">
           <input 
-            ref={ this.textInput } 
+            // ref={ textInput } 
             type="text" 
-            value={ values } 
-            onChange={ this.handleChange } 
-            onKeyUp={ this.handleChange }
+            value={ value } 
+            onChange={ handleChange } 
+            onKeyUp={ handleChange }
             placeholder="Введите сообщение"
           />
-          <IconButton color="primary" aria-label="send" className="chat-wrap_input__button" onClick={ this.sendMessage }>
-            <SendIcon />
-          </IconButton>
+            <IconButton color="primary" aria-label="send" className="chat-wrap_input__button" onClick={ sendMessage }>
+              <SendIcon />
+            </IconButton>
         </div>
       </div>
       {/* <MessageInput className="chat-wrap_input"/> */}
     </div>
-  }
-}
-
-/*MessageList.PropTypes = {
-  dataMessages: PropTypes.array
-}*/
+  )
+};

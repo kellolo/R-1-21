@@ -3,12 +3,10 @@ import ReactDOM from 'react-dom';
 
 import './style.scss';
 
-// import MessageList from '@containers/MessageList';
-import ChatList from '@containers/ChatList';
+import Layout from '@containers/Layout';
 
-export default () => {
-  return <section className="chat-wrap">
-    <ChatList />
-    {/* <MessageList /> */}
-  </section>
-}
+export default (props) => {
+  const { params: { chatid } } = props.match;
+
+  return <section><Layout userId={ chatid }/></section>
+};

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -12,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import './style.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   fontPrimary: {
     fontSize: "13px",
     fontWeight: 600,
@@ -26,37 +27,40 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default (props) => {
+export default () => {
+  const dispatch = useDispatch();
+  const chats = useSelector(state => state.chatContainer.chats);
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = useState();
+
   
   const handleListItemClick = (event, index) => {
-    // console.log(event);
     setSelectedIndex(index);
   };
 
-  const ListConcats = ({chats}) => {
+  const ListConcats = ({ chats }) => {
     return chats.map(val => {
       return (
-        <Link key = { val.id } to={`/chat/${val.id}/`}>
+        <Link key={ val.id } to={`/chat/${val.id}/`}>
           <ListItem
-            key = { val.id }
-            alignItems = "flex-start"
+            key={ val.id }
+            alignItems="flex-start"
             button
-            selected = { selectedIndex === `${val.id}` }
-            onClick = { event => handleListItemClick(event, `${val.id}`) }
+            selected={ selectedIndex === `${val.id}` }
+            onClick={ event => handleListItemClick(event, `${ val.id }`) }
+            className="chat-list"
           >
             <ListItemAvatar>
-              <Avatar alt = { val.name } src={ val.icon } />
+              <Avatar alt={ val.name } src={ val.icon } />
             </ListItemAvatar>
-            <ListItemText className = { classes.fontPrimary }
+            <ListItemText className={ classes.fontPrimary }
               primary={
-                <Typography className = { classes.fontPrimary }>
-                  {val.name}
+                <Typography className={ classes.fontPrimary }>
+                  { val.name }
                 </Typography>
               }
               secondary={
-                <Typography className = { classes.fontSecondary }>
+                <Typography className={ classes.fontSecondary }>
                   { val.lastMessageShort }
                 </Typography>
               }
@@ -67,11 +71,13 @@ export default (props) => {
     })
   };
 
-  return <div className="chat-wrap_display__contacts-list">
-    <div className={ classes.root }>
-      <List component="nav" aria-label="main mailbox folders" style={{ paddingTop: 0 }}>
-        <ListConcats chats={ props.chats }/>
-      </List>
+  return (
+    <div className="chat-wrap_display__contacts-list">
+      <div className={ classes.root }>
+        <List component="nav" aria-label="main mailbox folders" style={{ paddingTop: 0 }}>
+          <ListConcats chats={ chats }/>
+        </List>
+      </div>
     </div>
-  </div>
+  )
 };

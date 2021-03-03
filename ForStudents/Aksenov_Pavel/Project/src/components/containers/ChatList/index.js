@@ -1,3 +1,3 @@
-import page from './ChatList.jsx'
+import page from './ChatList.jsx';
 
 export default page;
