@@ -6,7 +6,7 @@
 
         const Header = props => {
             return  <div className="header">
-                       Вас обслуживает <Link to = { `/profile/${props.id}` } className="headerlink">{ props.activeChats[props.id].name }</Link>
+                       Вас обслуживает <Link to = { `/profile/${ props.id }` } className="headerlink">{ props.activeChats[props.id].name }</Link>
             </div>;
         };
 

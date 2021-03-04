@@ -11,11 +11,11 @@ import { StylesProvider } from '@material-ui/core';
 export default props => {
     return <StylesProvider>
         <div className="content">
-            <Header id={props.id} />
+            <Header id={ props.id } />
             <div className="interactive">
             {/* <MsgInput /> */}
             <ChatsList />
-            <MessageList />
+            { props.id && <MessageList /> }
             </div>
         </div>
     </StylesProvider>;

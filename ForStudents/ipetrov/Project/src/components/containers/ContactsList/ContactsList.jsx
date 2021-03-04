@@ -66,10 +66,7 @@ class ContactsList extends Component {
                     inactiveChats={ this.props.inactiveChats }
             />
         </div>;
-}
-
-
-
+    }
 };
 
 

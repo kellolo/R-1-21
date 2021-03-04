@@ -7,7 +7,7 @@ import Message from '@components/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages';
+import { loadMessages, sendMessage } from '@actions/messages';
 
 class MessageList extends Component {
     constructor (props) {
@@ -29,15 +29,10 @@ class MessageList extends Component {
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
+            this.props.send('You', this.state.yourMessage);
             this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'You', text: this.state.yourMessage },
-                    // имитация раздумий
-    //                { name: 'Bot-Sociopath', text: '#$#$#$#$#$#' }
-                ],
                 yourMessage: ''
             },
-                
                 () => this.scrollToMyRef()
                 
             );
@@ -101,4 +96,6 @@ const mapState = ({ messagesReducer }) => ({
     messages: messagesReducer.messages
 })
 
-export default connect(mapState, null)(MessageList);
+const mapActions = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
+
+export default connect(mapState, mapActions)(MessageList);
