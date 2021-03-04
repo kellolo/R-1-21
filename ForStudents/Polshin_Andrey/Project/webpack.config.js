@@ -65,11 +65,12 @@ module.exports = {
             '@components': path.resolve(__dirname, 'src', 'components'),
             '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
             '@pages': path.resolve(__dirname, 'src', 'pages'),
-            '@core': path.resolve(__dirname,'src','Core'),
+            '@core': path.resolve(__dirname, 'src', 'Core'),
             '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'Actions'),
             '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
             '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
-            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries')
+            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+            '@midlewares': path.resolve(__dirname, 'src', 'Core', 'Midleware'),
         }
     },
     plugins: [
