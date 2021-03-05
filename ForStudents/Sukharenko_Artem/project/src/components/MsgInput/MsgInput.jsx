@@ -18,7 +18,7 @@ export default class MsgInput extends Component {
         } 
         const userMsgInput = document.querySelector('#user-msg');
         const msg = userMsgInput.value.trim();
-        if (msg === '') return;
+        if (!msg) return;
         this.props.sendMessage(msg);
         userMsgInput.value = '';
     }

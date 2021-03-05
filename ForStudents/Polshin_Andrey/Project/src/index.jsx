@@ -4,17 +4,17 @@ import ReactDom from 'react-dom';
 import '@styles/main.scss';
 
 import Router from '@core/Router/';
-import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import ourStore from '@core/Store';
+import { ConnectedRouter } from 'connected-react-router';
+import { initStore, history } from './Core/Store';
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <Provider store={ ourStore() }>
-        <BrowserRouter>
-                <Router />
-        </BrowserRouter>
+    <Provider store={initStore()}>
+        <ConnectedRouter history={history}>
+            <Router />
+        </ConnectedRouter>
     </Provider>,
     container
 );

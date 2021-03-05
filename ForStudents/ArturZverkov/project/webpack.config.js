@@ -6,11 +6,9 @@ const path = require('path');
 module.exports = {
     entry: {
         main: path.resolve(__dirname, 'src', 'index.jsx')
-        // main: path.resolve(__dirname, 'src')
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        // publicPath: '',  
         filename: path.join('js', 'bundle.js')
     },
     target: 'web',
@@ -22,7 +20,7 @@ module.exports = {
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: ["style-loader", "css-loader", "sass-loader",]
+                use: ["style-loader", "css-loader", "sass-loader"]
             },
             {
                 test: /\.jsx?$/i,
@@ -35,7 +33,6 @@ module.exports = {
                             { "loose": true }
                         ]
                     ]
-                    // preset: ["@babel/preset-env", "@babel/preset-react"]
                 }
             }
         ]
@@ -48,7 +45,8 @@ module.exports = {
             '@pages': path.resolve(__dirname, 'src', 'pages'),
             '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
             '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
-            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries')
+            '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+            '@actions': path.resolve(__dirname, 'src', 'core', 'store', 'actions')
         }
     },
     plugins: [

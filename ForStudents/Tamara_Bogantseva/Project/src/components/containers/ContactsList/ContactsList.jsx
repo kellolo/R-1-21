@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -43,19 +42,19 @@ function SimpleDialog(props) {
     };
 
     return (
-        <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open} >
+        <Dialog onClose={ handleClose } aria-labelledby="simple-dialog-title" open={ open } >
             <DialogTitle id="simple-dialog-title">Write to...</DialogTitle>
             <List>
-                {emails.map((email) => (
-                    <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+                { emails.map((email) => (
+                    <ListItem button onClick={ () => handleListItemClick(email) } key={ email }>
                         <ListItemAvatar>
-                            <Avatar className={classes.avatar}>
+                            <Avatar className={ classes.avatar }>
                                 <PersonIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={email} />
+                        <ListItemText primary={ email } />
                     </ListItem>
-                ))}
+                )) }
             </List>
         </Dialog>
     );
@@ -83,10 +82,10 @@ export default function SimpleDialogDemo(props) {
 
     return (
         <div>
-            <IconButton aria-label="add" color="primary" onClick={handleClickOpen}>
+            <IconButton aria-label="add" color="primary" onClick={ handleClickOpen }>
                 <AddCircleOutlineRoundedIcon />
             </IconButton>
-            <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addChat={props.add} />
+            <SimpleDialog selectedValue={ selectedValue } open={ open } onClose={ handleClose } addChat={ props.add } />
         </div>
     );
-}
+};

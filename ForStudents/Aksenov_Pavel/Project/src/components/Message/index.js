@@ -1,3 +1,3 @@
-import page from './Message.jsx'
+import page from './Message.jsx';
 
 export default page;
