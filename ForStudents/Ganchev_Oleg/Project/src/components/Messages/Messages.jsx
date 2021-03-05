@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 export default props => {
     const messages = props.messages;
-    const chatId = props.chatId || 0;
+    const chatId = props.chatId;
 
     return (
     <List className='message__wrap'>

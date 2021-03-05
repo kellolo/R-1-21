@@ -1,3 +1,4 @@
+import update from 'react-addons-update';
 
 const storeMessages = {
     messages: [
@@ -9,13 +10,8 @@ const storeMessages = {
 export default (store = storeMessages, action) => {
     switch(action.type) {
         case 'SEND_MSG': {
-            return ({
-                messages: [...store.messages, {
-                    name: action.name,
-                    text: action.text,
-                    style: action.style,
-                    chatId: action.chatId,
-                }],
+            return update(store,{
+                messages: { $push: [action.paramMsg] }
             });
         }
         default: {

@@ -32,21 +32,24 @@ class MessageList extends Component {
     }
 
     render() {
-        return <div className="message-list">
-            <div className="message-list__msg">
-                <Messages
-                    lastMessage={ el => this.lastMsg = el }
-                    messages={ this.props.messages }
-                    chatId={ this.props.chatId }
-                />
+        return (
+            <div className="message-list">
+                <div className="message-list__msg">
+                    <Messages
+                        lastMessage={ el => this.lastMsg = el }
+                        messages={ this.props.messages }
+                        chatId={ this.props.chatId }
+                    />
+                </div>
+                <div className="message-list__input">
+                    <MsgInput
+                        textInput={ el => this.textInput = el }
+                        sendMessage={ this.sendMessage }
+                    />
+                </div>
             </div>
-            <div className="message-list__input">
-                <MsgInput
-                    textInput={ el => this.textInput = el }
-                    sendMessage={ this.sendMessage }
-                />
-            </div>
-        </div>;
+        );
+
     }
 
     componentDidUpdate() {
