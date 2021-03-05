@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Grid from '@material-ui/core/Grid';
 import List from '@material-ui/core/List';
 import './style.scss';
+import { loadMessages } from '@actions/messages';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
 
 
-export default class MessageList extends Component {
+class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'Me', text: 'Hey!', avatar: null, styleName: 'msg__user'}, 
-                { name: 'two', text: 'How are you?', avatar: null, styleName: 'msg__companion' }
-            ],
         };
     }
 
@@ -26,7 +25,7 @@ export default class MessageList extends Component {
     }
 
     render() {
-        const { messages } = this.state;
+        const { messages } = this.props;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i }
@@ -48,3 +47,11 @@ export default class MessageList extends Component {
             </Grid>);
     }
 };
+
+const mapState = ({ messagesReducer }) => ({
+    messages: messagesReducer.messages
+});
+
+const mapActions = dispatch => bindActionCreators({ load: loadMessages }, dispatch);
+
+export default connect(mapState, mapActions)(MessageList);
