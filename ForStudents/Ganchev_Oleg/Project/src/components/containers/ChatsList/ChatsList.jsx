@@ -6,7 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import SendIcon from '@material-ui/icons/Send';
-import { Link } from "react-router-dom";
+import { push } from 'connected-react-router';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { addChat } from "@actions/chats";
@@ -15,7 +15,7 @@ class ChatsList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            selectedIndex: 0,
+            selectedIndex: '',
         };
     }
 
@@ -37,24 +37,25 @@ class ChatsList extends Component {
         });
     }
 
+    handleNavigate(chatId) {
+        this.setSelectedIndex(chatId);
+        this.props.push(`/chat/${chatId}`);
+    }
+
     render() {
         const chatsList = (
             <List>
                 { this.props.chats.map( (el, i) =>
-                    <Link to={`/chat/${i}`}
-                          key={ 'chatID' + i }
-                          className="chats-list__link"
-                    >
                         <ListItem
                             button
+                            key={ 'chatID' + i }
                             selected={ this.getSelectedIndex(i) }
-                            onClick={ () => this.setSelectedIndex(i) } >
+                            onClick={ () => this.handleNavigate(i) } >
                             <ListItemIcon>
                                 <SendIcon />
                             </ListItemIcon>
                             <ListItemText primary={ el.title } />
                         </ListItem>
-                    </Link>
                 ) }
             </List>
         );
@@ -70,7 +71,7 @@ const mapState = ({ chatsReducer }) => ({
     chats: chatsReducer.chats
 });
 
-const mapAction = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapAction = dispatch => bindActionCreators({ addChat, push }, dispatch);
 
 export default connect(mapState, mapAction)(ChatsList);
 
