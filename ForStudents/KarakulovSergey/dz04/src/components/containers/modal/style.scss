@@ -1,0 +1,23 @@
+.modal {
+    width:300px;
+    max-height: 400px;
+    overflow: hidden;
+    margin:auto;
+    background-color:white;
+    border:none;
+    border-radius:10px;
+}
+#btn {
+    padding: 5px;
+    box-sizing:border-box;
+    margin:15px;
+    right:15px;
+    float:right;
+}
+#btn:hover {
+    cursor:pointer;
+}
+#simple-modal-title {
+    padding: 15px;
+    box-sizing:border-box;
+}
