@@ -20,11 +20,13 @@ export class MessageList extends Component {
     render() {
         const { chatID, chats, messages } = this.props;
         const Messages = chats[chatID].messageList.map((messageId, index) =>
-            <Message
+            < Message
                 key={index}
                 sender={messages[messageId].sender}
                 text={messages[messageId].text}
-            />);
+                date={messages[messageId].date}
+            />
+        );
 
         return <div className='chat'>
             <ul
