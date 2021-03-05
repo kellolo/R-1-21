@@ -6,18 +6,18 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import AddIcon from '@material-ui/icons/Add';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Modal from "@components/Modal";
-import { Link } from "react-router-dom";
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { push } from "connected-react-router";
+import { addChat } from "@actions/chatActions.js";
 
 import styles from "./styles.module.scss";
 
 const ChatList = (props) => {
-    const {chatId} = props;
-    const [list, setList] = useState([
-        { id: "1", name: "Чат 1" },
-        { id: "2", name: "Чат 2" },
-        { id: "3", name: "Чат 3" }
-    ]);
+    const {chatId, chats, highlighted, addChat, push} = props;
     const [contacts, setContacts] = useState(['Контакт 1', 'Контакт 2', 'Контакт 3']);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -25,15 +25,19 @@ const ChatList = (props) => {
         <div className={styles.chat__list}>
 
             <List component="nav">
-                {list.map((item, i) => (
-                    <Link to={`/chat/${item.id}`} key={i}>
-                        <ListItem button
-                                  selected={chatId === item.id}>
+                {chats.map((item, i) => {
+                    const isHighlighted = highlighted.indexOf(item.id) > -1;
 
-                            <ListItemText primary={`${item.name}`}/>
+                    return (
+                        <ListItem button
+                                  onClick={() => push(`/chat/${item.id}`)}
+                                  key={i}
+                                  selected={chatId === item.id}>
+                            <ListItemText primary={`${item.title}`}/>
+                            { isHighlighted && <MailOutlineIcon className={styles.highlighted}/> }
                         </ListItem>
-                    </Link>
-                ))}
+                    )
+                })}
 
                 {contacts.length > 0 && (
                     <ListItem button
@@ -59,12 +63,19 @@ const ChatList = (props) => {
                    contacts={contacts}
                    onSelect={(value) => {
                        setIsOpen(false);
-                       setList([...list, { id: `${list.length + 1}`, name: value }])
-                       setContacts(contacts.filter((item) => item !== value))
+                       addChat(value);
+                       setContacts(contacts.filter((item) => item !== value));
                    }} />
 
         </div>
     )
 }
 
-export default ChatList;
+const mapStateToProps = ({ chatReducer }) => ({
+    chats: chatReducer.chats,
+    highlighted: chatReducer.highlighted
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({addChat, push }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

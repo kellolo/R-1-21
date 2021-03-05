@@ -1,9 +1,12 @@
-import React, {Component, useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState} from "react";
 
 import Message from "@components/Message/";
 import IconButton from '@material-ui/core/Button';
 import SendIcon from '@material-ui/icons/Send';
 import TextField from '@material-ui/core/TextField';
+
+import { connect } from "react-redux";
+import { sendMsg } from "@actions/messageAction.js";
 
 import {makeStyles} from '@material-ui/core/styles';
 import styles from "./styles.module.scss";
@@ -18,19 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MessageList = (props) => {
-    const {chatId} = props;
-    const [messages, setMessages] = useState({
-        "1": [{author: "Оксана", text: "Привет чату 1!"}],
-        "2": [{author: "Оксана", text: "Привет чату 2!"}],
-        "3": [{author: "Оксана", text: "Привет чату 3!"}]
-    });
+    const {chatId, messages, sendMsg} = props;
     const [text, setText] = useState('');
     const messagesWindow = useRef();
     const classes = useStyles();
 
     useEffect(() => {
         messagesWindow.current.scrollTop = messagesWindow.current.scrollHeight;
-    }, [messages])
+    }, [chatId, messages]);
 
     const handleChange = (ev) => {
         if (ev.keyCode !== 13) {
@@ -41,16 +39,10 @@ const MessageList = (props) => {
     }
 
     const handleSubmit = () => {
-        let temp = messages;
-
-        if (temp[chatId]) {
-            temp[chatId] = [...temp[chatId], {author: "Оксана", text: text}];
-        } else {
-            temp[chatId] = [{author: "Оксана", text: text}];
-        }
-
         if (text.length > 0) {
-            setMessages(temp);
+            const msgId = (new Date()).getTime().toString();
+
+            sendMsg(chatId, msgId, "Оксана", text);
             setText('');
         }
     }
@@ -89,4 +81,12 @@ const MessageList = (props) => {
     )
 }
 
-export default MessageList;
+const mapStateToProps = (store) => ({
+    messages: store.messagesReducer.messages
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    sendMsg: (chatId, msgId, author, text) => dispatch(sendMsg(chatId, msgId, author, text))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
