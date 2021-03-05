@@ -5,6 +5,7 @@ module.exports = componentName => {
     const content = `
         import React from 'react';
         import './style.scss';
+
         export default props => {
             return  <div className="${componentName.toLowerCase()}">
                        

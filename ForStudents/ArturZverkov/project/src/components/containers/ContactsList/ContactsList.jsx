@@ -1,13 +1,13 @@
 
 import React, { Component } from 'react';
-import './style.css';
+import './style.scss';
 import Modal from '@components/Modal';
 
 export default class MessageList extends Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
         this.state = {
-
+            
         };
     }
 

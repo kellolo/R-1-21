@@ -1,5 +1,5 @@
 
-    import component from './Modal.jsx';
+        import component from './Modal.jsx';
 
-    export default component;
+        export default component;
     
