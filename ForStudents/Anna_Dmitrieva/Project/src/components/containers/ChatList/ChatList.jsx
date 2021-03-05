@@ -5,28 +5,32 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChatIcon from '@material-ui/icons/Chat';
-import Modal from '@components/Modal';
+import ContactList from "@containers/ContactList";
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'; 
+import { loadActiveChats } from '@actions/activeChats';
 
 import './style.scss';
 
-export default class ChatList extends Component {
+class ChatList extends Component { // export default 
     constructor(props) {
         super(props);
         this.state = {
-            activeChats: [
-                { name: 'Коля', id: '1' },
-                { name: 'Аня', id: '2' },
-                { name: 'Катя', id: '3' },
-                { name: 'Тема', id: '4' },
-            ],
+            // activeChats: [
+            //     { name: 'Коля', id: '1' },
+            //     { name: 'Аня', id: '2' },
+            //     { name: 'Катя', id: '3' },
+            //     { name: 'Тема', id: '4' },
+            // ],
         };
     };
-    addChat = name => {
+    addChat = (name) => {
         this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
     };
     render() {
         const { classes } = this.props;
-        const { activeChats } = this.state;
+        const { activeChats } = this.props;
         return (<div className="chat-list">
             <List>
                 {activeChats.map((chat, i) => (
@@ -38,8 +42,15 @@ export default class ChatList extends Component {
                     </ListItem>
                 ))}
             </List>
-            <Modal add={ this.addChat } />
+            <ContactList emails={ this.props.emails } add={ this.addChat }/>
         </div>
         );
     };
 };
+
+const mapState = ({ chatsReducer }) => ({ 
+    activeChats: chatsReducer.activeChats,
+});
+const mapActions = dispatch => bindActionCreators({ loadActiveChats }, dispatch);
+
+export default connect(mapState, mapActions)(ChatList);

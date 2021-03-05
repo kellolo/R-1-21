@@ -3,7 +3,7 @@ import React from 'react';
 
 import './style.scss';
 
-export default props => {
+export default (props) => {
     const { name, text } = props;
     return <div className="msg-main">
         <div className={ name === 'Анна' ? 'msg-me' : 'msg-bot' }>
