@@ -40,7 +40,9 @@ const MessageList = (props) => {
 
     const handleSubmit = () => {
         if (text.length > 0) {
-            sendMsg(chatId, "Оксана", text);
+            const msgId = (new Date()).getTime().toString();
+
+            sendMsg(chatId, msgId, "Оксана", text);
             setText('');
         }
     }
@@ -84,7 +86,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    sendMsg: (chatId, author, text) => dispatch(sendMsg(chatId, author, text))
+    sendMsg: (chatId, msgId, author, text) => dispatch(sendMsg(chatId, msgId, author, text))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);
