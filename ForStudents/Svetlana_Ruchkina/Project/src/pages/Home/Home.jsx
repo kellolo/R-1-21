@@ -1,14 +1,17 @@
 import React from 'react';
-// import ReactDom from 'react-dom';
 import MessageList from '@containers/MessageList';
-import MsgInput from '@components/MsgInput';
+import ChartsList from '@containers/ChartsList';
+import Header from '@components/Header';
 
 import './style.scss';
 
 export default () => {
 
-    return <div>
-        <MessageList />
-        {/* <MsgInput /> */}
+    return <div className="messenger">
+        <Header />
+        <div className="messenger-content">
+            <ChartsList />
+            <MessageList />
+        </div>
     </div>;
 }

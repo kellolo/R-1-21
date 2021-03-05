@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import ReactDom from 'react-dom';
 
 import './style.scss';
 import Message from '@components/Message';
-//import MsgInput from '@components/MsgInput';
 //stateFull
 
 
@@ -22,21 +20,24 @@ export default class MessageList extends Component {
 
     sendMessage = () => {
         this.setState({
+            value: '',
             messages: [...this.state.messages, {
                 name: 'me', text: this.state.value
             }]
         });
     }
 
-    handleChange() {
-        this.setState({ value: event.target.value });
-        //console.log("что-то ввелось")
+    handleChange = event => {
+        if (event.keyCode !== 13) {
+            this.setState({ value: event.target.value });
+        } else {
+            this.sendMessage();
+        }
     }
 
     componentDidUpdate() {
         if (this.state.messages.length % 2 === 1) {
             setTimeout(() => {
-                //console.log('массив сообщений чатика дополнился');
                 this.setState({
                     messages: [...this.state.messages, {
                         name: 'bot', text: 'i see you'
@@ -55,10 +56,15 @@ export default class MessageList extends Component {
                 text={el.text}
             />);
 
-        return <div>
-            <input type="text" onChange={this.handleChange} />
-            <button onClick={this.sendMessage}>Отправить</button>
+        return <div className="msg-list">
             {Messages}
+            <input
+                type="text"
+                value={this.state.value}
+                onChange={this.handleChange}
+                onKeyUp={this.handleChange}
+            />
+            <button onClick={this.sendMessage}>Отправить</button>
         </div>;
 
     }
