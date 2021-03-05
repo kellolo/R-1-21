@@ -1,7 +1,9 @@
+import update from 'react-addons-update';
+
 const storeMessages = {
     messages: [
-        { name: 'Bot', text: 'Hey!' },
-        { name: 'Bot', text: 'How are you?' }
+        // { name: 'Bot', text: 'Hey!', date: '' },
+        // { name: 'Bot', text: 'How are you?', date: '' }
     ]
 };
 
@@ -11,8 +13,13 @@ export default (store = storeMessages, action) => {
             return store;
         }
 
-        case 'SEND_MESSAGE': {
-            return store.messages.push(text);
+        case 'SEND_MSG': {
+            const msg = action.payload;
+            return update(store, { messages: { $push: [msg] } });
+        }
+
+        case 'DELETE_MSG': {
+            return update(store, { messages: { $set: [] } }) //прикрутила просто небывалый костыль и сижу довольная
         }
 
         default: {

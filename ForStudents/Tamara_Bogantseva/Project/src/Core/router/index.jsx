@@ -8,12 +8,10 @@ export default class Router extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/chat/1" render={() => <Home name="Darth Vader" />} />
-                <Route exact path="/chat/2" render={() => <Home name="Chewbacca" />} />
-                <Route exact path="/chat/3" render={() => <Home name="Luke Skywalker" />} />
-                {/* <Route exact path="/chat/4" render={() => <Home name="Пердуня" />} /> */}
-                {/* <Route exact path="/not-home" render = { () => <div>This is not your Home. Get out!</div> } /> */}
+                <Route exact path="/" component={ Home } />
+                <Route exact path="/chat/1" render={ () => <Home name="Darth Vader" /> } />
+                <Route exact path="/chat/2" render={ () => <Home name="Chewbacca" /> } />
+                <Route exact path="/chat/3" render={ () => <Home name="Luke Skywalker" /> } />
             </Switch>
         );
     }

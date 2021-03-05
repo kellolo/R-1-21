@@ -8,7 +8,7 @@ import MsgInput from '@components/MsgInput';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages';
+import { sendMessage, deleteMessages } from '@actions/messages';
 
 
 class MessageList extends Component {
@@ -18,9 +18,11 @@ class MessageList extends Component {
     }
 
     sendMessage = (text) => {
-        this.setState({
-            messages: [...this.props.messages, { name: 'Leia', text: text }],
-        });
+        this.props.send('Leia', text);
+    }
+
+    deleteMessage = () => {
+        this.props.kill();
     }
 
     componentDidUpdate() {
@@ -38,7 +40,9 @@ class MessageList extends Component {
                 key={ `msg_${i}` }
                 name={ el.name }
                 text={ el.text }
+                date={ el.date }
             />);
+        //тут есть кнопка для удаления сообщений, она сделана через костыли и выглядит убого. Не забыть удалить. 
         return <div className="message-list">
             <div className="message-list__chat">
                 <div className="message-list__chat_wrapper">
@@ -46,6 +50,7 @@ class MessageList extends Component {
                 </div>
                 <div ref={ this.newMsg }></div>
             </div>
+            <button onClick={ this.deleteMessage }>Kill</button>
             <div className="message-list__input">
                 <MsgInput userSend={ this.sendMessage } />
             </div>
@@ -58,6 +63,6 @@ const mapState = ({ messagesReducer }) => ({
     messages: messagesReducer.messages
 });
 
-const mapActions = dispatch => bindActionCreators({ load: loadMessages }, dispatch);
+const mapActions = dispatch => bindActionCreators({ send: sendMessage, kill: deleteMessages }, dispatch);
 
 export default connect(mapState, mapActions)(MessageList);

@@ -13,7 +13,7 @@ export default (props) => {
         <>
             <Header name={ props.name } />
             <ChatsList />
-            <MessageList />
+            { props.name && <MessageList /> }
         </>
     </StylesProvider>;
 }
