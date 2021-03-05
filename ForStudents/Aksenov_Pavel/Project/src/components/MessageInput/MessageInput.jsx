@@ -8,10 +8,12 @@ import TextField from '@material-ui/core/TextField';
 
 
 export default () => {  
-  return <div className="chat-wrap_input">
-    <div className="chat-wrap_input__content">
-      <TextField variant="outlined" />
-      <button className="chat-wrap_input__button">Отправить</button>
+  return (
+    <div className="chat-wrap_input">
+      <div className="chat-wrap_input__content">
+        <TextField variant="outlined" />
+        <button className="chat-wrap_input__button">Отправить</button>
+      </div>
     </div>
-  </div>
-}
+  )
+};
