@@ -13,7 +13,7 @@ export default class Router extends Component {
         <Route 
           exact 
           path='/chat/:chatId/' 
-          render = { obj => <Home name="Гена" chatId={ Number(obj.match.params.chatId) } /> } 
+          render = { obj => <Home chatId={ Number(obj.match.params.chatId) } /> } 
         />
       </Switch>
     )

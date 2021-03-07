@@ -3,9 +3,8 @@ import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+
+import { connect } from 'react-redux';
 
 const theme = createMuiTheme({
   palette: {
@@ -39,9 +38,18 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function ButtonAppBar(props) {
+function ButtonAppBar(props) {
   const classes = useStyles(theme);
-  const { heading } = props;
+  const { heading, activeChats } = props;
+
+  let header = null;
+  if(heading) {
+    activeChats.forEach(element => {
+      if(element.id == heading) {
+        header = element.name;
+      };
+    });
+  };
 
   return (
     <div className="header">
@@ -50,22 +58,20 @@ export default function ButtonAppBar(props) {
         className={ classes.noshadow }
       >
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={ classes.menuButton }
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
           <Typography
             variant="h5"
             className={ classes.title }
           >
-            { heading ? heading : 'Messanger' }
+            { header != null ? header : 'Мессенджер' }
           </Typography>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};
+
+const mapStateToProps = ({ chatsReducer }) => ({
+  activeChats: chatsReducer.activeChats
+});
+
+export default connect(mapStateToProps, {})(ButtonAppBar);
