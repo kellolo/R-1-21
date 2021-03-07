@@ -12,7 +12,6 @@ import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import { blue } from '@material-ui/core/colors';
 
-const emails = ['username@gmail.com', 'user02@gmail.com', 'test@lol.net'];
 const useStyles = makeStyles({
     avatar: {
         backgroundColor: blue[100],
@@ -47,19 +46,18 @@ function SimpleDialog(props) {
         props.addChat(value);
         onClose(value);
     };
-
     return (
-        <Dialog onClose={ handleClose } aria-labelledby="simple-dialog-title" open={open}>
+        <Dialog onClose={ handleClose } aria-labelledby="simple-dialog-title" open={ open }>
             <DialogTitle id="simple-dialog-title">Выберете собеседника</DialogTitle>
             <List>
-                {emails.map((email) => (
-                    <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+                {props.emails.map((email) => (
+                    <ListItem button onClick={ () => handleListItemClick(email) } key={ email }>
                         <ListItemAvatar>
-                            <Avatar className={classes.avatar}>
+                            <Avatar className={ classes.avatar }>
                                 <PersonIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={email} />
+                        <ListItemText primary={ email } />
                     </ListItem>
                 ))}
             </List>
@@ -76,7 +74,7 @@ SimpleDialog.propTypes = {
 export default function SimpleDialogDemo(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+    const [selectedValue, setSelectedValue] = React.useState(props.emails[1]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -92,7 +90,7 @@ export default function SimpleDialogDemo(props) {
             <Button className={ classes.btn_contact } variant="outlined" color="primary" onClick={ handleClickOpen }>
                 Открыть список контактов
             </Button>
-            <SimpleDialog selectedValue={ selectedValue } open={ open } onClose={ handleClose } addChat={ props.add } />
+            <SimpleDialog selectedValue={ selectedValue } open={ open } onClose={ handleClose } addChat={ props.add } emails={ props.emails }/>
         </div>
     );
-}; 
+};
