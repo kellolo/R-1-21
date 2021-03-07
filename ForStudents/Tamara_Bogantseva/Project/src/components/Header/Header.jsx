@@ -22,40 +22,25 @@ export default function FadeMenu(props) {
     return (
         <div className="header">
             <div className="header-avatar">
-                <Button aria-controls="fade-menu" aria-haspopup="true" onClick={handleClick}>
+                <Button aria-controls="fade-menu" aria-haspopup="true" onClick={ handleClick }>
                     <Avatar alt="Leia" src="../../src/resources/img/avatars/leia.jpg" />
                 Princess Leia
             </Button>
                 <Menu
                     id="fade-menu"
-                    anchorEl={anchorEl}
+                    anchorEl={ anchorEl }
                     keepMounted
-                    open={open}
-                    onClose={handleClose}
-                    TransitionComponent={Fade}
+                    open={ open }
+                    onClose={ handleClose }
+                    TransitionComponent={ Fade }
                 >
-                    <MenuItem onClick={handleClose}>Profile</MenuItem>
-                    <MenuItem onClick={handleClose}>My account</MenuItem>
-                    <MenuItem onClick={handleClose}>Logout</MenuItem>
+                    <MenuItem onClick={ handleClose }>Profile</MenuItem>
+                    <MenuItem onClick={ handleClose }>My account</MenuItem>
+                    <MenuItem onClick={ handleClose }>Logout</MenuItem>
                 </Menu>
             </div>
 
-            <h3 className="header-chatinfo">{props.name}</h3>
+            <h3 className="header-chatinfo">{ props.name }</h3>
         </div>
     );
 }
-
-// export default class Header extends Component {
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-
-//         };
-//     }
-
-//     render() {
-//         return <div className="header">
-
-//         </div>;
-//     }
-// };

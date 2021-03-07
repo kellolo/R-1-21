@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 function Header(props) {
     return <div className="header">
-        <h1>MyMessenger - { props.chats[props.chatId].title }</h1>
+        <h1>MyMessenger { isFinite(props.chatId) && ('- ' + props.chats[props.chatId].title) }</h1>
     </div>;
 }
 

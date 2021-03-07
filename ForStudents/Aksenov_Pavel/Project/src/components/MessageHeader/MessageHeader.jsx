@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 
 import './style.scss';
 
-
-export default (props) => {
-  return <div className="chat-wrap_header">
-   Заголовок чата <span></span>
-  </div>
-}
+export default ({ username }) => {
+  return (
+    <div className="chat-wrap_header">
+      <span>{ username }</span>
+    </div>
+  )
+};

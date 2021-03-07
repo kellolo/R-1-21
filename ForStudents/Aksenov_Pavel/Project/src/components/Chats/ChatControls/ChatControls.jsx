@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import Divider from '@material-ui/core/Divider';
 import ChatIcon from '@material-ui/icons/Chat';
@@ -18,23 +18,16 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import PersonIcon from '@material-ui/icons/Person';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
 import './style.scss';
 
-const useStyles = makeStyles((theme) => ({
-  grid: {
-    padding: '10px'
-  },
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600],
-  },
+import { addContactToChat } from '@store/chats/actions';
+
+const useStyles = makeStyles(() => ({
+  grid: { padding: '10px' },
+  avatar: { backgroundColor: blue[100], color: blue[600] },
   fontPrimary: {
     fontSize: "13px",
     fontWeight: 600,
@@ -45,157 +38,146 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline',
     color: '#959d9f'
   },
-  lists: {
-    minWidth: '400px',
-    borderBottom: '1px solid #dfe7f4'
+  button_container: { 
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '15px',
+    // backgroundColor: '#ebedf0'
   },
-  lists_title: {
-    backgroundColor: '#6c7687',
-    color: '#d0e0ee'
-  },
-  chat: {
-    backgroundColor: '#6c7687'
-  },
-  fillchat: {
-    fill: '#FFF'
-  },
-  fill: {
-    fill: '#6c7687'
-  },
-  gridBtn: {
-    padding: '15px'
-  },
-  button: {
-    fontSize: '12px',
-    fontWeight: 600
-  }
-
+  list: { overflowX: 'hidden', overflowY:'auto', maxHeight: '80%',minWidth: '400px' },
+  listItem: { borderBottom: '1px solid #dfe7f4' },
+  lists_title: { backgroundColor: '#6c7687', color: '#d0e0ee' },
+  chat: { backgroundColor: '#6c7687' },
+  fillchat: { fill: '#FFF' },
+  fill: { fill: '#6c7687' },
+  button: { fontSize: '12px', fontWeight: 600 }
 }));
 
+// >>
+const SimpleDialogChat = ({ onClose, contacts, open, selectFunction, selectedUser, addContactFunction }) => {
+  const classes = useStyles();
+
+  let isdisabled = true;
+  if (typeof selectedUser != 'undefined') {
+    isdisabled = false;
+  }
+  else {
+    isdisabled = true;
+  };
+
+  const handleCloseDialog = () => {
+    onClose();
+    selectFunction();
+  };
+
+  const handleListItemClick = (value, id) => {
+    selectFunction(id);
+  };
+
+  const handleAddContact = () => {
+    addContactFunction(selectedUser);
+    handleCloseDialog();
+  };
+  
+  return (
+    <Dialog onClose={ handleCloseDialog } aria-labelledby="simple-dialog-title" open={ open }>
+      <DialogTitle className={ classes.lists_title }>Контакты</DialogTitle>
+      <List className={ classes.list }>
+      {/* <List> */}
+        { contacts.map(val => (
+          <ListItem
+            key={ val.id }
+            alignItems="flex-start"
+            button
+            selected={ selectedUser === `${val.id}` }
+            onClick={ value => handleListItemClick(value, `${val.id}`) }
+            className={ classes.listItem }
+          >
+            <ListItemAvatar>
+              <Avatar alt={ val.name } src={ val.icon } />
+            </ListItemAvatar>
+            <ListItemText className={ classes.fontPrimary }
+              primary={
+                <Typography className={ classes.fontPrimary }>
+                  { val.name }
+                </Typography>
+              }
+              secondary={
+                <Typography className={ classes.fontSecondary }>
+                  { val.telephone }
+                </Typography>
+              }
+            />
+          </ListItem>
+        ))}
+        </List>
+        <div className={ classes.button_container }>
+          <Button disabled={ isdisabled } className={ classes.button } onClick={ handleAddContact } color="primary" >Добавить контакт</Button>
+          <Button className={ classes.button } onClick={ handleCloseDialog } color="primary" >Закрыть</Button>
+        </div>
+    </Dialog>
+  );
+};
+// <<
 
 export default () => {
+  const dispatch = useDispatch();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   
-  const [selectedValue, setSelectedValue] = useState();
+  const contacts = useSelector(state => state.chatContainer.contacts);
 
-  const contacts = [
-    {
-      id: 5,
-      name: "Катя",
-      telephone: '+7900000005',
-      email: 'email5@email.com',
-      icon: '',
-    },
-    {
-      id: 6,
-      name: "Женя",
-      telephone: '+7900000006',
-      email: 'email6@email.com',
-      icon: '',
-    },
-    {
-      id: 7,
-      name: "Виктор",
-      telephone: '+7900000007',
-      email: 'email7@email.com',
-      icon: '',
-    },
-    {
-      id: 8,
-      name: "Света",
-      telephone: '+7900000008',
-      email: 'email8@email.com',
-      icon: '',
-    }
-  ];
+  const [openChat, setOpenChat] = useState(false);
+  const [selectedUser, setSelectedUser] = useState();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const openModalAddChat = () => {
+    setOpenChat(true);
   };
 
-  const handleClose = (value) => {
-    setOpen(false);
-    setSelectedValue(value);
+  const closeModalAddChat = () => {
+    setOpenChat(false);
   };
 
-  /////////
-  const SimpleDialog = (props) => {
-    const { onClose, selectedValue, open } = props;
-  
-    const handleCloseDialog = () => {
-      onClose(selectedValue);
-    };
-  
-    const handleListItemClick = (value) => {
-      onClose(value);
-      console.log(value)
-    };
-  
-    return (
-      <Dialog onClose={handleCloseDialog} aria-labelledby="simple-dialog-title" open={open}>
-        <DialogTitle className={classes.lists_title}>Контакты</DialogTitle>
-        <List>
-          {contacts.map((val) => (
-            <ListItem
-              key={val.id}
-              alignItems="flex-start"
-              button
-              autoFocus
-              onClick={(value) => handleListItemClick(value)}
-              className={classes.lists}
-            >
-              <ListItemAvatar>
-                <Avatar alt={val.name} src={val.icon} />
-              </ListItemAvatar>
-              <ListItemText className={classes.fontPrimary}
-                primary={
-                  <Typography className={classes.fontPrimary}>
-                    {val.name}
-                  </Typography>
-                }
-                secondary={
-                  <Typography className={classes.fontSecondary}>
-                    {val.telephone}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ))}
-          </List>
-          <Grid justify="space-between" container spacing={2} className={classes.gridBtn}>
-            <Button color="primary" className={classes.button}>Добавить контакт</Button>
-            <Button className={classes.button}>Закрыть</Button>
-          </Grid>
-      </Dialog>
-    );
-  }
-  ///////
+  const selectFunction = (id) => {
+    setSelectedUser(id);
+  };
 
-  return <div>
-    <Divider />
-    <Grid container spacing={2}>
-      <Grid item xs={12}>
-        <Grid container justify="space-between" spacing={2} className={classes.grid}>
-          <Grid key='message' item>
-            <Fab size="small" className={classes.chat} aria-label="chatCreate" onClick={ handleClickOpen }>
-              <ChatIcon className={classes.fillchat}/>
-            </Fab>
-          </Grid>
-          <Grid key='group' item>
-            <Fab size="small" color="default" aria-label="groupAdd" >
-              <GroupAddIcon className={classes.fill}/>
-            </Fab>
-          </Grid>
-          <Grid key='setting' item>
-            <Fab size="small" color="default" variant="round" aria-label="setting" style={{backgroundColor:'inherit'}}>
-              <MoreVertIcon className={classes.fill}/>
-            </Fab>
+  const addContactFunction = (id) => {
+    dispatch(addContactToChat(id));
+  };
+
+  return (
+    <div>
+      <Divider />
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Grid container justify="space-between" spacing={2} className={ classes.grid }>
+            <Grid key='message' item>
+              <Fab size="small" className={ classes.chat } aria-label="chatCreate" onClick={ openModalAddChat }>
+                <ChatIcon className={ classes.fillchat }/>
+              </Fab>
+            </Grid>
+            <Grid key='group' item>
+              <Fab size="small" color="default" aria-label="groupAdd" >
+                <GroupAddIcon className={ classes.fill }/>
+              </Fab>
+            </Grid>
+            <Grid key='setting' item>
+              <Fab size="small" color="default" variant="round" aria-label="setting" style={{ backgroundColor:'inherit' }}>
+                <MoreVertIcon className={ classes.fill }/>
+              </Fab>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  <Divider />
-  <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-  </div>
+      <Divider />
+      <SimpleDialogChat 
+        contacts={ contacts } 
+        selectedUser={ selectedUser } 
+        selectFunction={ selectFunction } 
+        open={ openChat } 
+        onClose={ closeModalAddChat }
+        addContactFunction={ addContactFunction }
+      />
+    </div>
+  )
 };

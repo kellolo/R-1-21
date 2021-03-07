@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -11,7 +13,7 @@ import Typography from '@material-ui/core/Typography';
 
 import './style.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   fontPrimary: {
     fontSize: "13px",
     fontWeight: 600,
@@ -25,73 +27,57 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default (props) => {
+export default () => {
+  const dispatch = useDispatch();
+  const chats = useSelector(state => state.chatContainer.chats);
   const classes = useStyles();
   const [selectedIndex, setSelectedIndex] = useState();
+
   
   const handleListItemClick = (event, index) => {
-    console.log(event);
     setSelectedIndex(index);
   };
 
-  const chats = [
-    {
-      id: 1,
-      name: "Максим",
-      lastMessageShort: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores laboriosam iusto molestiae?',
-      icon: '',
-    },
-    {
-      id: 2,
-      name: "Толя",
-      lastMessageShort: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores laboriosam iusto molestiae?',
-      icon: '',
-    },
-    {
-      id: 3,
-      name: "Вика",
-      lastMessageShort: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores laboriosam iusto molestiae?',
-      icon: '',
-    },
-    {
-      id: 4,
-      name: "Илья",
-      lastMessageShort: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolores laboriosam iusto molestiae?',
-      icon: '',
-    }
-  ];
+  const ListConcats = ({ chats }) => {
+    return chats.map(val => {
+      return (
+        <Link key={ val.id } to={`/chat/${val.id}/`}>
+          <ListItem
+            key={ val.id }
+            alignItems="flex-start"
+            button
+            selected={ selectedIndex === `${val.id}` }
+            onClick={ event => handleListItemClick(event, `${ val.id }`) }
+            className="chat-list"
+          >
+            <ListItemAvatar>
+              <Avatar alt={ val.name } src={ val.icon } />
+            </ListItemAvatar>
+            <ListItemText className={ classes.fontPrimary }
+              primary={
+                <Typography className={ classes.fontPrimary }>
+                  { val.name }
+                </Typography>
+              }
+              secondary={
+                <Typography className={ classes.fontSecondary }>
+                  { val.lastMessageShort }
+                </Typography>
+              }
+            />
+          </ListItem>
+        </Link>
+      )
+    })
+  };
 
-  const ListConcats = (props) => {return props.chats.map((val) => {
-    return <ListItem
-      key={val.id}
-      alignItems="flex-start"
-      button
-      selected={selectedIndex === `${val.id}`}
-      onClick={(event) => handleListItemClick(event, `${val.id}`)}
-    >
-      <ListItemAvatar>
-        <Avatar alt={val.name} src={val.icon} />
-      </ListItemAvatar>
-      <ListItemText className={classes.fontPrimary}
-        primary={
-          <Typography className={classes.fontPrimary}>
-            {val.name}
-          </Typography>
-        }
-        secondary={
-          <Typography className={classes.fontSecondary}>
-            {val.lastMessageShort}
-          </Typography>
-        }
-      />
-    </ListItem>  
-  })};
-
-  return <div className="chat-wrap_display__contacts-list">
-    <div className={classes.root}>
-      <List component="nav" aria-label="main mailbox folders" style={{paddingTop: 0}}>
-        <ListConcats chats={ chats }/>
-      </List>
+  return (
+    <div className="chat-wrap_display__contacts-list">
+      <div className={ classes.root }>
+        <List component="nav" aria-label="main mailbox folders" style={{ paddingTop: 0 }}>
+          <ListConcats chats={ chats }/>
+        </List>
+      </div>
     </div>
-  </div>
+  )
 };

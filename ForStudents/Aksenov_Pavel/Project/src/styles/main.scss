@@ -6,10 +6,10 @@ body {
   margin: 0;
   padding: 0;
 }
-
+a { text-decoration: none; }
 .chat-wrap {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   height: calc(100vh - 3px);
   overflow: hidden;
   &_display {
@@ -53,7 +53,7 @@ body {
       outline: 1px solid $color-theme;
       background-color: #FFF;
       overflow: hidden;
-      min-width: 25%;
+      max-width: 25%;
       &-search {
         display: flex;
         justify-content: flex-start;

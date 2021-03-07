@@ -1,0 +1,19 @@
+@import "@styles/variables";
+.msg-input {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+
+  & input {
+    width: 800px;
+   }
+
+  & button {
+    background-color: black;
+    padding: 14px 12px 10px 16px;
+    border-radius: 50%;
+    }
+  
+  
+}

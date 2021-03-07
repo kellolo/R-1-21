@@ -6,6 +6,8 @@ npm i react react-dom
 
 3)
 npm i -D webpack webpack-cli webpack-dev-server
+npm i -D minimist
+npm i @material-ui/core @material-ui/icons
 
 4) (все, что нужно, чтобы реакт завелся)
 npm i -D @babel/core @babel/preset-env @babel/preset-react @babel/plugin-proposal-class-properties babel-loader css-loader html-webpack-plugin mini-css-extract-plugin

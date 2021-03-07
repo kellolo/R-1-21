@@ -1,0 +1,8 @@
+.contact-list {
+    padding: 15px;
+    box-sizing:border-box;
+    border-bottom: 1px solid black;
+}
+.contact-list:first-child {
+    border-top: 1px solid black;
+}

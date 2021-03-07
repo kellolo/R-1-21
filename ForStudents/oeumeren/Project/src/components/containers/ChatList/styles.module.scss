@@ -7,3 +7,22 @@
   border-right: 2px solid $color-dark-blue;
   overflow-y: auto;
 }
+
+@keyframes newMsg {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+.highlighted {
+  animation-name: newMsg;
+  animation-iteration-count: infinite;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-direction: alternate;
+}

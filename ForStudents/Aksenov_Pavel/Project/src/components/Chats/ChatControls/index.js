@@ -1,3 +1,3 @@
-import page from './ChatControls.jsx'
+import page from './ChatControls.jsx';
 
 export default page;

@@ -1,3 +1,3 @@
-import page from './Chats.jsx'
+import page from './Chats.jsx';
 
 export default page;

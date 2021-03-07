@@ -1,0 +1,15 @@
+$modal-background-color: rgb(141, 173, 209);
+$modal-border-color: rgb(31, 43, 212);
+
+.simple-modal-container {
+    inset: 200px !important;
+}
+
+.simple-modal-block {
+    background-color: $modal-background-color;
+    border: 3px inset $modal-border-color;
+    width: 250px;
+    height: 400px;
+    margin: 0 auto;
+    padding: 20px;
+}
