@@ -1,4 +1,3 @@
-// import ReactDOM from 'react-dom';
 import React from 'react';
 import ChatList from "@containers/ChatList";
 import MessageField from "@containers/MessageField";
@@ -11,10 +10,10 @@ export default (props) => {
   return (
     <StylesProvider>
       <div className="home-page">
-        <Header chatId={ props.chatId } />
+        <Header chatIdD={ props.chatId } />
         <div className="home-page-messenger">
           <ChatList />
-          <MessageField />
+          { props.chatId && <MessageField /> } 
         </div>
       </div>
     </StylesProvider>

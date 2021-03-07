@@ -13,9 +13,14 @@ class ContactList extends Component {
     };
 
     render() {
-        return <div className="contacts-list">
-            <Modal emails={ this.props.emails } addChat={ this.props.add }/>
-        </div>;
+        return (
+            <div className="contacts-list">
+                <Modal 
+                    emails={ this.props.emails } 
+                    addChat={ this.props.add }
+                />
+            </div>
+        );
     };
 };
 
