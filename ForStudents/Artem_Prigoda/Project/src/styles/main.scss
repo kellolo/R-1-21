@@ -5,9 +5,11 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: $main-color;
+    background: $bg-color;
     height: 100%;
     font-family: sans-serif;
+    background: linear-gradient(to right, rgba(251,131,250,1) 0%,rgba(233,60,236,1) 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fb83fa', endColorstr='#e93cec',GradientType=1 );
 }
 
 #app {
