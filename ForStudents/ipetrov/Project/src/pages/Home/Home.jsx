@@ -15,7 +15,7 @@ export default props => {
             <div className="interactive">
             {/* <MsgInput /> */}
             <ChatsList />
-            { props.id && <MessageList /> }
+            { props.id && <MessageList chatId={ props.id }  /> }
             </div>
         </div>
     </StylesProvider>;

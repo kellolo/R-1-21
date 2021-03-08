@@ -5,7 +5,7 @@ export default store => next => action => {
         case 'SEND_MSG': {
             if (action.payload.name == 'You') {
                 setTimeout(() => {
-                    return store.dispatch(sendMessage('Bot','kek'));
+                    return store.dispatch(sendMessage('Bot','kek', action.payload.chatId));
                 }, 500);
             }
 

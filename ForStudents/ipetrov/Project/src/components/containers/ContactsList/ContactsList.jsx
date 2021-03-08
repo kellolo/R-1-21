@@ -56,6 +56,7 @@ class ContactsList extends Component {
             <Link to = { `/chat/${el}` } key={ 'contact_' + el }>
                 <Contact 
                     name={ activeChats[el].name }
+                   
                 />
             </Link>);
 

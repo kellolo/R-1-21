@@ -29,12 +29,11 @@ class MessageList extends Component {
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
-            this.props.send('You', this.state.yourMessage);
+            this.props.send('You', this.state.yourMessage, this.props.chatId);
             this.setState({
                 yourMessage: ''
             },
                 () => this.scrollToMyRef()
-                
             );
         }        
     }
@@ -67,7 +66,7 @@ class MessageList extends Component {
     };
 
     render() {
-        const { messages } = this.props;
+        const messages = this.props.messages[this.props.chatId];
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 

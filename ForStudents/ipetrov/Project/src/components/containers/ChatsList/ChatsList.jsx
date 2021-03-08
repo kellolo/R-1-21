@@ -20,7 +20,7 @@ class ChatsList extends Component {
                 {name:'Максим Евгеньевич парикмахерская', id: '3'}],
 */
             }
-    }
+    };
 
     addContact = val => {
         // добавим контакт в список чатов
@@ -28,17 +28,17 @@ class ChatsList extends Component {
             ...this.state.activeChats,
             { name: val, id: this.state.activeChats.length }
         ]});
-    }
+    };
 
     render() {
         return <div className="chatslist">
             <ContactsList addContact={ this.addContact } activeChats={ this.props.activeChats } />
         </div>;
-    }
+    };
 };
 
 const mapState = ({ chatsReducer }) => ({ 
     activeChats: chatsReducer.activeChats
-})
+});
 
 export default connect(mapState, null)(ChatsList);
