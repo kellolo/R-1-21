@@ -5,13 +5,13 @@ import './style.scss';
 
 export default props => {
     const { sender, text, date } = props;
-
     return <li
         className='msg'
         style={{
             alignSelf: sender === 'BOT' ? 'flex-start' : 'flex-end'
         }}>
-        <time>{date.toTimeString()}</time>
+
+        <time>{date.toString()}</time>
         <p className="msg__sender">
             {sender}
         </p>
