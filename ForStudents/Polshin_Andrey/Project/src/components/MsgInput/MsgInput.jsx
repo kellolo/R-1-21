@@ -6,8 +6,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addMsgToChat } from '@actions/chats';
-import { craeteMsg } from '@actions/messages';
+import { sendMsg } from '@actions/messages';
 
 import './style.scss';
 export class MsgInput extends Component {
@@ -46,11 +45,10 @@ export class MsgInput extends Component {
         if (!msgText) {
             return;
         }
-        const { chatID, messages, craeteMsg, addMsgToChat } = this.props;
 
+        const { chatID, messages, sendMsg } = this.props;
         const msgID = (Object.keys(messages).length + 1).toString();
-        craeteMsg(msgID, 'User', msgText);
-        addMsgToChat(chatID, msgID);
+        sendMsg(msgID, 'User', msgText, chatID);
 
         this.setState({
             msgText: ''
@@ -85,5 +83,5 @@ const mapStateToProps = ({ chatsReducer, messagesReducer }) => ({
     chats: chatsReducer.chats,
     messages: messagesReducer.messages
 });
-const mapDispatchToProps = dispatch => bindActionCreators({ craeteMsg, addMsgToChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMsg }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(MsgInput);

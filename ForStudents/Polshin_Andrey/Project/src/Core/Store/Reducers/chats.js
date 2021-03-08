@@ -1,5 +1,6 @@
 import update from 'react-addons-update';
-import { ADD_CHAT, ADD_MSG } from '@actions/chats';
+import { ADD_CHAT } from '@actions/chats';
+import { SEND_MESSAGE } from '@actions/messages';
 
 const storeChats = {
     chats: {
@@ -25,12 +26,12 @@ export default (store = storeChats, action) => {
                 }
             });
         }
-        case ADD_MSG: {
+        case SEND_MESSAGE: {
             return update(store, {
                 chats: {
-                    [action.chatID]: {
+                    [action.payload.chatID]: {
                         messageList: {
-                            $push: [action.msgID]
+                            $push: [action.payload.id]
                         }
                     }
                 }
