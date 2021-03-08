@@ -1,7 +1,11 @@
+@import "@styles/variables.scss";
+
 .header {
 	width: 100%;
 	height: 30px;
-	background-color: hsl(236, 96%, 74%);
-	padding: 0 10px;
+	background-color: $main-color;
+	border-radius: 10px;
+	box-shadow: 5px 5px 2px grey;
 	box-sizing: border-box;
+	margin-bottom: 10px;
 }

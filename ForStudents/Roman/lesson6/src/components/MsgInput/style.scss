@@ -1,0 +1,18 @@
+.after-chat {
+    margin: 24px auto 0 auto;
+    width: 50%;
+    display: flex;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.enter-text {
+    padding: 1em 2em;
+    flex-grow: 1;
+    line-height: 1;
+    margin: 0 5px 0 0;
+}
+
+.after-chat .pulse {
+    margin: 0;
+}

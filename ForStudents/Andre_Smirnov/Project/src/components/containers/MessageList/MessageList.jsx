@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages';
+import { loadMessages, sendMessage } from '@actions/messages';
 import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
@@ -26,11 +26,13 @@ class MessageList extends Component {
     }
 
     addMessage = (msg) => {
-        this.setState({
-            messages: [...this.state.messages, {
-                name: 'User1', text: msg
-            }]
-        });
+        this.props.send('Username', msg);
+        
+        // this.setState({
+        //     messages: [...this.state.messages, {
+        //         name: 'User1', text: msg
+        //     }]
+        // });
         const LastMsg = document.getElementById('msgList').lastElementChild;
         LastMsg.scrollIntoView({ block: "end", behavior: "smooth" });
 
@@ -66,7 +68,7 @@ const mapState = ({ messagesReducer }) => ({
     messages: messagesReducer.messages
 });
 
-const mapActions = dispatch => bindActionCreators({ load: loadMessages }, dispatch);
+const mapActions = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
 
 export default connect(mapState, mapActions)(MessageList);
 
