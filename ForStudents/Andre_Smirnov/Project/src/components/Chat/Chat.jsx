@@ -16,13 +16,13 @@ export default props => {
             <ListItem button component={Link} to={`/chat/${userId}`}>
                 <ListItemIcon>
                     <Badge badgeContent={2} color="secondary">
-                        <Avatar>U</Avatar>
+                        <Avatar>{userName.slice(0, 2).toUpperCase()}</Avatar>
                     </Badge>
                 </ListItemIcon>
                 <ListItemText primary={userName} />
             </ListItem>
         </React.Fragment>
     );
-    
+
 }
 

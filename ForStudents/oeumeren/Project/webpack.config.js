@@ -45,6 +45,8 @@ module.exports = {
             "@containers": path.resolve(__dirname, "src", "components", "containers"),
             "@pages": path.resolve(__dirname, "src", "pages"),
             "@assets": path.resolve(__dirname, "src", "assets"),
+            "@actions": path.resolve(__dirname, "src", "Core", "Store", "actions"),
+            "@middleware": path.resolve(__dirname, "src", "Core", "middleware"),
         }
     },
     plugins: [

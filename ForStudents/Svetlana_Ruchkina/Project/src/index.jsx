@@ -3,13 +3,16 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 import App from '@pages/Home';
+import { StylesProvider } from '@material-ui/core/styles';
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <div>
-        <App />
-    </div>,
+    <StylesProvider>
+        <div>
+            <App />
+        </div>
+    </StylesProvider>,
     container
 );
 

@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDom from 'react-dom';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
@@ -24,8 +23,8 @@ export default (props) => {
         <TextField className="text_input"
             autoFocus
             type="text"
-            ref={ props.focus }
-            value= {props.clearInput }
+            // ref={ props.focus }
+            value= { props.clearInput }
             onChange={ props.change }
             onKeyUp={ props.keyup }
             id="outlined-basic"

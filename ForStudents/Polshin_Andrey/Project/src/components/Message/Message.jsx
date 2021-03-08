@@ -4,13 +4,14 @@ import React from 'react';
 import './style.scss';
 
 export default props => {
-    const { sender, text } = props;
+    const { sender, text, date } = props;
 
     return <li
         className='msg'
         style={{
             alignSelf: sender === 'BOT' ? 'flex-start' : 'flex-end'
         }}>
+        <time>{date.toTimeString()}</time>
         <p className="msg__sender">
             {sender}
         </p>

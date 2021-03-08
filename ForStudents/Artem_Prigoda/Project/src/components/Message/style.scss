@@ -1,5 +1,7 @@
+@import "@styles/variables.scss";
+
 .message-list--item {
-	background-color: #71b8f7;
+	background-color: $second-color;
 	border-radius: 5px;
 	padding: 2px;
 	margin-bottom: 7px;

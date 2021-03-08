@@ -3,17 +3,23 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import App from '@pages/Home';
+import Router from './Core/router/';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
+import { history, initStore } from './Core/Store';
 
-
-import Router from './router/';
-import { BrowserRouter } from 'react-router-dom';
+const { store, persistor } = initStore();
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <BrowserRouter>
-        <Router />
-    </BrowserRouter>,
+    <Provider store={ store }>
+        <PersistGate loading={ null } persistor={ persistor }>
+            <ConnectedRouter history={ history }>
+                <Router />
+            </ConnectedRouter>
+        </PersistGate>
+    </Provider>,
     container
 );
