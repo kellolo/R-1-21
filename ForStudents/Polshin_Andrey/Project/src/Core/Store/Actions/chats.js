@@ -14,3 +14,9 @@ export const sendMsg = (id, sender, text, chatID) => ({
         ChatID
     }
 });
+
+export const IS_NEW_MSG = '@@chats/IS_NEW_MESSAGE';
+export const newMsg = (chatID) => ({
+    type: IS_NEW_MSG,
+    chatID
+});

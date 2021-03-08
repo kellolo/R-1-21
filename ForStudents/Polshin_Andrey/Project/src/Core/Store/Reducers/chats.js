@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { ADD_CHAT } from '@actions/chats';
+import { ADD_CHAT, IS_NEW_MSG } from '@actions/chats';
 import { SEND_MESSAGE } from '@actions/messages';
 
 const storeChats = {
@@ -7,7 +7,8 @@ const storeChats = {
         0: { id: '0', title: 'Чат 0', messageList: [0] },
         1: { id: '1', title: 'Чат 1', messageList: [1] },
         2: { id: '2', title: 'Чат 2', messageList: [1] }
-    }
+    },
+    newMsg: -1
 };
 
 export default (store = storeChats, action) => {
@@ -35,6 +36,11 @@ export default (store = storeChats, action) => {
                         }
                     }
                 }
+            });
+        }
+        case IS_NEW_MSG: {
+            return update(store, {
+                newMsg: { $set: action.chatID }
             });
         }
         default: {

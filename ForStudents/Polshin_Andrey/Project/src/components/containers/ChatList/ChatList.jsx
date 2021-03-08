@@ -10,18 +10,18 @@ import { addChat } from '@actions/chats';
 
 const ChatList = (props) => {
 
-    const { chatID, chats } = props;
+    const { chatID, chats, haseNewMsg } = props;
     const Chats = Object.values(chats).map((el, i) => <li key={i} className='chats__item'>
         <Button name={el.title}
             className='item__btn'
             variant="contained"
-            disabled={el.id == chatID}
+            disabled={haseNewMsg == -1 && (el.id == chatID || haseNewMsg == el.id)}
             color="primary">
             <Link to={`/chat/${el.id}`} className='item__link'>
                 {el.title}
             </Link>
         </Button>
-    </li>);
+    </li >);
 
     const handlerAddChat = name => {
         if (!name) return;
@@ -40,7 +40,8 @@ const ChatList = (props) => {
 }
 
 const mapStateToProps = ({ chatsReducer }) => ({
-    chats: chatsReducer.chats
+    chats: chatsReducer.chats,
+    haseNewMsg: chatsReducer.newMsg
 });
 const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

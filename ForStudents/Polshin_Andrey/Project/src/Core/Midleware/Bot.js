@@ -1,4 +1,5 @@
 import { SEND_MESSAGE, sendMsg } from '@actions/messages';
+import { newMsg } from '@actions/chats';
 
 export default store => next => action => {
     switch (action.type) {
@@ -7,7 +8,7 @@ export default store => next => action => {
                 setTimeout(() => {
                     const id = action.payload.id + 1;
                     return store.dispatch(sendMsg(id, 'BOT', 'Hellow ^)', action.payload.chatID));
-                }, 500);
+                }, 1000);
             }
         }
     }
