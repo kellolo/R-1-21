@@ -3,7 +3,6 @@ import React from 'react';
 import MessageList from '@containers/MessageList';
 import ChatsList from '@containers/ChatsList';
 import Header from '@components/Header';
-import MsgInput from '@components/MsgInput';
 
 import './style.scss';
 import { StylesProvider } from '@material-ui/core';

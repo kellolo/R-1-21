@@ -31,7 +31,7 @@ export default (store = storeChats, action) => {
                             styleList: {
                                 backgroundColor: {
                                     $set: 'yellow'}}}}})
-        }
+        };
 
         case 'UNHGHLGHT': {
             return update(store, {
@@ -39,8 +39,8 @@ export default (store = storeChats, action) => {
                         [action.payload.chatId]: {
                             styleList: {
                                 backgroundColor: {
-                                    $set: undefined}}}}})
-        }
+                                    $set: null}}}}})
+        };
 
         case 'ADD_CHT': {
             const newChat = { [action.payload.chatId]: {name: action.payload.name, styleList: {}}};
@@ -49,12 +49,20 @@ export default (store = storeChats, action) => {
                     $merge: newChat
                 }
             })
-        }
+        };
 
-
+        case 'REM_CHT': {
+            return update(store, {
+                activeChats: {
+                    [action.payload.chatId]: {
+                        $set: null
+                    }
+                }
+            })
+        };
 
         default: {
             return store;
         }
-    }
+    };
 };

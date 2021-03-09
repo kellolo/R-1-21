@@ -9,9 +9,9 @@ export const addChat = (chatId, name) => ({
     payload: { chatId, name }
 });
 
-export const removeChat = (name, text, chatId) => ({
+export const removeChat = (chatId) => ({
     type: 'REM_CHT',
-    payload: { name, text, chatId }
+    payload: { chatId }
 });
 
 export const highlight = (name, chatId) => ({

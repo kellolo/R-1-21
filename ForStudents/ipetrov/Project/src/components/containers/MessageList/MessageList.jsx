@@ -38,26 +38,6 @@ class MessageList extends Component {
         }        
     };
 
-/*    
-    componentDidUpdate() {
-        var regexp = /[а-яё]/i;
-        var answer = regexp.test( this.state.yourMessage ) ? 'Parle français?' : 'Ай донт спик инглиш';
-        // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
-        const last = this.state.messages[this.state.messages.length - 1];
-        if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
-            this.state.messages.pop();
-            this.textInput.current.disabled = false;
-            setTimeout(() =>  
-            this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'Bot-Sociopath', text: answer }
-                ] 
-            })
-            , 1000);          
-        }
-    }
-*/
-
     scrollToMyRef = () => {
         const scroll =
         this.chatContainer.current.scrollHeight -
@@ -67,6 +47,7 @@ class MessageList extends Component {
 
     render() {
         const messages = this.props.messages[this.props.chatId];
+        
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
