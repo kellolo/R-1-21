@@ -12,7 +12,7 @@ const persistConfig = {
     key: 'messanger',
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['messagesReducer', 'chatsReducer'],
+    whitelist: ['messagesReducer'],
 };
 
 const reduxDevTool = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : () => { };
