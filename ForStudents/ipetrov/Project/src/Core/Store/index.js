@@ -12,7 +12,7 @@ const persistConfig = {
     key: "my_chat",
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['messageReducer', 'chatsReducer']
+    whitelist: ['messagesReducer']
 }
 
 const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : () => {};
@@ -26,7 +26,6 @@ const initStore = () => {
     );
 
     const persistor = persistStore(store);
-
     return { store, persistor };
 }
 

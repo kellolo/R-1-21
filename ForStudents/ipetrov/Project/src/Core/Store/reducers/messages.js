@@ -1,12 +1,11 @@
 import update from "react-addons-update";
-import chatsStore from "./chats";
 
 const storeMessages = {
 
     messages: {
-        "0": [{ name: 'one', text: 'Hey!', chatId:'0' , date: '' }, { name: 'one', text: 'Вася', chatId:'01', date: '' }],
-        "1": [{ name: 'one', text: 'How are you?', chatId:'1', date: '' }, { name: 'one', text: 'Эдик', chatId:'1', date: '' }],
-        "2": [{ name: 'one', text: 'Максим', chatId:'2', date: '' }, { name: 'one', text: 'How are you?', chatId:'2', date: '' }],
+        "0": [{ name: 'one', text: 'Hey!', chatId:'0', date: '01.01.2021' }, { name: 'one', text: 'Вася', chatId:'0', date: '01.01.2021' }],
+        "1": [{ name: 'one', text: 'How are you?', chatId:'1', date: '01.01.2021' }, { name: 'one', text: 'Эдик', chatId:'1', date: '01.01.2021' }],
+        "2": [{ name: 'one', text: 'Максим', chatId:'2', date: '01.01.2021' }, { name: 'one', text: 'How are you?', chatId:'2', date: '01.01.2021' }],
      }
 
 /*
@@ -35,8 +34,6 @@ const storeMessages = {
 export default (store = storeMessages, action) => {
     switch(action.type) {
         case 'LOAD_MSG': {
-// здесь мне нужно забирать массив из объектов имя + сообщение
-// сначала мы по id чата забираем массив id сообщений, а по id сообщений создаем себе массив из объектов
             return store;
         }
 

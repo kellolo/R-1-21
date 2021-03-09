@@ -5,6 +5,8 @@ import Modal from '@components/Modal';
 import Contact from '@components/Contact';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { removeContact } from '@actions/contacts';
 
 class ContactsList extends Component {
     constructor (props) {
@@ -22,12 +24,16 @@ class ContactsList extends Component {
     }
 
     removeContact = val => {
+        this.props.remove(val);
+        /*
         const inactiveProcessing = this.state.inactiveChats;
         const inactiveChats = inactiveProcessing.filter((user, i) => user.name !== val);
         this.setState({ inactiveChats: [
             ...inactiveChats
         ]});
-    }
+*/
+    };
+
 
 
 /* до перехода на объект
@@ -56,6 +62,7 @@ class ContactsList extends Component {
             <Link to = { `/chat/${el}` } key={ 'contact_' + el }>
                 <Contact 
                     name={ activeChats[el].name }
+                    style={ activeChats[el].styleList }
                    
                 />
             </Link>);
@@ -63,7 +70,7 @@ class ContactsList extends Component {
         return <div className="contactslist">
             <div>{ Contacts }</div>
             <Modal  removeContact={ this.removeContact }
-                    add={ this.props.addContact } 
+                    add={ this.props.addChat } 
                     inactiveChats={ this.props.inactiveChats }
             />
         </div>;
@@ -75,4 +82,6 @@ const mapState = ({ contactsReducer }) => ({
     inactiveChats: contactsReducer.inactiveChats
 })
 
-export default connect(mapState, null)(ContactsList);
+const mapActions = dispatch => bindActionCreators({ remove: removeContact }, dispatch);
+
+export default connect(mapState, mapActions)(ContactsList);

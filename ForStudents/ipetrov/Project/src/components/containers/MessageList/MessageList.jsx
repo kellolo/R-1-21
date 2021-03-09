@@ -16,7 +16,7 @@ class MessageList extends Component {
             yourMessage: ''
         };
         this.chatContainer = React.createRef();
-    }
+    };
     
     changeHandler = (event) => {
         if (event.keyCode !== 13) {
@@ -24,7 +24,7 @@ class MessageList extends Component {
         } else {
             this.sendMessage();
         }
-    }
+    };
 
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
@@ -36,7 +36,7 @@ class MessageList extends Component {
                 () => this.scrollToMyRef()
             );
         }        
-    }
+    };
 
 /*    
     componentDidUpdate() {
@@ -72,6 +72,7 @@ class MessageList extends Component {
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text }
+                date={ el.date }
             />);
 
         return <div className="messagelist">
@@ -93,7 +94,7 @@ class MessageList extends Component {
 
 const mapState = ({ messagesReducer }) => ({ 
     messages: messagesReducer.messages
-})
+});
 
 const mapActions = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
 

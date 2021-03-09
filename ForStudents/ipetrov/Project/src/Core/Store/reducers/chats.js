@@ -1,9 +1,10 @@
+import update from "react-addons-update";
 
 const storeChats = {
     activeChats: {
-        "0": { name:'Василий Петрович шиномонтаж', messagelist: ['0', '2', '1'] },
-        "1": { name:'Эдуард Васильевич прачечная', messagelist: ['0', '3', '5'] },
-        "2": { name:'Максим Евгеньевич парикмахерская', messagelist: ['0', '4', '1'] },
+        "0": { name:'Василий Петрович шиномонтаж', styleList: {} },
+        "1": { name:'Эдуард Васильевич прачечная', styleList: {} },
+        "2": { name:'Максим Евгеньевич парикмахерская', styleList: {} },
     }
 
 
@@ -21,7 +22,36 @@ export default (store = storeChats, action) => {
     switch(action.type) {
         case 'LOAD_CHT': {
             return store;
+        };
+
+        case 'HGHLGHT': {
+            return update(store, {
+                    activeChats: {
+                        [action.payload.chatId]: {
+                            styleList: {
+                                backgroundColor: {
+                                    $set: 'yellow'}}}}})
         }
+
+        case 'UNHGHLGHT': {
+            return update(store, {
+                    activeChats: {
+                        [action.payload.chatId]: {
+                            styleList: {
+                                backgroundColor: {
+                                    $set: undefined}}}}})
+        }
+
+        case 'ADD_CHT': {
+            const newChat = { [action.payload.chatId]: {name: action.payload.name, styleList: {}}};
+            return update(store, {
+                activeChats: {
+                    $merge: newChat
+                }
+            })
+        }
+
+
 
         default: {
             return store;

@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import './style.scss';
 import ContactsList from '@containers/ContactsList';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addChat } from '@actions/chats';
+
 
 
 class ChatsList extends Component {
@@ -22,17 +25,21 @@ class ChatsList extends Component {
             }
     };
 
-    addContact = val => {
+    addChat = (chatId, name) => {
         // добавим контакт в список чатов
+        this.props.add(chatId, name);
+
+/*
         this.setState({ activeChats: [
             ...this.state.activeChats,
             { name: val, id: this.state.activeChats.length }
         ]});
+*/
     };
 
     render() {
         return <div className="chatslist">
-            <ContactsList addContact={ this.addContact } activeChats={ this.props.activeChats } />
+            <ContactsList addChat={ this.addChat } activeChats={ this.props.activeChats } />
         </div>;
     };
 };
@@ -41,4 +48,6 @@ const mapState = ({ chatsReducer }) => ({
     activeChats: chatsReducer.activeChats
 });
 
-export default connect(mapState, null)(ChatsList);
+const mapActions = dispatch => bindActionCreators({ add: addChat }, dispatch);
+
+export default connect(mapState, mapActions)(ChatsList);
