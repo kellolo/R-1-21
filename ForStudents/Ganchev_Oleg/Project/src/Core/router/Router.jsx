@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import './style.scss';
 import Home from '@pages/Home'
 import { Switch, Route } from 'react-router-dom';
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-export default class Router extends Component {
+class Router extends Component {
 
     render() {
+        //console.log('router' + this.props.chats);
         return (
             <Switch className="router">
                 <Route exact path='/' component={ Home } />
@@ -19,3 +22,11 @@ export default class Router extends Component {
         );
     } 
 };
+
+const mapState = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+
+const mapAction = dispatch => bindActionCreators({  }, dispatch);
+
+export default connect(mapState, mapAction)(Router);

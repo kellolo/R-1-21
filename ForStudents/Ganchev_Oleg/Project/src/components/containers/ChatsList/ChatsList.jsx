@@ -9,7 +9,7 @@ import SendIcon from '@material-ui/icons/Send';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { addChat } from "@actions/chats";
+import { loadChats, addChat } from "@actions/chats";
 
 class ChatsList extends Component {
     constructor (props) {
@@ -20,8 +20,8 @@ class ChatsList extends Component {
     }
 
     addChat = (userId, name) => {
-        const check = this.props.chats.filter( (el) => el.userId === userId);
-        if (check.length === 0) {
+        const check = this.props.chats.find((el) => el.userId === userId);
+        if (!check) {
             const title = 'Chat with ' + name;
             this.props.addChat(title, userId);
         }
@@ -42,20 +42,24 @@ class ChatsList extends Component {
         this.props.push(`/chat/${chatId}`);
     }
 
+    componentDidMount() {
+        this.props.loadChats('userName');
+    }
+
     render() {
         const chatsList = (
             <List>
-                { this.props.chats.map( (el, i) =>
-                        <ListItem
-                            button
-                            key={ 'chatID' + i }
-                            selected={ this.getSelectedIndex(i) }
-                            onClick={ () => this.handleNavigate(i) } >
-                            <ListItemIcon>
-                                <SendIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={ el.title } />
-                        </ListItem>
+                { this.props.chats.map((el, i) =>
+                    <ListItem
+                        button
+                        key={ 'chatID' + i }
+                        selected={ this.getSelectedIndex(i) }
+                        onClick={ () => this.handleNavigate(i) } >
+                        <ListItemIcon>
+                            <SendIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={ el.title } />
+                    </ListItem>
                 ) }
             </List>
         );
@@ -71,7 +75,7 @@ const mapState = ({ chatsReducer }) => ({
     chats: chatsReducer.chats
 });
 
-const mapAction = dispatch => bindActionCreators({ addChat, push }, dispatch);
+const mapAction = dispatch => bindActionCreators({ loadChats, addChat, push }, dispatch);
 
 export default connect(mapState, mapAction)(ChatsList);
 
