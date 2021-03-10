@@ -10,7 +10,7 @@ import SendIcon from '@material-ui/icons/Send';
 import Message from '@components/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { sendMessage } from '@actions/messages';
+import { sendMessage, loadMessages } from '@actions/messages';
 import redux from 'redux';
 
 
@@ -44,7 +44,11 @@ class MessageList extends Component {
             value: ''
         });
     };
-
+    
+    componentDidMount() {
+        this.props.loadMessages();
+    }
+ 
     render() {
         const { messages, activeChats, chatId } = this.props;
         const Messages = activeChats[chatId].messageList.map((messageId, index) => {
@@ -87,5 +91,5 @@ const mapStateToProps = ({ messagesReducer, chatsReducer }) => ({
     messages: messagesReducer.messages,
     activeChats: chatsReducer.activeChats
 });
-const mapActions = dispatch => bindActionCreators({ sendMessage }, dispatch);
+const mapActions = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 export default connect(mapStateToProps, mapActions)(MessageList);
