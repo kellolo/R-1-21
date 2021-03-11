@@ -2,12 +2,12 @@ import update from "react-addons-update";
 
 const storeChats = {
     activeChats: {
+/*
         "0": { name:'Василий Петрович шиномонтаж', styleList: {} },
         "1": { name:'Эдуард Васильевич прачечная', styleList: {} },
         "2": { name:'Максим Евгеньевич парикмахерская', styleList: {} },
+*/
     }
-
-
 
 /*
     activeChats: [
@@ -20,6 +20,11 @@ const storeChats = {
 
 export default (store = storeChats, action) => {
     switch(action.type) {
+
+        case 'LOAD_CHATS_SUCCESS': {
+            return update(store, { activeChats: { $set: action.payload.data }})
+        };
+
         case 'LOAD_CHT': {
             return store;
         };

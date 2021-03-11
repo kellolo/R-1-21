@@ -4,8 +4,8 @@ import './style.scss';
 import ContactsList from '@containers/ContactsList';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addChat, removeChat } from '@actions/chats';
-import { addMessageStore } from '@actions/messages';
+import { addChat, removeChat, loadChat } from '@actions/chats';
+import { addMessageStore, openNewChat } from '@actions/messages';
 
 
 
@@ -16,6 +16,11 @@ class ChatsList extends Component {
         }
     };
 
+    componentDidMount() {
+        this.props.open();
+        this.props.load();
+    }
+
     addChat = (chatId, name) => {
         // добавим контакт в список чатов
         this.props.add(chatId, name);
@@ -24,7 +29,7 @@ class ChatsList extends Component {
 
     removeChat = (chatId) => {
         this.props.remove(chatId);
-    }
+    };
 
     render() {
         return <div className="chatslist">
@@ -37,6 +42,6 @@ const mapState = ({ chatsReducer }) => ({
     activeChats: chatsReducer.activeChats
 });
 
-const mapActions = dispatch => bindActionCreators({ add: addChat, remove: removeChat, addMsgStr: addMessageStore  }, dispatch);
+const mapActions = dispatch => bindActionCreators({ add: addChat, remove: removeChat, addMsgStr: addMessageStore, load: loadChat, open: openNewChat }, dispatch);
 
 export default connect(mapState, mapActions)(ChatsList);
