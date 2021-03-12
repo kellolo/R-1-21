@@ -1,0 +1,6 @@
+messages.js
+
+case 'FILTER_MSG': {
+  reg = new RegExp(action.searchWord, 'i');
+  return store.messages.filter(msg => reg.test(msg.text));
+};
