@@ -1,5 +1,5 @@
 import update from 'react-addons-update';
-import { LOAD_MESSAGE, CREATE_MESSAGE } from '@actions/messages';
+import { LOAD_MESSAGE, SEND_MESSAGE } from '@actions/messages';
 
 const storeMessages = {
   messages: {
@@ -13,25 +13,21 @@ export default (store = storeMessages, action) => {
     case LOAD_MESSAGE: {
       return store;
     }
-    case CREATE_MESSAGE: {
-      return craeteMsg(store, action);
+    case SEND_MESSAGE: {
+      return update(store, {
+        messages: {
+          $merge: {
+            [action.payload.id]: {
+              sender: action.payload.sender,
+              text: action.payload.text,
+              date: new Date()
+            }
+          }
+        }
+      });
     }
     default: {
       return store;
     }
-  }
+  };
 };
-
-const craeteMsg = (store = storeMessages, action) => {
-  return update(store, {
-    messages: {
-      $merge: {
-        [action.id]: {
-          sender: action.sender,
-          text: action.text,
-          date: new Date()
-        }
-      }
-    }
-  });
-}
