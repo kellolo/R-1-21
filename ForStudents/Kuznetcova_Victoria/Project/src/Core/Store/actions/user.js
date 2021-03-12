@@ -1,19 +1,19 @@
 import { RSAA, getJSON } from 'redux-api-middleware';
 
-export const loadContacts = (id) => ({
+export const loadUser = () => ({
   [RSAA]: {
-    endpoint: `/api/contacts/${id}/`,
+    endpoint: '/api/me/',
     method: 'GET',
     types: [
-      'LOAD_CONTACTS_REQUEST',
+      'LOAD_USER_REQUEST',
       {
-        type: 'LOAD_CONTACTS_SUCCESS',
+        type: 'LOAD_USER',
         payload: async (action, state, response) => {
           const res = await getJSON(response);
-          return { data:JSON.parse(res) };
+          return { data:JSON.parse(res) }; 
         }
       },
-      'LOAD_CONTACTS_FAILURE'
+      'LOAD_USER_FAILURE'
     ]
   }
 });

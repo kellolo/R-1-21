@@ -11,27 +11,36 @@ import { Link } from 'react-router-dom';
 
 import Dialog from '@components/Dialog';
 
-
 import { connect } from 'react-redux';
 import redux, { bindActionCreators } from 'redux';
 import { loadChats } from '@actions/chats' ;
 
-class ChatsList extends Component {
+
+class ChatList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            // activeChats: []
+            activeChats: [
+                { name: 'Ira', id: '1' },
+                { name: 'Alex', id: '2' },
+                { name: 'Zo', id: '3' },
+                { name: 'Mary', id: '4' }
+            ]
         };
     }
 
-    // addChat = (props) => {
-    //         console.log(props);
-    //         this.setState({ activeChats: [...this.state.activeChats, { name: name, id: Date.now() }] });
-    // }
+    addChat = (name) => {
+            this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
+    }
     
+    componentDidMount(){
+        // this.props.loadChats('UserName');
+    }
+
 render() {
-    const { activeChats } = this.props;
-    const Chats = activeChats.map((el, i) => <Link to ={ `/chat/${el.id}` }><ListItem button key={ i }><ListItemAvatar><Avatar></Avatar></ListItemAvatar><ListItemText primary={ el.name } /></ListItem></Link>);
+    const { chats } = this.props;
+    const Chats = chats.map((el, i) => <Link to ={ `/chat/${el.id}` } key={ i }><ListItem button ><ListItemAvatar><Avatar></Avatar></ListItemAvatar><ListItemText primary={ el.name } /></ListItem></Link>);
+
     return <div className="chatslist">
                     { Chats }
                 <Divider />
@@ -41,11 +50,11 @@ render() {
     }
 };
 
+
 const mapState = ({ chatsReducer }) => ({
-    activeChats: chatsReducer.activeChats
+    chats: chatsReducer.chats
 });
 
-const mapActions = dispatch => bindActionCreators({ load: loadChats }, dispatch);
+const mapActions = dispatch => bindActionCreators({ loadChats }, dispatch);
 
-
-export default connect(mapState, null)(ChatsList);
+export default connect(mapState, mapActions)(ChatList);
