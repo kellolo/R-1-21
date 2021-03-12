@@ -29,9 +29,13 @@ class ChatsList extends Component {
         this.props.add(value);
     }
 
+    componentDidMount() {
+        this.props.load('userName');
+    }
+
     render() {
-        const { activeChats } = this.props;
-        const Chats = activeChats.map((el, i) => <ListItem key={ i }>
+        const { chats } = this.props;
+        const Chats = chats.map((el, i) => <ListItem key={ i }>
             <ListItemAvatar>
                 <Avatar alt={ el.name } src={ el.img }>
                 </Avatar>
@@ -50,7 +54,7 @@ class ChatsList extends Component {
 };
 
 const mapState = ({ chatsReducer }) => ({
-    activeChats: chatsReducer.activeChats
+    chats: chatsReducer.chats
 });
 
 const mapActions = dispatch => bindActionCreators({ load: loadChats, add: addChats }, dispatch);
