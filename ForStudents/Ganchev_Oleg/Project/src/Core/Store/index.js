@@ -3,6 +3,28 @@ import initReducers from './reducers';
 import middleware from '@middlewares';
 import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
+
+const reduxDevTools = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : () => {};
+export const history = createBrowserHistory();
+
+export default function ourStore() {
+    const initStore = {};
+
+    return createStore(
+        initReducers(history),
+        initStore,
+        compose(
+            applyMiddleware(
+                routerMiddleware(history),
+                ...middleware
+            ),
+            reduxDevTools,
+        ),
+    );
+};
+
+/* подключение Persist
+
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
@@ -35,4 +57,4 @@ export default function ourStore() {
     const persistor = persistStore(store);
 
     return { store, persistor };
-}
+}*/

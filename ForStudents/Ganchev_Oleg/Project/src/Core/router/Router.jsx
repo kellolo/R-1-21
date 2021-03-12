@@ -3,6 +3,7 @@ import './style.scss';
 import Home from '@pages/Home'
 import { Switch, Route } from 'react-router-dom';
 
+
 export default class Router extends Component {
 
     render() {
@@ -18,4 +19,4 @@ export default class Router extends Component {
             </Switch>
         );
     } 
-};
+}
