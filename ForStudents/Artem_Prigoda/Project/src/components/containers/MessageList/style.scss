@@ -1,11 +1,15 @@
+@import "@styles/variables.scss";
+
 .layout {
 	height: 95%;
 	width: 100%;
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	padding: 5px;
 	flex-direction: column;
 	box-sizing: border-box;
+	//background-color: $second-color;
 	// button {
 	// 	width: 50px;
 	// 	border-radius: 50%;
@@ -14,19 +18,25 @@
 }
 
 .message-list {
-	flex: 1 0 80%;
+	flex: 1 0 auto;
 	display: flex;
 	flex-direction: column;
-	// background-color: #dfe4ff;
+	background-color: $main-color;
 	// height: 100%;
 	width: 100%;
 	padding: 20px;
 	box-sizing: border-box;
 	overflow-y: scroll;
+	border-radius: 10px;
+	box-shadow: 5px 5px 2px grey;
+	margin: 0 0 10px 0;
 	&--input {
 		width: 100%;
 		display: flex;
 		color: #e2e2e2;
+		background-color: $main-color;
+		border-radius: 10px;
+		box-shadow: 5px 5px 2px grey;
 	}
 }
 

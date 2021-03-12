@@ -1,27 +1,29 @@
-// // import React from 'react';
 import React, { Component } from "react";
-// // import ReactDOM from 'react-dom';
 import MsgInput from "@components/MsgInput";
 import MessageList from "@containers/MessageList";
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'; 
+import { loadMessages } from '@actions/messages';
+
 import "./style.scss";
 
-export default class MessageField extends Component {
+class MessageField extends Component { // export default 
     constructor(props) {
         super(props);
         this.state = {
             input: "",
-            messages: [
-                { name: "Бот", text: "Привет" },
-                { name: "Бот", text: "Как у тебя дела?" },
-            ],
+            // messages: [
+            //     { name: "Бот", text: "Привет" },
+            //     { name: "Бот", text: "Как у тебя дела?" },
+            // ],
         };
         this.chatContainer = React.createRef();
-        this.textInput = React.createRef();
+        // this.textInput = React.createRef(); // change to autofocus
     };
-    componentDidMount() {
-        this.textInput.current.focus();
-    };
+    // componentDidMount() { // change to autofocus
+    //     this.textInput.current.focus();
+    // };
     sendMessage = (message) => {
         if (!message) {
         } else {
@@ -56,14 +58,15 @@ export default class MessageField extends Component {
         this.sendMessage();
     };
     render() {
+        console.log(this.props.loadMessages());
         return (
             <div className="field-chat-list">
                 <MessageList
-                    messages={ this.state.messages }
+                    messages={ this.props.messages }
                     scroll={ this.chatContainer }
                 />
                 <MsgInput
-                    focus={ this.textInput}
+                    // focus={ this.textInput } // change to autofocus
                     clearInput={ this.state.input }
                     click={ () => this.handleClick(this.state.input) }
                     change={ this.handleChange }
@@ -73,3 +76,10 @@ export default class MessageField extends Component {
         );
     };
 };
+
+const mapState = ({ messagesReducer }) => ({ 
+    messages: messagesReducer.messages,
+});
+const mapActions = dispatch => bindActionCreators({ loadMessages }, dispatch);
+
+export default connect(mapState, mapActions)(MessageField);

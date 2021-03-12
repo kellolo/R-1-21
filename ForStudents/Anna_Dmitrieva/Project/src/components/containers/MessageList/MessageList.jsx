@@ -13,8 +13,8 @@ export default class MessageList extends Component {
                 name={ el.name }
                 text={ el.text }
             />);
-        return <div ref={this.props.scroll} className="msg-list">
-                    {Messages}
+        return <div ref={ this.props.scroll } className="msg-list">
+                    { Messages }
                 </div>;
     };
 };

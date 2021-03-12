@@ -35,8 +35,9 @@ class MessageList extends Component {
         });
     };
 
-    componentDidUpdate() {
-        // console.log('Отправлено');
+    async componentDidMount() {
+        console.log(this.props);
+        await this.props.loadMessages(this.props.user.user.id, this.props.activeChat);
     };
 
     render() {
@@ -67,10 +68,12 @@ class MessageList extends Component {
 };
 
 // mapState - это когда вы берете данные прям из хранилища
-const mapState = ({ messagesReducer }) => ({
-    messages: messagesReducer.messages
+const mapState = ({ messagesReducer, userReducer, chatsReducer }) => ({
+    messages: messagesReducer.messages,
+    user: userReducer,
+    activeChat: chatsReducer.activeChat
 });
 
-const mapActions = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
+const mapActions = dispatch => bindActionCreators({ send: sendMessage, loadMessages }, dispatch);
 
 export default connect(mapState, mapActions)(MessageList);
