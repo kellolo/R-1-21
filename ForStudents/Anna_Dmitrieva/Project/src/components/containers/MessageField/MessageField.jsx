@@ -4,7 +4,7 @@ import MessageList from "@containers/MessageList";
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'; 
-import { loadMessages } from '@actions/messages';
+import { loadMessages, sendMessage} from '@actions/messages';
 
 import "./style.scss";
 
@@ -27,8 +27,9 @@ class MessageField extends Component { // export default
     sendMessage = (message) => {
         if (!message) {
         } else {
+            this.props.send('Анна', this.state.input); //вызов функции отправки через action
             this.setState({
-                messages: [...this.state.messages, { text: message, name: "Анна" }],
+                // messages: [...this.state.messages, { text: message, name: "Анна" }],
                 input: "",
             },
                 () => this.scrollToMyRef(),
@@ -36,9 +37,7 @@ class MessageField extends Component { // export default
         };
     };
     scrollToMyRef = () => {
-        const scroll =
-            this.chatContainer.current.scrollHeight -
-            this.chatContainer.current.clientHeight;
+        const scroll = this.chatContainer.current.scrollHeight - this.chatContainer.current.clientHeight;
         // console.log(this.chatContainer.current.scrollHeight);
         // console.log(this.chatContainer.current.clientHeight);
         this.chatContainer.current.scrollTo(0, scroll);
@@ -54,11 +53,11 @@ class MessageField extends Component { // export default
     handleChange = (event) => {
         if (event.keyCode !== 13) {
             this.setState({ input: event.target.value });
-        };
-        this.sendMessage();
+        } else {
+            this.sendMessage();
+        }
     };
     render() {
-        console.log(this.props.loadMessages());
         return (
             <div className="field-chat-list">
                 <MessageList
@@ -80,6 +79,6 @@ class MessageField extends Component { // export default
 const mapState = ({ messagesReducer }) => ({ 
     messages: messagesReducer.messages,
 });
-const mapActions = dispatch => bindActionCreators({ loadMessages }, dispatch);
+const mapActions = dispatch => bindActionCreators({ load: loadMessages, send: sendMessage }, dispatch);
 
 export default connect(mapState, mapActions)(MessageField);
