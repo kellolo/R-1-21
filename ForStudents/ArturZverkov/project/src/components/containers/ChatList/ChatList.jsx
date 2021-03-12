@@ -1,49 +1,64 @@
 
-        import './style.css';
-        import React, { Component, Fragment } from 'react';
-        import { Link } from 'react-router-dom';
-        import ChatsDialog from '@components/ChatsDialog';
+import './style.css';
+import React, { Component, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import ChatsDialog from '@components/ChatsDialog';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-        export default class ChatList extends Component {
-            constructor(props) {
-                super(props);
-                this.state = {
-                    activeChats: [
-                        { name: 'Вася', id: '1' },
-                        { name: 'Клава', id: '2' },
-                        { name: 'Дуня', id: '3' },
-                        { name: 'Пердуня', id: '4' }
-                    ]
-                }
-            }
+import { loadChats } from '@actions/chats';
 
-            addChat = name => {
-                this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
-            }
+class ChatList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeChats: [
+                { name: 'Вася', id: '1' },
+                { name: 'Клава', id: '2' },
+                { name: 'Дуня', id: '3' },
+                { name: 'Пердуня', id: '4' }
+            ]
+        }
+    }
 
-            render() {
-                const { activeChats } = this.state;
-                const Chats = activeChats.map((el, i) => <li key={ i } className="chatlist-list__item">
-                    <Link to = {`/chat/${el.id}`} >{ el.name }</Link>
-                </li>);
-        
-                return (
-                    <div className="chatlist d-flex flex-column">
-                        <div>
-                            <ul className="chatlist-list">
-                                { Chats }
-                            </ul>
-                        </div>
-                         
+    addChat = name => {
+        this.setState({ activeChats: [...this.state.activeChats, { name, id: Date.now() }] });
+    }
 
-                        <div>
-                            <ChatsDialog add={ this.addChat } />
-                        </div>
-                        {/* <div>
+    componentDidMount() {
+        this.props.loadChats('userName');
+    }
+
+    render() {
+        const { activeChats } = this.state;
+        const Chats = activeChats.map((el, i) => <li key={i} className="chatlist-list__item">
+            <Link to={`/chat/${el.id}`} >{el.name}</Link>
+        </li>);
+
+        return (
+            <div className="chatlist d-flex flex-column">
+                <div>
+                    <ul className="chatlist-list">
+                        {Chats}
+                    </ul>
+                </div>
+
+
+                <div>
+                    <ChatsDialog add={this.addChat} />
+                </div>
+                {/* <div>
                             <Link to = '/not-home'>Not Home</Link>
                         </div> */}
-                    </div>
-                )
-            }
-        }
-    
+            </div>
+        )
+    }
+}
+
+const mapState = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+
+const mapAction = dispatch => bindActionCreators({ loadChats }, dispatch);
+
+export default connect(mapState, mapAction)(ChatList);

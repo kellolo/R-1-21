@@ -1,8 +1,10 @@
 
+import update from 'react-addons-update';
+
 const storeMessages = {
     messages: [
-        { name: 'one', text: 'Hey!' },
-        { name: 'one', text: 'How are you?' }
+        { name: 'one', text: 'Hey!', date: '' },
+        { name: 'one', text: 'How are you?', date: '' }
     ],
 };
 
@@ -17,6 +19,9 @@ export default (store = storeMessages, action) => {
         }
         default: {
             return store;
+        }
+        case 'SEND_MSG': {
+            return update(storer, { messages: { $push: [action.payload] } });
         }
     }
 };
