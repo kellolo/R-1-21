@@ -1,29 +1,46 @@
 import { RSAA, getJSON } from 'redux-api-middleware';
 
-export const loadChats = () => ({
+export const loadChats = (user) => ({
     [RSAA]: {
         endpoint: '/api/chats/',
-        method: 'GET',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json;charset=utf-8' },
+        body: JSON.stringify(user),
         types: [
             "LOAD_CHATS_REQUEST",
             {
                 type: "LOAD_CHATS_SUCCESS",
                 payload: async (action, state, response) => {
                     const res = await getJSON(response);
-                    console.log(res);
                     return { data: JSON.parse(res) }; // reducer : action.payload.data
                 },
             },
-            "LOAD_CHATS_FAILURE"
+            {
+                type: "LOAD_CHATS_FAILURE",
+                meta: async (action, state, response) => {
+                    const res = await getJSON(response);
+                    if (res) {
+                        return {
+                            status: res.status,
+                            statusText: res.statusText
+                        };
+                    } else {
+                        return {
+                            status: 'Network request failed'
+                        }
+                    }
+                }
+            }
         ]
     }
-
 });
 
-export const addChat = (title, userId) => ({
-    type: 'ADD_CHAT',
-    paramChat: {title, userId},
+export const addChat = (title, chatId, contactId) => ({
+    type: "ADD_CHAT",
+    paramChat: { title, chatId, contactId },
 });
+
+
 
 /* хранение данных в Redux store
 export const ADD_CHAT = '@@chat/ADD_CHAT';

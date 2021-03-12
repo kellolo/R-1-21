@@ -1,16 +1,17 @@
 const express = require('express');
 const chatController = require('./controllers/chat');
+const messageController = require('./controllers/message');
+const contactController = require('./controllers/contact');
+const userController = require('./controllers/user');
+
 const app = express();
 
 app.use(express.json());
 
-/*app.get('/app/:id', (req, res) => {
-    const id = req.params.id;
-    res.json({ some_data: `for user ${id}`});
-})*/
-
-app.get('/chats', chatController.load);
-//app.get('/chats', chatController.load);
+app.post('/chats', chatController.load);
+app.post('/messages', messageController.load);
+app.post('/contacts', contactController.load);
+app.get('/me', userController.load);
 //app.get('/chats', chatController.load);
 //app.get('/chats', chatController.load);
 

@@ -12,7 +12,9 @@ export default (store = storeChats, action) => {
             });
         }
         case 'ADD_CHAT': {
-            return store;
+            return update(store, {
+                chats: { $push: [action.paramChat] }
+            });
         }
         default: {
             return store;

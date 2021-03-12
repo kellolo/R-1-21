@@ -1,26 +1,25 @@
 import { RSAA, getJSON } from 'redux-api-middleware';
 
-export const loadMessages = (user) => ({
+export const loadContacts = (user) => ({
     [RSAA]: {
-        endpoint: '/api/messages/',
+        endpoint: '/api/contacts/',
         method: 'POST',
         headers: { 'Content-Type': 'application/json;charset=utf-8' },
         body: JSON.stringify(user),
         types: [
-            "LOAD_MESSAGES_REQUEST",
+            "LOAD_CONTACTS_REQUEST",
             {
-                type: "LOAD_MESSAGES_SUCCESS",
+                type: "LOAD_CONTACTS_SUCCESS",
                 payload: async (action, state, response) => {
                     const res = await getJSON(response);
                     return { data: JSON.parse(res) }; // reducer : action.payload.data
                 },
             },
-            "LOAD_MESSAGES_FAILURE",
+            "LOAD_CONTACTS_FAILURE",
         ]
     }
 });
 
-export const sendMessages = (name, text, style, chatId) => ({
-    type: 'SEND_MSG',
-    paramMsg: {name, text, style, chatId},
+export const addContacts = () => ({
+
 });

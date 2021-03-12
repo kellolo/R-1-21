@@ -16,14 +16,16 @@ class ChatsList extends Component {
         super(props);
         this.state = {
             selectedIndex: '',
+            isChatsLoad: false,
         };
     }
 
-    addChat = (userId, name) => {
-        const check = this.props.chats.find((el) => el.userId === userId);
+    addChat = (name, contactId) => {
+        const check = this.props.chats.find((el) => el.contactId === contactId);
         if (!check) {
+            const chatId = this.props.chats.length;
             const title = 'Chat with ' + name;
-            this.props.addChat(title, userId);
+            this.props.addChat(title, chatId, contactId);
         }
     }
 
@@ -39,22 +41,23 @@ class ChatsList extends Component {
 
     handleNavigate(chatId) {
         this.setSelectedIndex(chatId);
-        this.props.push(`/chat/${chatId}`);
+        this.props.push(`/chat/${ chatId }`);
     }
 
     componentDidMount() {
-        this.props.loadChats('userName');
+        const userId = this.props.user.userId;
+        this.props.loadChats({ userId });
     }
 
     render() {
         const chatsList = (
             <List>
-                { this.props.chats.map((el, i) =>
+                { this.props.chats.map((el) =>
                     <ListItem
                         button
-                        key={ 'chatID' + i }
-                        selected={ this.getSelectedIndex(i) }
-                        onClick={ () => this.handleNavigate(i) } >
+                        key={ el.chatId }
+                        selected={ this.getSelectedIndex(el.chatId) }
+                        onClick={ () => this.handleNavigate(el.chatId) } >
                         <ListItemIcon>
                             <SendIcon />
                         </ListItemIcon>
@@ -66,7 +69,7 @@ class ChatsList extends Component {
 
         return <div className="chats-list">
             { chatsList }
-            <ContactsList add={ this.addChat } />
+            <ContactsList user={this.props.user} add={ this.addChat } />
         </div>;
     }
 }
