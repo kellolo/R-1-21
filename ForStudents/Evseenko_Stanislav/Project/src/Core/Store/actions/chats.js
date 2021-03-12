@@ -13,3 +13,9 @@ export const addChat = (name, chatId) => ({
   name,
   chatId
 });
+
+export const lastMessage = (chatId, text) => ({
+  type: 'LAST_MSG',
+  chatId,
+  text
+})

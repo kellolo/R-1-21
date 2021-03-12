@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { sendMessage, writeText } from '@actions/messages';
-import { updateChats } from '@actions/chats';
+import { updateChats, lastMessage } from '@actions/chats';
 
 import './style.scss';
 
@@ -25,26 +25,20 @@ class MessageList extends Component {
     };
   };
 
-  currentTime = () => {
-    const curDate = new Date();
-    const curHours = curDate.getHours() < 10 ? "0" + curDate.getHours() : curDate.getHours();
-    const curMinutes = curDate.getMinutes() < 10 ? "0" + curDate.getMinutes() : curDate.getMinutes();
-    return `${ curHours }:${ curMinutes }`;
-  };
-
   sendMessage = () => {
     const { messages, chatId, text } = this.props;
 
     if(text) {
       const messageId = messages.length + 1;
-      this.props.sendMessage(messageId, 'Я', text, `${ this.currentTime() }`);
+      this.props.sendMessage(chatId, messageId, 'Я', text);
       this.props.updateChats(chatId, messageId);
+      this.props.lastMessage(chatId, text);
       this.props.writeText('');
-
+      
       const LastMessage = document.querySelector('.message-area').lastChild;
       if(LastMessage) {
         LastMessage.scrollIntoView({ block: "end", behavior: "smooth" });
-      }
+      };
     };
   };
 
@@ -97,6 +91,6 @@ const mapStateToProps = ({ messagesReducer, chatsReducer }) => ({
   text: messagesReducer.text,
 });
 
-const mapActions = dispatch => bindActionCreators({ sendMessage, updateChats, writeText }, dispatch);
+const mapActions = dispatch => bindActionCreators({ sendMessage, updateChats, writeText, lastMessage }, dispatch);
 
 export default connect(mapStateToProps, mapActions)(MessageList);

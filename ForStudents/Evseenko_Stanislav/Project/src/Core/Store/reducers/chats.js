@@ -13,19 +13,19 @@ const storeChats = {
     {
       name: 'Гена',
       id: '1',
-      text: 'Привет!',
+      text: 'Начните чат c Геной',
       avatar: 'src/resources/img/avatar.jpg'
     },
     {
       name: 'Чебурашка',
       id: '2',
-      text: 'Да зачем тебе этот React?!',
+      text: 'Начните чат c Чебурашкой',
       avatar: 'src/resources/img/avatar2.jpg'
     },
     {
       name: 'Шапокляк',
       id: '3',
-      text: 'Приходи вечером на чай!',
+      text: 'Начните чат c Шапокляк',
       avatar: 'src/resources/img/avatar3.jpg'
     }
   ]
@@ -34,7 +34,7 @@ const storeChats = {
 export default (store = storeChats, action) => {
   switch (action.type) {
     case 'LOAD_CHATS': {
-      return store.activeChats;
+      return store.chats;
     }
     case 'UPD_CHATS': {
       return update(store, {
@@ -55,6 +55,21 @@ export default (store = storeChats, action) => {
             avatar: ''
           }
         ]}
+      });
+    }
+    case 'LAST_MSG': {
+      let chatIndex = null;
+      store.activeChats.forEach((element, i) => {
+        if(element.id == action.chatId) {
+          chatIndex = i;
+        }
+      });
+      return update(store, {
+        activeChats: {
+          [chatIndex]: {
+            text: { $set: action.text }
+          }
+        }
       });
     }
     default: {

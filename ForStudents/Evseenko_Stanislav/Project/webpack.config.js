@@ -44,6 +44,7 @@ module.exports = {
       '@pages': path.resolve(__dirname, 'src', 'pages'),
       '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
       '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'actions'),
+      '@middleware': path.resolve(__dirname, 'src', 'Core', 'middleware'),
     }
   },
   plugins: [

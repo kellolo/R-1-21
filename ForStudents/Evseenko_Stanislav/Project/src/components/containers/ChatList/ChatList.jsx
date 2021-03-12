@@ -8,9 +8,12 @@ import Avatar from '@material-ui/core/Avatar';
 
 import './style.scss';
 
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { push } from 'connected-react-router';
 
 class ChatList extends Component {
 
@@ -18,25 +21,31 @@ class ChatList extends Component {
     super(props);
   };
 
+  handleNavigate = (link) => {
+    this.props.push(link);
+  };
+
   render () {
     const { activeChats } = this.props;
     const chats = activeChats.map((el, i) => {
       return (
-        <Link to={`/chat/${ el.id }`}  key={ `chat_${i}` } className="chat" >
-          <ListItem button>
-            <ListItemAvatar>
-              <Avatar
-                src={ el.avatar }
-              />
-            </ListItemAvatar>
-            <ListItemText
-              className="chat__text"
-              primary={ el.name }
-              secondary={ el.text }
+        <ListItem
+          button
+          className="chat"
+          key={ `chat_${i}` }
+          onClick={ () => this.handleNavigate(`/chat/${ el.id }`) }
+        >
+          <ListItemAvatar>
+            <Avatar
+              src={ el.avatar }
             />
-          </ListItem>
-        </Link>
-        
+          </ListItemAvatar>
+          <ListItemText
+            className="chat__text"
+            primary={ el.name }
+            secondary={ el.text }
+          />
+        </ListItem>
       );
     });
 
@@ -56,4 +65,6 @@ const mapStateToProps = ({ chatsReducer }) => ({
   activeChats: chatsReducer.activeChats
 });
 
-export default connect(mapStateToProps, {})(ChatList);
+const mapActions = dispatch => bindActionCreators({ push }, dispatch);
+
+export default connect(mapStateToProps, mapActions)(ChatList);
