@@ -10,29 +10,29 @@ import List from "@material-ui/core/List";
 const ContactList = (props) => {
     const { onClick, contacts } = props;
 
-    const handleListItemClick = (value, i) => {
+    const handleListItemClick = (value) => {
         onClick(value);
     };
 
+    const renderContacts = () => (
+        contacts.map((name) => (
+            <ListItem button onClick={() => handleListItemClick(name)} key={name}>
+
+                <ListItemAvatar>
+
+                    <Avatar>
+                        <PersonIcon />
+                    </Avatar>
+
+                </ListItemAvatar>
+
+                <ListItemText primary={name} />
+            </ListItem>
+        ))
+    );
+
     return (
-        <List>
-
-            {contacts.map((name) => (
-                <ListItem button onClick={() => handleListItemClick(name)} key={name}>
-
-                    <ListItemAvatar>
-
-                        <Avatar>
-                            <PersonIcon />
-                        </Avatar>
-
-                    </ListItemAvatar>
-
-                    <ListItemText primary={name} />
-                </ListItem>
-            ))}
-
-        </List>
+        <List>{ renderContacts() }</List>
     )
 }
 

@@ -2,55 +2,62 @@
 import React, { Component, Fragment } from 'react';
 import './style.scss';
 import Modal from '@components/Modal';
-import Contact from '@components/Contact'
+import Contact from '@components/Contact';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { removeContact, addContact } from '@actions/contacts';
+import CloseIcon from '@material-ui/icons/Close';
 
-export default class ContactsList extends Component {
+class ContactsList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            activeChats: [{name:'Василий Петрович шиномонтаж', id: '1'}, 
-                            {name:'Эдуард Васильевич прачечная', id: '2'}, 
-                            {name:'Максим Евгеньевич парикмахерская', id: '3'}],
-            inactiveChats: [{name:'Вась Васич', id: '4'}, 
-                            {name:'Оль Олич', id: '5'}, 
-                            {name:'Дим Димыч', id: '6'}, 
-                            {name:'Халк Халкыч', id: '7'}]
-        };
-    }
+        }
+    };
 
-    handleContact = val => {
-        // добавим контакт в список чатов
-        this.setState({ activeChats: [
-            ...this.state.activeChats,
-            { name: val, id: this.state.activeChats.length + 1 }
-        ]});
+    addContact = (chatId, name) => {
+        this.props.add(chatId, name);
+    };
 
-        // удалим контакт из списка контактов не в чате. Если не остается контактов, то selectedValue нечего назначить и все пропало
-        const inactiveProcessing = this.state.inactiveChats;
-        const inactiveChats = inactiveProcessing.filter((user, i) => user.name !== val);
-        this.setState({ inactiveChats: [
-            ...inactiveChats
-        ]});
-    }
+    removeContact = val => {
+        this.props.remove(val);
+    };
+
+    handleCloseClick = (chatId, name) => {
+        this.addContact(chatId, name);
+        this.props.removeChat(chatId);
+    };
 
     render() {
-
-        const { activeChats } = this.state;
-        const Contacts = activeChats.map((el, i) => 
-            <Link to = { `/chat/${el.id}` }>
-                <Contact 
-                    key={ 'contact_' + i } 
-                    name={ el.name }
-                />
-            </Link>);
+        const { activeChats } = this.props;
+        const Contacts = Object.keys(activeChats).map((el) => 
+            (activeChats[el]) &&
+            <div className="contactContainer" key={ 'contactlist_' + el } >
+                <Link to = { `/chat/${el}` } key={ 'contact_' + el }>
+                    <Contact 
+                        name={ activeChats[el].name }
+                        style={ activeChats[el].styleList }
+                    />
+                </Link>
+                <button className="removeChat" onClick={() => this.handleCloseClick(el, activeChats[el].name)} ><CloseIcon className="removeChatIcon" /></button>
+            </div>
+            );
 
         return <div className="contactslist">
             <div>{ Contacts }</div>
-            <Modal  add={ this.handleContact } 
-                    inactiveChats={ this.state.inactiveChats }
+            <Modal  removeContact={ this.removeContact }
+                    add={ this.props.addChat } 
+                    inactiveChats={ this.props.inactiveChats }
             />
         </div>;
     }
 };
-    
+
+const mapState = ({ contactsReducer }) => ({
+    inactiveChats: contactsReducer.inactiveChats
+});
+
+const mapActions = dispatch => bindActionCreators({ remove: removeContact, add: addContact }, dispatch);
+
+export default connect(mapState, mapActions)(ContactsList);

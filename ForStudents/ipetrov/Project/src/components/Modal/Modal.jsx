@@ -39,7 +39,6 @@ import { blue } from '@material-ui/core/colors';
 //     padding: theme.spacing(2, 4, 3),
 //   },
 // }));
-const contactName = ['Вась Васич', 'Дим Димыч', 'Оль Олич', 'Халк Халкыч'];
 const useStyles = makeStyles({
   avatar: {
     backgroundColor: blue[100],
@@ -55,23 +54,25 @@ function SimpleDialog(props) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value) => {
-    props.addContact(value);
-    onClose(value);
+  const handleListItemClick = (chatId, name) => {
+    props.addContact(chatId, name);
+    props.removeContact(chatId);
+    onClose(chatId);
   };
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
       <DialogTitle id="simple-dialog-title">Add new chat</DialogTitle>
       <List>
-        {inactiveChats.map((el) => (
-          <ListItem button onClick={() => handleListItemClick(el.name)} key={el.name}>
+        {Object.keys(inactiveChats).map((el) => (
+          (inactiveChats[el]) &&
+          <ListItem button onClick={() => handleListItemClick(el, inactiveChats[el].name)} key={inactiveChats[el].name}>
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={el.name} />
+            <ListItemText primary={inactiveChats[el].name} />
           </ListItem>
         ))}
       </List>
@@ -88,8 +89,7 @@ SimpleDialog.propTypes = {
 export default function SimpleDialogDemo(props) {
   const [open, setOpen] = React.useState(false);
   const { inactiveChats } = props;
-  console.log(React.useState(inactiveChats[0].name));
-  const [selectedValue, setSelectedValue] = React.useState(inactiveChats[0].name);
+  const [selectedValue, setSelectedValue] = React.useState("0");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -105,7 +105,7 @@ export default function SimpleDialogDemo(props) {
       <Button variant="outlined" color="primary" onClick={handleClickOpen} className="addContacts">
         Add Contacts
       </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats}/>
+      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats} removeContact={props.removeContact}/>
     </div>
   );
 }

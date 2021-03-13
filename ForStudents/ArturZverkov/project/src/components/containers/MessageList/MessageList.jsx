@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+// import ReactDom from 'react-dom';
 
-import './style.css';
+import './style.scss';
 import Message from '@components/Message';
+//stateFull
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { loadMessages, sendMessage } from '@actions/messages';
 
 
-export default class MessageList extends Component {
+class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,53 +29,51 @@ export default class MessageList extends Component {
         } else {
             this.sendMessage();
         }
-    }
+    };
 
     sendMessage = () => {
+        this.props.send('Username', this.state.text);
 
         this.setState({
             text: '',
-            messages: [...this.state.messages,
-            {
-                name: 'User',
-                text: this.state.text
-            }]
         });
-    }
+    };
+
+    componentDidUpdate() {
+
+    };
 
     render() {
-        const { messages } = this.state;
+        const { messages } = this.props;
         const Messages = messages.map((el, i) =>
             <Message
-                key={i}
+                key={'msg_' + i}
                 name={el.name}
                 text={el.text}
             />);
 
-        return <div>
-            <button onClick={this.sendMessage}>add</button>
-            <input type="text"
-                value={this.state.text}
-                onChange={this.handleChange}
-                onKeyUp={this.handleChange}
-            />
-            {Messages}
+        return <div className="message-list__wrapper">
+            <div className="message-list__messages">
+                {Messages}
+            </div>
+            <div className="message-list__form">
+                <input
+                    type="text"
+                    value={this.state.text}
+                    onChange={this.handleChange}
+                    onKeyUp={this.handleChange}
+                />
+                <button onClick={this.sendMessage}>add</button>
+            </div>
         </div>;
 
-    }
+    };
 };
 
-//stateLess
-// const arr = [{ name: 'one', text: 'Hey!' }, { name: 'one', text: 'How are you?' }];
+const mapState = ({ messagesReducer }) => ({
+    messages: messagesReducer.messages
+});
 
-// export default () => {
-//     const Messages = arr.map((el, i) => <Message 
-//                                             key={ 'msg_' + i } 
-//                                             name={ el.name } 
-//                                             text={ el.text }
-//                                         />);
+const mapAction = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
 
-//     return <div>
-//         { Messages }
-//     </div>;
-// };
+export default connect(mapState, mapAction)(MessageList);

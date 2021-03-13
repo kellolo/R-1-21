@@ -8,7 +8,7 @@ const Modal = (props) => {
     const { open, onClose, title, onSelect, contacts } = props;
 
     return (
-        <Dialog open={open} onClose={onClose}>
+        <Dialog open={ open } onClose={ onClose }>
 
             <DialogTitle id="contacts-dialog">{title}</DialogTitle>
             <ContactList onClick={(value) => { onSelect(value) }} contacts={contacts} />

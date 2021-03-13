@@ -1,16 +1,21 @@
-// import React from 'react';
-// import ReactDOM from 'react-dom';
-import React, { Component } from "react";
-import Layout from "@containers/Layout";
-// import MsgInput from "@components/MsgInput";
+import React from 'react';
+import ChatList from "@containers/ChatList";
+import MessageField from "@containers/MessageField";
+import Header from "@components/Header";
+import { StylesProvider } from '@material-ui/core/styles';
 
 import "./style.scss";
 
-export default class Home extends Component {
-  render() {
-    return (<>
-      <Layout />
-    </>
-    );
-  };
+export default (props) => {
+  return (
+    <StylesProvider>
+      <div className="home-page">
+        <Header chatIdD={ props.chatId } />
+        <div className="home-page-messenger">
+          <ChatList />
+          { props.chatId && <MessageField /> } 
+        </div>
+      </div>
+    </StylesProvider>
+  );
 };

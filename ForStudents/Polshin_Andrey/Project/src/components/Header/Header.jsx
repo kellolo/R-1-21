@@ -1,45 +1,60 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Avatar from '@material-ui/core/Avatar';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 
 import Link from '@material-ui/core/Link';
-import { Link as RouterLink } from 'react-router-dom';
+import { push } from 'connected-react-router';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 import './style.scss';
 
-export default (props) => {
+const Header = (props) => {
 
-    const { chat, user } = props;
+    const { chats, chatID, user } = props;
     const curUser = user ? user : 'Guest';
-    const text = chat ? chat.title : 'To main';
+    const chat = chats[chatID];
+    const text = chat ? chat.title : `Profile - ${curUser}`;
+
+    const handleNavigate = link => {
+        props.push(link);
+    };
 
     return <AppBar position="static" className='header'>
         <Toolbar className='header__wraper'>
 
             <Breadcrumbs aria-label="breadcrumb" className='header__breadcrumbs'>
-                <RouterLink to='/' className='MuiTypography-root MuiLink-root MuiLink-underlineHover breadcrumbs__link MuiTypography-colorInherit'>
+                <Link href='/'
+                    color='inherit'
+                    onClick={() => handleNavigate(`/`)}>
                     Main
-                </RouterLink>
-                <RouterLink to='/profile' className='MuiTypography-root MuiLink-root MuiLink-underlineHover breadcrumbs__link MuiTypography-colorInherit'>
+                </Link>
+                <Link href='#' color='inherit' onClick={() => handleNavigate(`/profile`)}>
                     {curUser}
-                </RouterLink>
-                <Link href='/' color='inherit' className='MuiTypography-root MuiLink-root MuiLink-underlineHover breadcrumbs__link MuiTypography-colorInherit'>
+                </Link>
+                <Link href='/' color='inherit'>
                     {text}
                 </Link>
             </Breadcrumbs>
 
             <h1>{text}</h1>
 
-            <RouterLink to='/profile' color='inherit' className='header__profile'>
+            <Link href='#' color='inherit' className='header__profile'>
                 <Avatar>{curUser[0]}</Avatar>
                 &nbsp;
                 {curUser}
-            </RouterLink>
+            </Link>
 
         </Toolbar>
 
     </AppBar>;
 }
+
+const mapStateToProps = ({ chatsReducer }) => ({
+    chats: chatsReducer.chats
+});
+const mapDispatchToProps = dispatch => bindActionCreators({ push }, dispatch);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

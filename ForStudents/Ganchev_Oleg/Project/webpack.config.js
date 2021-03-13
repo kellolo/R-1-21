@@ -48,16 +48,19 @@ module.exports = {
             '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
             '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
             '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
+            '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'actions'),
+            '@middlewares': path.resolve(__dirname, 'src', 'Core', 'middleware'),
         }
     },
     plugins: [
         new MiniCssExtractPlugin({
             filename: path.join('style', '[name].css'),
-            chunkFilename: '[id].css'
+            chunkFilename: '[id].css',
         }),
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: path.resolve(__dirname, 'public', 'index.html')
+            template: path.resolve(__dirname, 'public', 'index.html'),
+            favicon: './src/favicon.ico',
         })
     ],
     devServer: {
@@ -65,7 +68,15 @@ module.exports = {
         hot: true,
         open: false,
         historyApiFallback: {
-            index: 'index.html'
+            index: './public/index.html'
+        },
+        proxy: {
+            '/api': {
+                target: 'http://localhost:9090',
+                pathRewrite: { '^/api' : '' },
+                secure: false,
+                changeOrigin: true,
+            }
         }
     },
 };

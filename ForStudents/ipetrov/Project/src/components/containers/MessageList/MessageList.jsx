@@ -2,20 +2,30 @@ import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
 import './style.scss';
 import Message from '@components/Message';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 //stateFull
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class MessageList extends Component {
+import { loadMessages, sendMessage } from '@actions/messages';
+
+class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'one', text: 'Hey!' }, 
-                { name: 'one', text: 'How are you?' }
-            ],
             yourMessage: ''
         };
         this.chatContainer = React.createRef();
+    };
+
+    loadMessages = (id) => {
+        this.props.load(id);
+    };
+
+    componentDidMount() {
+        this.loadMessages(this.props.chatId);
     }
     
     changeHandler = (event) => {
@@ -24,35 +34,20 @@ export default class MessageList extends Component {
         } else {
             this.sendMessage();
         }
-    }
-
-
+    };
 
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
+            this.props.send('You', this.state.yourMessage, this.props.chatId);
             this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'You', text: this.state.yourMessage },
-                    // имитация раздумий
-    //                { name: 'Bot-Sociopath', text: '#$#$#$#$#$#' }
-                ],
                 yourMessage: ''
             },
-                
                 () => this.scrollToMyRef()
-                
             );
         }        
-    }
+    };
 
-
-
-
-/*
-    componentDidMount() {
-    }
-*/
 /*    
     componentDidUpdate() {
         var regexp = /[а-яё]/i;
@@ -81,14 +76,19 @@ export default class MessageList extends Component {
     };
 
     render() {
-        const { messages } = this.state;
+        if (this.props.isLoading) {
+            return <CircularProgress />
+        }
+        const messages = this.props.messages[this.props.chatId];
+        
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text }
+                date={ el.date }
             />);
-
+        
         return <div className="messagelist">
                     <div className="controls">
                         <input
@@ -100,24 +100,18 @@ export default class MessageList extends Component {
                             />
                         <button className="sendbutton" onClick={ this.sendMessage }>Send</button>
                     </div>
-                    <div className="messages" ref={this.chatContainer}>{ Messages }</div>
+                    <div className="messages" ref={ this.chatContainer }>{ Messages }</div>
                 </div>;
-
+        
     }
 };
 
+const mapState = ({ messagesReducer }) => ({ 
+    messages: messagesReducer.messages,
+    servermessages: messagesReducer.servermessages,
+    isLoading: messagesReducer.isLoading
+});
 
-//stateLess
-// const arr = [{ name: 'one', text: 'Hey!' }, { name: 'one', text: 'How are you?' }];
+const mapActions = dispatch => bindActionCreators({ load: loadMessages, send: sendMessage }, dispatch);
 
-// export default () => {
-//     const Messages = arr.map((el, i) => <Message 
-//                                             key={ 'msg_' + i } 
-//                                             name={ el.name } 
-//                                             text={ el.text }
-//                                         />);
-
-//     return <div>
-//         { Messages }
-//     </div>;
-// };
+export default connect(mapState, mapActions)(MessageList);

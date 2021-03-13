@@ -2,48 +2,76 @@ import React, { Component } from 'react';
 import './style.scss';
 import Messages from '@components/Messages';
 import MsgInput from '@components/MsgInput';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadMessages, sendMessages } from '@actions/messages';
 
-export default class MessageList extends Component {
+class MessageList extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            messages: [
-                { name: 'user', text: 'Hey!', style: 'message__me' },
-                { name: 'user', text: 'How are you?', style: 'message__me' }
-            ],
             userAnswer: false,
         };
+        this.textInput = null;
+        this.lastMsg = null;
     }
 
-    sendMessage = (text) => {
+    sendMessage = (name, text) => {
+        const userAnswer = (name === 'me');
+        const style = userAnswer ? 'message__me' : 'message__other';
+        const chatId = this.props.chatId;
+        this.props.sendMessages(name, text, style, chatId);
         this.setState({
-            messages: [...this.state.messages, {
-                name: 'user', text: text, style: 'message__me'
-            }],
-            userAnswer: true,
+            userAnswer,
         });
     };
 
+    componentDidMount() {
+        const userId = this.props.user.userId;
+        this.props.loadMessages({ userId });
+
+        const elemInput = this.textInput.firstChild.firstChild;
+        elemInput.focus();
+    }
+
     render() {
-        return <div className="message-list">
-            <div className="message-list__msg">
-                <Messages messages={ this.state.messages }/>
+        return (
+            <div className="message-list">
+                <div className="message-list__msg">
+                    <Messages
+                        lastMessage={ el => this.lastMsg = el }
+                        messages={ this.props.messages }
+                        chatId={ this.props.chatId }
+                    />
+                </div>
+                <div className="message-list__input">
+                    <MsgInput
+                        textInput={ el => this.textInput = el }
+                        sendMessage={ this.sendMessage }
+                    />
+                </div>
             </div>
-            <div className="message-list__input">
-                <MsgInput sendMessage={ this.sendMessage }/>
-            </div>
-        </div>;
+        );
+
     }
 
     componentDidUpdate() {
+        if (this.lastMsg) {
+            this.lastMsg.scrollIntoView({ behavior: 'smooth' });
+        }
+
         setTimeout(() => {
             if (this.state.userAnswer) {
-                this.setState({
-                    messages: [...this.state.messages, { name: 'bot', text: 'answer', style: 'message__bot' }],
-                    userAnswer: false,
-                    }
-                );
+                this.sendMessage('bot', 'answer');
             }
-        }, 2000);
+        }, 500);
     }
-};
+}
+
+const mapState = ({ messagesReducer }) => ({
+    messages: messagesReducer.messages
+});
+
+const mapAction = dispatch => bindActionCreators({ loadMessages, sendMessages }, dispatch);
+
+export default connect(mapState, mapAction)(MessageList);

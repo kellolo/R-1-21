@@ -3,17 +3,23 @@ import ReactDom from 'react-dom';
 
 import '@styles/main.scss';
 
-import App from '@pages/Home';
+import Router from './Core/router/';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
+import { PersistGate } from 'redux-persist/integration/react';
+import { history, initStore } from './Core/Store';
 
-import { StylesProvider } from '@material-ui/core/styles';
+const { store, persistor } = initStore();
 
 const container = document.querySelector('#app');
 
 ReactDom.render(
-    <StylesProvider>
-        <>
-            <App />
-        </>
-    </StylesProvider>,
+    <Provider store={ store }>
+        <PersistGate loading={ null } persistor={ persistor }>
+            <ConnectedRouter history={ history }>
+                <Router />
+            </ConnectedRouter>
+        </PersistGate>
+    </Provider>,
     container
 );

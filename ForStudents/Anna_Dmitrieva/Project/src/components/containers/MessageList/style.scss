@@ -1,3 +1,31 @@
 .msg-list {
-    background-color: rgb(209, 178, 208);
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    height: 70vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    margin-right: calc(1 * (52.8vw - 100%));
+}
+
+::-webkit-scrollbar-button {
+    background-repeat: no-repeat;
+    height: 0px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #e9d2c8;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, #ff8e53 30%, #fe6b8b 90%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, #fe6b8b 30%, #ff8e53 90%);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
 }

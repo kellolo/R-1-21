@@ -1,50 +1,68 @@
 import React, { Component } from 'react';
-// import ReactDom from 'react-dom';
+
 
 import './style.scss';
 import Message from '@components/Message';
 import MsgInput from '@components/MsgInput';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class MessageList extends Component {
+import { sendMessage, deleteMessages } from '@actions/messages';
+
+
+class MessageList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            messages: [
-                { name: 'Bot', text: 'Hey!' },
-                { name: 'Bot', text: 'How are you?' }
-            ],
-        };
+        this.newMsg = React.createRef();
     }
 
     sendMessage = (text) => {
-        this.setState({
-            messages: [...this.state.messages, { name: 'Leia', text: text }],
-        });
+        this.props.send('Leia', text);
+    }
+
+    deleteMessage = () => {
+        this.props.kill();
     }
 
     componentDidUpdate() {
-        if (this.state.messages.length % 2 === 1) {  // Решение из методички, ничего пока не придумала. Надо бы через lastIndexOf как-то проверять, но пока все зацикливается
-            setTimeout(() =>
-                this.setState(
-                    { messages: [...this.state.messages, { name: 'Bot', text: 'Не приставай ко мне, я робот!' }] }),
-                1000);
-        }
+        this.scrollToBottom();
+    }
+
+    scrollToBottom() {
+        this.newMsg.current.scrollIntoView(false);
     }
 
     render() {
-        const { messages } = this.state;
+        const { messages } = this.props;
         const Messages = messages.map((el, i) =>
             <Message
-                key={'msg_' + i}
-                name={el.name}
-                text={el.text}
+                key={ `msg_${i}` }
+                name={ el.name }
+                text={ el.text }
+                date={ el.date }
             />);
-        //MsgInput должен конечно быть в Home 
-        return <div className="messageList">
-            {Messages}
-            <MsgInput userSend={this.sendMessage} />
+        //тут есть кнопка для удаления сообщений, она сделана через костыли и выглядит убого. Не забыть удалить. 
+        return <div className="message-list">
+            <div className="message-list__chat">
+                <div className="message-list__chat_wrapper">
+                    { Messages }
+                </div>
+                <div ref={ this.newMsg }></div>
+            </div>
+            <button onClick={ this.deleteMessage }>Kill</button>
+            <div className="message-list__input">
+                <MsgInput userSend={ this.sendMessage } />
+            </div>
         </div>;
 
     }
 };
+
+const mapState = ({ messagesReducer }) => ({
+    messages: messagesReducer.messages
+});
+
+const mapActions = dispatch => bindActionCreators({ send: sendMessage, kill: deleteMessages }, dispatch);
+
+export default connect(mapState, mapActions)(MessageList);

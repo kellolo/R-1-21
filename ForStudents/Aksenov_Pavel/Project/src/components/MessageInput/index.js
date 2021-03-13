@@ -1,3 +1,3 @@
-import page from './MessageInput.jsx'
+import page from './MessageInput.jsx';
 
 export default page;
