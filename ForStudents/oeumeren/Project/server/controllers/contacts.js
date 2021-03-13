@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = "./server/db/chats";
+const path = "./server/db/contacts";
 
 module.exports = {
     async load(req, res) {

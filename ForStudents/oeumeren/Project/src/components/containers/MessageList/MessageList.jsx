@@ -6,7 +6,7 @@ import SendIcon from '@material-ui/icons/Send';
 import TextField from '@material-ui/core/TextField';
 
 import { connect } from "react-redux";
-import { sendMsg } from "@actions/messageAction.js";
+import { sendMsg, loadMsg } from "@actions/messageAction.js";
 
 import {makeStyles} from '@material-ui/core/styles';
 import styles from "./styles.module.scss";
@@ -21,10 +21,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MessageList = (props) => {
-    const {chatId, messages, sendMsg} = props;
+    const {chatId, messages, sendMsg, loadMsg} = props;
     const [text, setText] = useState('');
     const messagesWindow = useRef();
     const classes = useStyles();
+
+    useEffect(() => {
+        loadMsg(chatId)
+    }, [chatId]);
 
     useEffect(() => {
         messagesWindow.current.scrollTop = messagesWindow.current.scrollHeight;
@@ -86,7 +90,8 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    sendMsg: (chatId, msgId, author, text) => dispatch(sendMsg(chatId, msgId, author, text))
+    sendMsg: (chatId, msgId, author, text) => dispatch(sendMsg(chatId, msgId, author, text)),
+    loadMsg: (chatId) => dispatch(loadMsg(chatId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

@@ -10,9 +10,9 @@ export const addChat = (title) => ({
     }
 });
 
-export const loadChats = () => ({
+export const loadChats = (userId) => ({
     [RSAA]: {
-        endpoint: "/api/chats/",
+        endpoint: `/api/chats/${userId}`,
         method: "GET",
         types: [
             "LOAD_CHATS_REQUEST",

@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="manifest" href="http://localhost:3300/manifest/manifest.json">
 </head>
 <body>
     <div id="app"></div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('http://localhost:3300/service-worker.js').then(function(registration) {
+                    // Registration was successful
+                    console.log('ServiceWorker успешно зарегистрирован со сферой действия: ', registration.scope);
+                }, function(err) {
+                    // registration failed :(
+                    console.log('ServiceWorker не удалось зарегистрировать: ', err);
+                }).catch(function(err) {
+                    console.log(err)
+                });
+            });
+        } else {
+            console.log('ServiceWorker не поддерживается');
+        }
+    </script>
 </body>
 </html>
