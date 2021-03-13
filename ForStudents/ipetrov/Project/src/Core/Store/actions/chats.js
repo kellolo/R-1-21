@@ -1,9 +1,9 @@
 import { getJSON, RSAA } from "redux-api-middleware";
 
 
-export const loadChat = () => ({
+export const loadChat = (id) => ({
     [RSAA]: {
-        endpoint: '/api/chats/',
+        endpoint: `/api/chats/${id}`,
         method: 'GET',
         types: [
             'LOAD_CHATS_REQUEST',

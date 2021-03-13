@@ -60,21 +60,23 @@ function SimpleDialog(props) {
     onClose(chatId);
   };
 
+  const Contacts = Object.keys(inactiveChats).map((el) => (
+    (inactiveChats[el]) &&
+    <ListItem button onClick={ () => handleListItemClick(el, inactiveChats[el].name) } key={ inactiveChats[el].name }>
+      <ListItemAvatar>
+        <Avatar className={ classes.avatar }>
+          <PersonIcon />
+        </Avatar>
+      </ListItemAvatar>
+      <ListItemText primary={ inactiveChats[el].name } />
+    </ListItem>
+  ));
+
   return (
-    <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+    <Dialog onClose={ handleClose } aria-labelledby="simple-dialog-title" open={ open }>
       <DialogTitle id="simple-dialog-title">Add new chat</DialogTitle>
       <List>
-        {Object.keys(inactiveChats).map((el) => (
-          (inactiveChats[el]) &&
-          <ListItem button onClick={() => handleListItemClick(el, inactiveChats[el].name)} key={inactiveChats[el].name}>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar}>
-                <PersonIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={inactiveChats[el].name} />
-          </ListItem>
-        ))}
+        { Contacts }
       </List>
     </Dialog>
   );
@@ -102,10 +104,10 @@ export default function SimpleDialogDemo(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen} className="addContacts">
+      <Button variant="outlined" color="primary" onClick={ handleClickOpen } className="addContacts">
         Add Contacts
       </Button>
-      <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} addContact={props.add} inactiveChats={inactiveChats} removeContact={props.removeContact}/>
+      <SimpleDialog selectedValue={ selectedValue } open={ open } onClose={ handleClose } addContact={ props.add } inactiveChats={ inactiveChats } removeContact={ props.removeContact }/>
     </div>
   );
 }

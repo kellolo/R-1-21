@@ -71,6 +71,9 @@ module.exports = {
                 secure: false,
                 changeOrigin: true
             }
+        },
+        historyApiFallback: {
+            index: '/public/index.html'
         }
     }
 };

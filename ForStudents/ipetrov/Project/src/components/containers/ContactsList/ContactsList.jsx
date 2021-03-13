@@ -34,7 +34,7 @@ class ContactsList extends Component {
         const Contacts = Object.keys(activeChats).map((el) => 
             (activeChats[el]) &&
             <div className="contactContainer" key={ 'contactlist_' + el } >
-                <Link to = { `/chat/${el}` } key={ 'contact_' + el }>
+                <Link to = { `/chat/${el}` } key={ 'contact_' + el } onClick={ this.props.open }>
                     <Contact 
                         name={ activeChats[el].name }
                         style={ activeChats[el].styleList }
@@ -50,9 +50,9 @@ class ContactsList extends Component {
                     add={ this.props.addChat } 
                     inactiveChats={ this.props.inactiveChats }
             />
-        </div>;
-    }
-};
+            </div>
+        };
+    };
 
 const mapState = ({ contactsReducer }) => ({
     inactiveChats: contactsReducer.inactiveChats

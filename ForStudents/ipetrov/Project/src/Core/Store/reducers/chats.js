@@ -2,27 +2,14 @@ import update from "react-addons-update";
 
 const storeChats = {
     activeChats: {
-/*
-        "0": { name:'Василий Петрович шиномонтаж', styleList: {} },
-        "1": { name:'Эдуард Васильевич прачечная', styleList: {} },
-        "2": { name:'Максим Евгеньевич парикмахерская', styleList: {} },
-*/
     }
-
-/*
-    activeChats: [
-        {name:'Василий Петрович шиномонтаж', id: '1'}, 
-        {name:'Эдуард Васильевич прачечная', id: '2'}, 
-        {name:'Максим Евгеньевич парикмахерская', id: '3'}
-    ]
-*/
 };
 
 export default (store = storeChats, action) => {
     switch(action.type) {
 
         case 'LOAD_CHATS_SUCCESS': {
-            return update(store, { activeChats: { $set: action.payload.data }})
+            return update(store, { activeChats: { $set: action.payload.data }});
         };
 
         case 'LOAD_CHT': {
@@ -35,7 +22,7 @@ export default (store = storeChats, action) => {
                         [action.payload.chatId]: {
                             styleList: {
                                 backgroundColor: {
-                                    $set: 'yellow'}}}}})
+                                    $set: 'yellow'}}}}});
         };
 
         case 'UNHGHLGHT': {
@@ -44,7 +31,7 @@ export default (store = storeChats, action) => {
                         [action.payload.chatId]: {
                             styleList: {
                                 backgroundColor: {
-                                    $set: null}}}}})
+                                    $set: null}}}}});
         };
 
         case 'ADD_CHT': {
@@ -53,7 +40,7 @@ export default (store = storeChats, action) => {
                 activeChats: {
                     $merge: newChat
                 }
-            })
+            });
         };
 
         case 'REM_CHT': {
@@ -63,7 +50,7 @@ export default (store = storeChats, action) => {
                         $set: null
                     }
                 }
-            })
+            });
         };
 
         default: {

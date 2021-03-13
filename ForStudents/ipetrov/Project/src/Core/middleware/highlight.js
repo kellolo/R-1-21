@@ -1,7 +1,7 @@
 import { highlight, unhighlight } from '@actions/chats';
 
 export default store => next => action => { 
-    if (action.type == 'SEND_MSG') {
+    if (action.type == 'SEND_MESSAGES_SUCCESS') {
         store.dispatch(highlight(action.payload.name, action.payload.chatId));
         setTimeout(() => {
             store.dispatch(unhighlight(action.payload.name, action.payload.chatId)); 

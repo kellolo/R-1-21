@@ -1,27 +1,19 @@
 const express = require('express');
 const chatController = require('./controllers/chats');
 const messagesController = require('./controllers/messages');
+const userController = require('./controllers/user');
+const contactsController = require('./controllers/contacts');
 
 const app = express();
 app.use(express.json());
 
-/*
-app.get('/app/:id', (req, res) => {
-    const id = req.params.id;
-    res.json( {some_data: `for user ${id}`} )
-});
-*/
+app.get('/me', userController.load);
+app.get('/chats/:id', chatController.load);
+app.get('/contacts/:id', contactsController.load);
+app.get('/messages/:userId/:id', messagesController.load);
+app.post('/messages/:userId/:id', messagesController.write);
 
-app.get('/chats', chatController.load);
 
-app.get('/chats/:id', (req, res) => {
-    const id = req.params.id;
-    chatController.load(id, res)} );
-
-app.get('/messages/:id', (req, res) => {
-    const id = req.params.id;
-    messagesController.load(id, res)} );
-    
 app.listen(9090, () => {
     console.log('listen 9090...')
 });
