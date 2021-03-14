@@ -1,0 +1,27 @@
+[
+    {
+        "contactId": 0,
+        "name": "Admin",
+        "avatar": "null"
+    },
+    {
+        "contactId": 1,
+        "name": "Andrew",
+        "avatar": "null"
+    },
+    {
+        "contactId": 2,
+        "name": "Bart",
+        "avatar": "null"
+    },
+    {
+        "contactId": 3,
+        "name": "Tom",
+        "avatar": "null"
+    },
+    {
+        "contactId": 4,
+        "name": "John",
+        "avatar": "null"
+    }
+]
