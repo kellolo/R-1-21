@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f69435">
     <title>Document</title>
+    <link rel="manifest" href="//localhost:3300/manifest/manifest.json">
 </head>
 <body>
     <div id="app"></div>
@@ -12,7 +14,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
-                navigator.serviceWorker.register('http://localhost:3300/service-worker.js').then(function(registration) {
+                navigator.serviceWorker.register('//localhost:3300/service-worker.js').then(function(registration) {
                     // Registration was successful
                     console.log('ServiceWorker успешно зарегистрирован со сферой действия: ', registration.scope);
                     }, function(err) {
