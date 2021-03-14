@@ -1,19 +1,19 @@
 import { getJSON, RSAA } from 'redux-api-middleware';
 
-export const loadMessages = () => ({
+export const loadMessages = (user, chat) => ({
 	[RSAA]: {
-		endpoint: '/api/messages/',
+		endpoint: `/api/messages/?user=${user}&chat=${chat}`,
        method: 'GET',
        types: [
-           'START_MESSAGES_LOADING',
+           'LOAD_MESSAGES_REQUEST',
            {
-               type: 'SUCCESS_MESSAGES_LOADING',
+               type: 'LOAD_MESSAGES_SUCCESS',
                payload: async (action, state, res) => {
 								 const result = await getJSON(res);
-								 return { data: result };
+								 return { data: JSON.parse(result) };
 							 }
            },
-           'ERROR_MESSAGES_LOADING',
+           'LOAD_MESSAGES_FAILURE',
        ],
 	}
 });
