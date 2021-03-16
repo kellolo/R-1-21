@@ -8,10 +8,9 @@ import Avatar from '@material-ui/core/Avatar';
 
 import './style.scss';
 
-// import { Link } from 'react-router-dom';
-
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { loadChats } from '@actions/chats';
 
 import { push } from 'connected-react-router';
 
@@ -24,6 +23,10 @@ class ChatList extends Component {
   handleNavigate = (link) => {
     this.props.push(link);
   };
+
+  componentDidMount() {
+    this.props.loadChats();
+  }
 
   render () {
     const { activeChats } = this.props;
@@ -62,9 +65,10 @@ class ChatList extends Component {
 };
 
 const mapStateToProps = ({ chatsReducer }) => ({
-  activeChats: chatsReducer.activeChats
+  activeChats: chatsReducer.activeChats,
+  chats: chatsReducer.chats
 });
 
-const mapActions = dispatch => bindActionCreators({ push }, dispatch);
+const mapActions = dispatch => bindActionCreators({ loadChats, push }, dispatch);
 
 export default connect(mapStateToProps, mapActions)(ChatList);

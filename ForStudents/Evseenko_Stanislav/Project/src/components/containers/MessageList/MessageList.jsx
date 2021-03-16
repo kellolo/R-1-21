@@ -60,7 +60,7 @@ class MessageList extends Component {
     return (
       <div className="message-list">
         <div className="message-area">
-          { messagesList != null ? messagesList : <div></div> }
+          { messagesList || <div></div> }
         </div>
         <div className="message-input">
           <input

@@ -40,16 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ButtonAppBar(props) {
   const classes = useStyles(theme);
-  const { heading, activeChats } = props;
-
-  let header = null;
-  if(heading) {
-    activeChats.forEach(element => {
-      if(element.id == heading) {
-        header = element.name;
-      };
-    });
-  };
+  const { heading } = props;
 
   return (
     <div className="header">
@@ -62,7 +53,7 @@ function ButtonAppBar(props) {
             variant="h5"
             className={ classes.title }
           >
-            { header != null ? header : 'Мессенджер' }
+            { heading || 'Мессенджер' }
           </Typography>
         </Toolbar>
       </AppBar>
@@ -70,8 +61,6 @@ function ButtonAppBar(props) {
   );
 };
 
-const mapStateToProps = ({ chatsReducer }) => ({
-  activeChats: chatsReducer.activeChats
-});
+const mapStateToProps = ({ }) => ({ });
 
 export default connect(mapStateToProps, {})(ButtonAppBar);

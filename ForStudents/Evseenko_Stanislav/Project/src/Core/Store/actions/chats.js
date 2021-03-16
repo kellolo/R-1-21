@@ -1,5 +1,20 @@
+import { getJSON, RSAA } from 'redux-api-middleware';
+
 export const loadChats = () => ({
-  type: 'LOAD_CHATS',
+  [RSAA]: {
+    endpoint: '/api/chats/',
+    method: 'GET',
+    types: [
+      'LOAD_CHATS_REQUEST',
+      {
+        type: 'LOAD_CHATS_SUCCESS',
+        payload: async (action, state, responce) => {
+          const res = await getJSON(responce);
+          return { data: JSON.parse(res) };
+        },
+      },
+      'LOAD_CHATS_FAILURE']
+  }
 });
 
 export const updateChats = (chatId, messageId) => ({
