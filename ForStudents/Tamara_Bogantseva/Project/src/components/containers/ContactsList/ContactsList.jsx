@@ -1,91 +1,94 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
+
+import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import IconButton from '@material-ui/core/IconButton';
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
+import { withRouter } from "react-router";
 
-import { blue } from '@material-ui/core/colors';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import Modal from '@material-ui/core/Modal';
 
-const emails = ['Han Solo', 'Yoda', 'Boba Fett'];
-//documentation https://material-ui.com/ru/styles/api/#makestyles-styles-options-hook
-const useStyles = makeStyles({
-    avatar: {
-        backgroundColor: blue[100],
-        color: blue[600],
+const styles = theme => ({
+    paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        top: 150
     },
-    testClass: {
-        fontSize: '10em'
-    }
 });
 
-function SimpleDialog(props) {
+class ContactsList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false,
+            setOpen: false
+        };
+    }
 
-    const classes = useStyles();
-    const { onClose, selectedValue, open } = props;
-
-    const handleClose = () => {
-        onClose(selectedValue);
+    handleOpen = () => {
+        this.setState({ open: true });
     };
 
-    const handleListItemClick = (value) => {
-        props.addChat(value);
-        onClose(value);
+    handleClose = () => {
+        this.setState({ open: false });
     };
 
-    return (
-        <Dialog onClose={ handleClose } aria-labelledby="simple-dialog-title" open={ open } >
-            <DialogTitle id="simple-dialog-title">Write to...</DialogTitle>
-            <List>
-                { emails.map((email) => (
-                    <ListItem button onClick={ () => handleListItemClick(email) } key={ email }>
-                        <ListItemAvatar>
-                            <Avatar className={ classes.avatar }>
-                                <PersonIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={ email } />
-                    </ListItem>
-                )) }
-            </List>
-        </Dialog>
-    );
-}
-
-SimpleDialog.propTypes = {
-    onClose: PropTypes.func.isRequired,
-    open: PropTypes.bool.isRequired,
-    selectedValue: PropTypes.string.isRequired,
-};
-
-export default function SimpleDialogDemo(props) {
-
-    const [open, setOpen] = React.useState(false);
-    const [selectedValue, setSelectedValue] = React.useState(emails[1]);
-
-    const handleClickOpen = () => {
-        setOpen(true);
+    handleListItemClick = (name, id) => {
+        this.props.add(name, id);
     };
 
-    const handleClose = (value) => {
-        setOpen(false);
-        setSelectedValue(value);
-    };
+    render() {
+        const { classes, theme, contacts } = this.props;
+        const Contact = contacts.map((el) => (
+            <ListItem button onClick={ () => this.handleListItemClick(el.name, el.id) } key={ el.id }>
+                <ListItemAvatar>
+                    <Avatar >
+                        <PersonIcon />
+                    </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={ el.name } />
+            </ListItem>
+        ));
+        const body = (
+            <div className={ classes.paper }>
+                <h2 id="simple-modal-title">Write to</h2>
+                { Contact }
+            </div>
+        );
 
-    return (
-        <div>
-            <IconButton aria-label="add" color="primary" onClick={ handleClickOpen }>
+        return <div>
+            <IconButton aria-label="add" color="primary" onClick={ this.handleOpen }>
                 <AddCircleOutlineRoundedIcon />
             </IconButton>
-            <SimpleDialog selectedValue={ selectedValue } open={ open } onClose={ handleClose } addChat={ props.add } />
-        </div>
-    );
+            <Modal
+                open={ this.state.open }
+                onClose={ this.handleClose }
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                { body }
+            </Modal>
+        </div>;
+    }
 };
+
+const mapState = ({ contactsReducer }) => ({
+    contacts: contactsReducer.contacts,
+});
+
+const mapActions = dispatch => bindActionCreators({}, dispatch);
+
+export default withStyles(styles, { withTheme: true })(withRouter(connect(mapState, mapActions)(ContactsList)));
