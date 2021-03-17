@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,32 +12,40 @@ import Modal from "@components/Modal";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { push } from "connected-react-router";
-import { addChat } from "@actions/chatActions.js";
+import { addChat, loadChats } from "@actions/chatActions.js";
 
 import styles from "./styles.module.scss";
 
 const ChatList = (props) => {
-    const {chatId, chats, highlighted, addChat, push} = props;
+    const {chatId, chats, highlighted, loadChats, addChat, push} = props;
     const [contacts, setContacts] = useState(['Контакт 1', 'Контакт 2', 'Контакт 3']);
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(() => {
+        loadChats();
+    }, []);
+
+    const renderChats = () => (
+        chats.map((item, i) => {
+            const isHighlighted = highlighted.indexOf(item.id) > -1;
+
+            return (
+                <ListItem button
+                          onClick={() => push(`/chat/${item.id}`)}
+                          key={ i }
+                          selected={ chatId === item.id }>
+                    <ListItemText primary={ `${item.title}` }/>
+                    { isHighlighted && <MailOutlineIcon className={styles.highlighted}/> }
+                </ListItem>
+            )
+        })
+    );
 
     return (
         <div className={styles.chat__list}>
 
             <List component="nav">
-                {chats.map((item, i) => {
-                    const isHighlighted = highlighted.indexOf(item.id) > -1;
-
-                    return (
-                        <ListItem button
-                                  onClick={() => push(`/chat/${item.id}`)}
-                                  key={i}
-                                  selected={chatId === item.id}>
-                            <ListItemText primary={`${item.title}`}/>
-                            { isHighlighted && <MailOutlineIcon className={styles.highlighted}/> }
-                        </ListItem>
-                    )
-                })}
+                { renderChats() }
 
                 {contacts.length > 0 && (
                     <ListItem button
@@ -57,10 +65,10 @@ const ChatList = (props) => {
 
             </List>
 
-            <Modal open={isOpen}
+            <Modal open={ isOpen }
                    onClose={() => setIsOpen(false)}
                    title="Выберите контакт"
-                   contacts={contacts}
+                   contacts={ contacts }
                    onSelect={(value) => {
                        setIsOpen(false);
                        addChat(value);
@@ -76,6 +84,6 @@ const mapStateToProps = ({ chatReducer }) => ({
     highlighted: chatReducer.highlighted
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({addChat, push }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({loadChats, addChat, push }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

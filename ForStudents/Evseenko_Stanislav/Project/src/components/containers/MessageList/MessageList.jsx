@@ -3,30 +3,23 @@ import Message from '@components/Message';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { sendMessage, writeText } from '@actions/messages';
+import { updateChats } from '@actions/chats';
+
 import './style.scss';
 
-export default class MessageList extends Component {
+class MessageList extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      chats: {
-        1: { title: 'Чат 1', messageList: [] },
-        2: { title: 'Чат 2', messageList: [] },
-        3: { title: 'Чат 3', messageList: [] },
-        4: { title: 'Чат 4', messageList: [] },
-        5: { title: 'Чат 5', messageList: [] },
-        6: { title: 'Чат 6', messageList: [] },
-      },
-      messages: [],
-      text: ''
-    };
   };
 
   handleChange = evnt => {
     if (evnt.keyCode !== 13) {
-      this.setState({ text: evnt.target.value });
+      this.props.writeText(evnt.target.value);
     } else {
       this.sendMessage();
     };
@@ -40,34 +33,23 @@ export default class MessageList extends Component {
   };
 
   sendMessage = () => {
-    const { messages, chats, text } = this.state;
-    const { chatId } = this.props;
+    const { messages, chatId, text } = this.props;
 
     if(text) {
       const messageId = messages.length + 1;
+      this.props.sendMessage(messageId, 'Я', text, `${ this.currentTime() }`);
+      this.props.updateChats(chatId, messageId);
+      this.props.writeText('');
 
-      this.setState({
-        text: '',
-        messages: [...messages,
-          {
-            id: messageId,
-            name: 'Я',
-            text: text,
-            time: `${ this.currentTime() }`
-          }
-        ],
-        chats: {...chats,
-          [chatId]: {...chats[chatId],
-            messageList: [...chats[chatId]['messageList'], messageId]
-          }
-        }
-      });
+      const LastMessage = document.querySelector('.message-area').lastChild;
+      if(LastMessage) {
+        LastMessage.scrollIntoView({ block: "end", behavior: "smooth" });
+      }
     };
   };
 
   render() {
-    const { messages, chats, text } = this.state;
-    const { chatId } = this.props;
+    const { messages, chats, chatId, text } = this.props;
     let messagesList = null;
 
     if (chatId) {
@@ -108,3 +90,13 @@ export default class MessageList extends Component {
     );
   };
 };
+
+const mapStateToProps = ({ messagesReducer, chatsReducer }) => ({
+  messages: messagesReducer.messages,
+  chats: chatsReducer.chats,
+  text: messagesReducer.text,
+});
+
+const mapActions = dispatch => bindActionCreators({ sendMessage, updateChats, writeText }, dispatch);
+
+export default connect(mapStateToProps, mapActions)(MessageList);

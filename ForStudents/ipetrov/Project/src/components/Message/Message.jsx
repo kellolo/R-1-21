@@ -4,7 +4,7 @@ import './style.scss';
 
 
 export default props => {
-    const { name, text } = props;
+    const { name, text, date } = props;
 
     return  <div className="message"
                  style={ 
@@ -13,7 +13,8 @@ export default props => {
                     textAlign: name === 'You' ?
                         'right' : 'left'}
                          }>
-                <p><b>{ name }</b></p>
-                <p>{ text }</p>
+                <p className="messageName"><b>{ name }</b></p>
+                <p className="messageText">{ text }</p>
+                <p className="messageDate">{ date }</p>
             </div>;
 }

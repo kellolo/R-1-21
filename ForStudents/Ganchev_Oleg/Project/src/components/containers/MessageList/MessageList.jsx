@@ -4,7 +4,7 @@ import Messages from '@components/Messages';
 import MsgInput from '@components/MsgInput';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { sendMessages } from '@actions/messages';
+import { loadMessages, sendMessages } from '@actions/messages';
 
 class MessageList extends Component {
     constructor (props) {
@@ -27,6 +27,9 @@ class MessageList extends Component {
     };
 
     componentDidMount() {
+        const userId = this.props.user.userId;
+        this.props.loadMessages({ userId });
+
         const elemInput = this.textInput.firstChild.firstChild;
         elemInput.focus();
     }
@@ -69,6 +72,6 @@ const mapState = ({ messagesReducer }) => ({
     messages: messagesReducer.messages
 });
 
-const mapAction = dispatch => bindActionCreators({ sendMessages }, dispatch);
+const mapAction = dispatch => bindActionCreators({ loadMessages, sendMessages }, dispatch);
 
 export default connect(mapState, mapAction)(MessageList);

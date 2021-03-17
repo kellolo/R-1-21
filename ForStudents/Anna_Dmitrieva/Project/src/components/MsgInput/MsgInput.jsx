@@ -11,26 +11,42 @@ const useStyles = makeStyles(() => ({
         borderRadius: 3,
         border: 0,
         color: 'white',
-        height: 48,
         padding: '0 30px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        height: '100%',
+    },
+    textField: {
+        width: '90%',
+        marginLeft: 'auto',
+        marginRight: 'auto',            
+        paddingBottom: 0,
+        marginTop: 0,
+        fontWeight: 500
     },
 }));
 
 export default (props) => {
     const classes = useStyles();
-    return <div className="msg_input">
-        <TextField className="text_input"
-            autoFocus
-            type="text"
-            // ref={ props.focus }
-            value= { props.clearInput }
-            onChange={ props.change }
-            onKeyUp={ props.keyup }
-            id="outlined-basic"
-            label="Напишите сообщение"
-            variant="outlined"
-        />
-        <Button className={ classes.btn_input } variant="outlined" color="primary" onClick={ props.click }>Отправить</Button>
-    </div>;
+    return (
+        <div className="msg_input">
+            <TextField className="text_input"
+                autoFocus
+                type="text"
+                // ref={ props.focus }
+                value= { props.clearInput }
+                onChange={ props.change }
+                onKeyUp={ props.keyup }
+                id="outlined-basic"
+                label="Напишите сообщение"
+                variant="outlined"
+            />
+            <Button 
+                className={ classes.btn_input }
+                variant="outlined" 
+                color="primary" 
+                onClick={ props.click }>
+                Отправить
+            </Button>
+        </div>
+    );
 };

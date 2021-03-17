@@ -1,3 +1,4 @@
 import bot from './Bot';
+import newMsgFlug from './newMsgFlug'
 
-export default [bot];
+export default [bot, newMsgFlug];

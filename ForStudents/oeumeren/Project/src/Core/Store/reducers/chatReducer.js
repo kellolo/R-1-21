@@ -1,16 +1,16 @@
 import { ADD_CHAT, HIGHLIGHT_CHAT } from "@actions/chatActions";
 
 const initialStore = {
-    chats: [
-        {id: "1", title: 'Чат 1'},
-        {id: "2", title: 'Чат 2'},
-        {id: "3", title: 'Чат 3'}
-    ],
+    chats: [],
     highlighted: []
 };
 
 export default function chatReducer(store = initialStore, action) {
     switch(action.type) {
+        case "LOAD_CHATS_SUCCESS":
+            return Object.assign({}, store, {
+                chats: action.payload.data
+            });
         case ADD_CHAT:
             return Object.assign({}, store, {
                 chats: store.chats.concat({

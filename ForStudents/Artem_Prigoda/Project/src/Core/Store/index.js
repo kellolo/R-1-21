@@ -13,7 +13,7 @@ const persistConfig = {
 	key: 'geekmessanger',
 	storage,
 	stateReconciler: autoMergeLevel2,
-	// whitelist: ['messagesReducer', 'chatsReducer'],
+	whitelist: ['messagesReducer', 'chatsReducer'],
 };
 
 

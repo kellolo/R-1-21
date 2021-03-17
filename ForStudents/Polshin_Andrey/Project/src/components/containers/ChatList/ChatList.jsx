@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './style.scss';
-import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import Button from '@material-ui/core/Button';
 import AddChatWindow from '@containers/AddChatWindow';
 
@@ -10,18 +10,21 @@ import { addChat } from '@actions/chats';
 
 const ChatList = (props) => {
 
-    const { chatID, chats } = props;
+    const { chatID, chats, haseNewMsg } = props;
     const Chats = Object.values(chats).map((el, i) => <li key={i} className='chats__item'>
         <Button name={el.title}
             className='item__btn'
             variant="contained"
-            disabled={el.id == chatID}
+            disabled={haseNewMsg == -1 && (el.id == chatID || haseNewMsg == el.id)}
+            onClick={() => handleNavigate(`/chat/${el.id}`)}
             color="primary">
-            <Link to={`/chat/${el.id}`} className='item__link'>
-                {el.title}
-            </Link>
+            {el.title}
         </Button>
-    </li>);
+    </li >);
+
+    const handleNavigate = link => {
+        props.push(link);
+    };
 
     const handlerAddChat = name => {
         if (!name) return;
@@ -40,7 +43,8 @@ const ChatList = (props) => {
 }
 
 const mapStateToProps = ({ chatsReducer }) => ({
-    chats: chatsReducer.chats
+    chats: chatsReducer.chats,
+    haseNewMsg: chatsReducer.newMsg
 });
-const mapDispatchToProps = dispatch => bindActionCreators({ addChat }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addChat, push }, dispatch);
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

@@ -12,9 +12,13 @@ export default class MessageList extends Component {
                 key={ i }
                 name={ el.name }
                 text={ el.text }
-            />);
-        return <div ref={ this.props.scroll } className="msg-list">
-                    { Messages }
-                </div>;
+                date={ el.date }
+            />
+        );
+        return ( 
+            <div ref={ this.props.scroll } className="msg-list">
+                { Messages }
+            </div>
+        );
     };
 };

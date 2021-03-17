@@ -18,16 +18,19 @@
         paddingLeft: theme.spacing(4),
       },
     }));
+
+  
     
     export default props =>  {
       const classes = useStyles();
-      const { name } = props;
+      const { name, style } = props;
     
       return (
         <List
           component="nav"
 
           className={classes.root}
+          style={style}
         >
           <ListItem button>
             <ListItemIcon>

@@ -3,9 +3,9 @@ import React from 'react';
 import './style.scss';
 
 export default (props) => {
-    const { chatId } = props;
+    const { chatIdD } = props;
     return <header className="header-home">
         <p>Annagram</p>
-        <p>{ chatId }</p>
+        <p>{ chatIdD }</p>
     </header>;
 };

@@ -1,4 +1,4 @@
-$main-color: rgba(133, 131, 131, 0.712);
+$main-color: linear-gradient(to right, rgb(255, 204, 254) 0%,rgb(236, 145, 238) 100%);
 $third-color: #ffffff;
-$bg-color: #ffffff;
-$second-color: #d4d4d4;
+$bg-color: linear-gradient(to right, rgba(255,255,255,1) 0%,rgba(243,243,243,1) 50%,rgba(237,237,237,1) 51%,rgba(255,255,255,1) 100%);
+$second-color: hsla(0, 0%, 100%, 0.808);
