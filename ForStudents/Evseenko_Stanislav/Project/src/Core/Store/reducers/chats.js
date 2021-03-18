@@ -9,41 +9,29 @@ const storeChats = {
     5: { title: 'Чат 5', messageList: [] },
     6: { title: 'Чат 6', messageList: [] },
   },
-  activeChats: [
-    {
-      name: 'Гена',
-      id: '1',
-      text: 'Привет!',
-      avatar: 'src/resources/img/avatar.jpg'
-    },
-    {
-      name: 'Чебурашка',
-      id: '2',
-      text: 'Да зачем тебе этот React?!',
-      avatar: 'src/resources/img/avatar2.jpg'
-    },
-    {
-      name: 'Шапокляк',
-      id: '3',
-      text: 'Приходи вечером на чай!',
-      avatar: 'src/resources/img/avatar3.jpg'
-    }
-  ]
+  activeChats: []
 };
 
 export default (store = storeChats, action) => {
   switch (action.type) {
-    case 'LOAD_CHATS': {
-      return store.activeChats;
+    case 'LOAD_CHATS_SUCCESS': {
+      console.log('LOAD_CHATS_SUCCESS', action.payload.data);
+      if(action.payload.data) {
+        return update(store, {
+          activeChats: { $set: action.payload.data }
+        });
+      }
     }
     case 'UPD_CHATS': {
-      return update(store, {
-        chats: { $merge: {...store.chats,
-          [action.chatId]: {...store.chats[action.chatId],
-            messageList: [...store.chats[action.chatId]['messageList'], action.messageId]
-          }
-        }} 
-      });
+      if(action.chatId) {
+        return update(store, {
+          chats: { $merge: {...store.chats,
+            [action.chatId]: {...store.chats[action.chatId],
+              messageList: [...store.chats[action.chatId]['messageList'], action.messageId]
+            }
+          }} 
+        });
+      };
     }
     case 'ADD_CHAT': {
       return update(store, {
@@ -55,6 +43,21 @@ export default (store = storeChats, action) => {
             avatar: ''
           }
         ]}
+      });
+    }
+    case 'LAST_MSG': {
+      let chatIndex = null;
+      store.activeChats.forEach((element, i) => {
+        if(element.id == action.chatId) {
+          chatIndex = i;
+        }
+      });
+      return update(store, {
+        activeChats: {
+          [chatIndex]: {
+            text: { $set: action.text }
+          }
+        }
       });
     }
     default: {

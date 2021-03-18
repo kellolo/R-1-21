@@ -1,13 +1,13 @@
-export const loadMessages = () => ({
-  type: 'LOAD_MSG',
-});
+// export const loadMessages = () => ({
+//   type: 'LOAD_MSG',
+// });
 
-export const sendMessage = (messageId, name, text, time) => ({
+export const sendMessage = (chatId, messageId, name, text) => ({
   type: 'SEND_MSG',
+  chatId,
   messageId,
   name,
   text,
-  time,
 });
 
 export const writeText = (text) => ({

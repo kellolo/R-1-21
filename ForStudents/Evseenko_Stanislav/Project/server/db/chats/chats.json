@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Гена",
+    "id": "1",
+    "text": "Начните чат c Геной",
+    "avatar": "src/resources/img/avatar.jpg"
+  },
+  {
+    "name": "Чебурашка",
+    "id": "2",
+    "text": "Начните чат c Чебурашкой",
+    "avatar": "src/resources/img/avatar2.jpg"
+  },
+  {
+    "name": "Шапокляк",
+    "id": "3",
+    "text": "Начните чат c Шапокляк",
+    "avatar": "src/resources/img/avatar3.jpg"
+  }
+]
