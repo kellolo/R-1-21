@@ -9,7 +9,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: path.join('js', 'bundle.js')
+        filename: path.join('js', 'bundle.js'),
+        publicPath: '/'
     },
     target: 'web',
     module: {
@@ -71,6 +72,9 @@ module.exports = {
                 secure: false,
                 changeOrigin: true
             }
+        },
+        historyApiFallback: {
+            index: '/public/index.html'
         }
     }
 };

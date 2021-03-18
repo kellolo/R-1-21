@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
 import './style.scss';
 import Message from '@components/Message';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-//stateFull
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -20,13 +17,9 @@ class MessageList extends Component {
         this.chatContainer = React.createRef();
     };
 
-    loadMessages = (id) => {
-        this.props.load(id);
+    async componentDidMount() {
+        await this.props.load(this.props.userId, this.props.chatId);
     };
-
-    componentDidMount() {
-        this.loadMessages(this.props.chatId);
-    }
     
     changeHandler = (event) => {
         if (event.keyCode !== 13) {
@@ -39,7 +32,7 @@ class MessageList extends Component {
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
-            this.props.send('You', this.state.yourMessage, this.props.chatId);
+            this.props.send('You', this.state.yourMessage, this.props.chatId, this.props.userId);
             this.setState({
                 yourMessage: ''
             },
@@ -47,26 +40,6 @@ class MessageList extends Component {
             );
         }        
     };
-
-/*    
-    componentDidUpdate() {
-        var regexp = /[а-яё]/i;
-        var answer = regexp.test( this.state.yourMessage ) ? 'Parle français?' : 'Ай донт спик инглиш';
-        // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
-        const last = this.state.messages[this.state.messages.length - 1];
-        if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
-            this.state.messages.pop();
-            this.textInput.current.disabled = false;
-            setTimeout(() =>  
-            this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'Bot-Sociopath', text: answer }
-                ] 
-            })
-            , 1000);          
-        }
-    }
-*/
 
     scrollToMyRef = () => {
         const scroll =
@@ -76,11 +49,7 @@ class MessageList extends Component {
     };
 
     render() {
-        if (this.props.isLoading) {
-            return <CircularProgress />
-        }
-        const messages = this.props.messages[this.props.chatId];
-        
+        const messages = this.props.messages;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
@@ -107,9 +76,7 @@ class MessageList extends Component {
 };
 
 const mapState = ({ messagesReducer }) => ({ 
-    messages: messagesReducer.messages,
-    servermessages: messagesReducer.servermessages,
-    isLoading: messagesReducer.isLoading
+    messages: messagesReducer.messages
 });
 
 const mapActions = dispatch => bindActionCreators({ load: loadMessages, send: sendMessage }, dispatch);

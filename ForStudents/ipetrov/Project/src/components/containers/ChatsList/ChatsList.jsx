@@ -4,7 +4,7 @@ import './style.scss';
 import ContactsList from '@containers/ContactsList';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addChat, removeChat, loadChat } from '@actions/chats';
+import { addChat, removeChat } from '@actions/chats';
 import { addMessageStore, openNewChat } from '@actions/messages';
 
 
@@ -16,9 +16,8 @@ class ChatsList extends Component {
         }
     };
 
-    componentDidMount() {
-        this.props.open();
-        this.props.load();
+    async componentDidMount() {
+        await this.props.open();
     }
 
     addChat = (chatId, name) => {
@@ -33,7 +32,7 @@ class ChatsList extends Component {
 
     render() {
         return <div className="chatslist">
-            <ContactsList addChat={ this.addChat } removeChat={ this.removeChat } activeChats={ this.props.activeChats } />
+            <ContactsList addChat={ this.addChat } removeChat={ this.removeChat } activeChats={ this.props.activeChats } open={ this.props.open } />
         </div>;
     };
 };
@@ -42,6 +41,6 @@ const mapState = ({ chatsReducer }) => ({
     activeChats: chatsReducer.activeChats
 });
 
-const mapActions = dispatch => bindActionCreators({ add: addChat, remove: removeChat, addMsgStr: addMessageStore, load: loadChat, open: openNewChat }, dispatch);
+const mapActions = dispatch => bindActionCreators({ add: addChat, remove: removeChat, addMsgStr: addMessageStore, open: openNewChat }, dispatch);
 
 export default connect(mapState, mapActions)(ChatsList);
