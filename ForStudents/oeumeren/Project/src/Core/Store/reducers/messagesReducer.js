@@ -1,13 +1,15 @@
 import { SEND_MSG, DELETE_MSG } from "@actions/messageAction";
 
 const initialStore = {
-    messages: {
-        "1": [{msgId: "1", author: "Оксана", text: "Привет чату 1!"}]
-    }
+    messages: {}
 };
 
 export default function messagesReducer(store = initialStore, action) {
     switch(action.type) {
+        case "LOAD_MESSAGES_SUCCESS":
+            return Object.assign({}, store, {
+                messages: {[action.payload.chatId]: action.payload.data}
+            });
         case SEND_MSG:
             const chat = store.messages[action.payload.chatId];
             const newMessage = {

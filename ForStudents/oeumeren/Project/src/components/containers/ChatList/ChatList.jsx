@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useState } from "react";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,18 +12,14 @@ import Modal from "@components/Modal";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { push } from "connected-react-router";
-import { addChat, loadChats } from "@actions/chatActions.js";
+import { addChat } from "@actions/chatActions.js";
+import { removeContact } from "@actions/contactsActions";
 
 import styles from "./styles.module.scss";
 
 const ChatList = (props) => {
-    const {chatId, chats, highlighted, loadChats, addChat, push} = props;
-    const [contacts, setContacts] = useState(['Контакт 1', 'Контакт 2', 'Контакт 3']);
+    const {chatId, chats, contacts, highlighted, addChat, push, removeContact} = props;
     const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        loadChats();
-    }, []);
 
     const renderChats = () => (
         chats.map((item, i) => {
@@ -68,22 +64,22 @@ const ChatList = (props) => {
             <Modal open={ isOpen }
                    onClose={() => setIsOpen(false)}
                    title="Выберите контакт"
-                   contacts={ contacts }
-                   onSelect={(value) => {
+                   onSelect={(name, id) => {
                        setIsOpen(false);
-                       addChat(value);
-                       setContacts(contacts.filter((item) => item !== value));
+                       addChat(name);
+                       removeContact(id)
                    }} />
 
         </div>
     )
 }
 
-const mapStateToProps = ({ chatReducer }) => ({
+const mapStateToProps = ({ chatReducer, contactsReducer }) => ({
     chats: chatReducer.chats,
-    highlighted: chatReducer.highlighted
+    highlighted: chatReducer.highlighted,
+    contacts: contactsReducer.contacts
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({loadChats, addChat, push }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({ addChat, push, removeContact }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatList);

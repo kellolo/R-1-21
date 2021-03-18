@@ -9,7 +9,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: path.join('js', 'bundle.js')
+        filename: path.join('js', 'bundle.js'),
+        publicPath: '/'
     },
     target: 'web',
     module: {
@@ -65,6 +66,7 @@ module.exports = {
         open: false,
         proxy: {
             "/api": "http://localhost:9090",
-        }
+        },
+        historyApiFallback: true
     }
 };
