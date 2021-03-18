@@ -7,10 +7,12 @@ const storeChats = {
 					2: {name: 'User2', messageList: [2]},
 					3: {name: 'User3', messageList: []},
 			},
+			chats: [],
+			activeChat: null,
 			contactList: [
 				{name: 'User4', id: '4'},
 			 	{name: 'User5', id: '5'},
-			]
+			],
 };
  
 export default (store = storeChats, action) => {
@@ -26,14 +28,27 @@ export default (store = storeChats, action) => {
 					contactList: {$splice: [[ind,1]]}
 			});
 		}
-		case 'SEND_MSG': {
-			return update(store, {
-				activeChats: { $merge: { [action.chatId]: {
-					name: store.activeChats[action.chatId].name,
-					messageList: [...store.activeChats[action.chatId].messageList, action.messageId]
-				}}},
-			});
-		}
+
+		case 'LOAD_CHATS_SUCCESS': {
+      return update(store, {
+        chats: { $set: action.payload.data }
+      });
+    }
+
+		case 'GET_CHAT_ID': {
+      return update(store, {
+        activeChat: { $set: action.payload.id }
+      });
+    }
+
+		// case 'SEND_MSG': {
+		// 	return update(store, {
+		// 		activeChats: { $merge: { [action.chatId]: {
+		// 			name: store.activeChats[action.chatId].name,
+		// 			messageList: [...store.activeChats[action.chatId].messageList, action.messageId]
+		// 		}}},
+		// 	});
+		// }
 		default: {
 			return store;
 		}

@@ -45,26 +45,32 @@ class MessageList extends Component {
         });
     };
     
-    componentDidMount() {
-        this.props.loadMessages();
-    }
+    async componentDidMount() {
+       await this.props.loadMessages(this.props.userLogin, this.props.activeChat);
+    };
  
     render() {
         const { messages, activeChats, chatId } = this.props;
-        const Messages = activeChats[chatId].messageList.map((messageId, index) => {
-            const message = messages.find(item => +item.id === messageId);            
-            return <Message
-                key={index}
-                name={message.name}
-                text={ message.text }
-            />;
-        });
-        
+        // const Messages = activeChats[chatId].message.map((messageId, index) => {
+        //     const message = messages.find(item => +item.id === messageId);            
+        //     return <Message
+        //         key={index}
+        //         name={message.name}
+        //         text={ message.text }
+        //     />;
+        // });
+        const Messages = messages.map((message, index) => {
+                return <Message
+                    key={ index }
+                    name={ message.name }
+                    text={ message.text }
+                />;
+            });
         
         return <div className="layout">
             <div className="message-list">
                 
-                {Messages}
+                { Messages }
             </div>
             <div className="message-list--input">
 
@@ -87,9 +93,11 @@ class MessageList extends Component {
     }
 };
 
-const mapStateToProps = ({ messagesReducer, chatsReducer }) => ({
+const mapStateToProps = ({ messagesReducer, chatsReducer, userReducer }) => ({
     messages: messagesReducer.messages,
-    activeChats: chatsReducer.activeChats
+    activeChats: chatsReducer.activeChats,
+    userLogin: userReducer.login,
+    activeChat: chatsReducer.activeChat
 });
 const mapActions = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
 export default connect(mapStateToProps, mapActions)(MessageList);
