@@ -6,10 +6,10 @@ import contactsReducer from './contacts';
 
 import { connectRouter } from 'connected-react-router';
 
-export default history => combineReducers({
-	router: connectRouter(history),
+export default history => combineReducers({	
 	messagesReducer, 
 	chatsReducer,
 	userReducer,
 	contactsReducer,
+	router: connectRouter(history),
  });

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactDom from 'react-dom';
 
 import './style.scss';
 
@@ -11,17 +10,14 @@ import Message from '@components/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { sendMessage, loadMessages } from '@actions/messages';
-import redux from 'redux';
+import { getActiveChat } from '@actions/chats';
+
 
 
 class MessageList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // messages: [
-            //     { name: 'owner', text: 'Hey!' },
-            //     { name: 'owner', text: 'How are you?' }
-            // ],
             value: ''
         };
         this.owner = 'owner';
@@ -38,27 +34,29 @@ class MessageList extends Component {
         }
     };
     sendMessage = () => {
-         
-        this.props.sendMessage(this.props.chatId, Date.now(), this.state.value, this.owner);
+        const user = this.props.userLogin;
+        const chat = this.props.chatId;
+
+        const payload = {
+            name: this.props.userLogin,
+            text: this.state.value,
+            date: Date.now()
+        };
+
+        this.props.sendMessage(payload, chat, user);
         this.setState({
             value: ''
         });
     };
     
     async componentDidMount() {
-       await this.props.loadMessages(this.props.userLogin, this.props.activeChat);
+        await this.props.loadMessages(this.props.userLogin, this.props.chatId);
     };
+
+
  
     render() {
-        const { messages, activeChats, chatId } = this.props;
-        // const Messages = activeChats[chatId].message.map((messageId, index) => {
-        //     const message = messages.find(item => +item.id === messageId);            
-        //     return <Message
-        //         key={index}
-        //         name={message.name}
-        //         text={ message.text }
-        //     />;
-        // });
+        const { messages } = this.props;
         const Messages = messages.map((message, index) => {
                 return <Message
                     key={ index }
@@ -68,28 +66,24 @@ class MessageList extends Component {
             });
         
         return <div className="layout">
-            <div className="message-list">
-                
+            <div className="message-list">                
                 { Messages }
             </div>
             <div className="message-list--input">
-
                 <TextField
                     name="input"
                     id="standard-basic"
-                    fullWidth={true}
+                    fullWidth= { true }
                     style={{ fontSize: '22px' }}
-                    onChange={this.handleChange}
-                    value={this.state.value}
-                    onKeyUp={this.handleChange}
+                    onChange={ this.handleChange }
+                    value={ this.state.value }
+                    onKeyUp={ this.handleChange }
                 />
-                {/* <button onClick={this.sendMessage}>send</button> */}
-                <Fab color="secondary" aria-label="add" onClick={this.sendMessage} className="message-list--button" >
+                <Fab color="secondary" aria-label="add" onClick={ this.sendMessage } className="message-list--button" >
                     <SendIcon />
                 </Fab>
             </div>
         </div>;
-
     }
 };
 
@@ -99,5 +93,5 @@ const mapStateToProps = ({ messagesReducer, chatsReducer, userReducer }) => ({
     userLogin: userReducer.login,
     activeChat: chatsReducer.activeChat
 });
-const mapActions = dispatch => bindActionCreators({ sendMessage, loadMessages }, dispatch);
+const mapActions = dispatch => bindActionCreators({ getActiveChat, sendMessage, loadMessages }, dispatch);
 export default connect(mapStateToProps, mapActions)(MessageList);

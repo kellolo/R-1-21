@@ -19,10 +19,30 @@ export const loadMessages = (user, chat) => ({
 });
 
 
-export const sendMessage = (chatId, messageId, text, name) => ({
-	type: 'SEND_MSG',
-	chatId,
-	messageId,
-	text,
-	name
+export const sendMessage = (reqBody, chat, user) => ({
+  [RSAA]: {
+    endpoint: '/api/messages/',
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ...reqBody, chat, user }),
+    types: [
+      'SEND_MESSAGE_REQUEST', 
+      {
+        type: 'SEND_MESSAGE_SUCCESS',
+        payload: async (action, state, response) => {
+          try {
+            const res = await getJSON(response);
+            if (res.ok) {
+              return { data: reqBody }; 
+            }
+          }
+          catch(err) {
+            console.log(err);
+            return { data: { name: 'System', text: 'Send failed' } };
+          }
+        },
+      }, 
+      'SEND_MESSAGE_FAILURE'
+    ]
+  }
 });

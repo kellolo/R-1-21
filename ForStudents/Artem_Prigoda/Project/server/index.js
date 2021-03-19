@@ -11,7 +11,8 @@ app.use(express.json());
 
 app.get('/chats/:id', chatController.load);
 app.get('/contacts/:id', contactsController.load);
-app.get('/messages/:user?', messagesController.load);
+app.get('/messages/:user?', messagesController.load.bind(messagesController));
+app.put('/messages/', messagesController.send.bind(messagesController));
 app.get('/:login', userController.load);
 
 app.listen(9090, () => {
