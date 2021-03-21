@@ -19,13 +19,13 @@ export default function SimpleModal(props) {
     };
 
     const handleListItemClick = (el, i) => {
-        props.addChat(i, el.name);
+        props.addChat(el.name, el.contactId);
         handleClose();
     }
 
     const usersList = (
         <List>
-            { props.users.map( (el, i) =>
+            { props.contacts.map( (el, i) =>
             <ListItem
                 button
                 key={ i }

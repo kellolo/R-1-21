@@ -6,11 +6,10 @@ import Message from '@components/Message';
 
 import SendIcon from '@material-ui/icons/Send';
 
-
 import { connect } from 'react-redux';
 import redux, { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages' ;
+import { loadMessages, sendMessages } from '@actions/messages';
 
 
 class MessageList extends Component {
@@ -21,7 +20,7 @@ class MessageList extends Component {
         };
     }
 
-    handleChange = (evt) => {
+    handleChange = evt => {
         if (evt.keyCode !== 13) {
             this.setState({ text: evt.target.value });
         } else {
@@ -30,14 +29,15 @@ class MessageList extends Component {
     };
 
     sendMessage = () => {
-        this.setState ({
+        this.props.send('Username', this.state.text);
+        this.setState({
             text: '',
-            messages: [...this.state.messages, 
-                {
-                   name: 'User',
-                   text: this.state.text
-                }]
             });
+           
+    };
+
+    async componentDidMount() {
+         await this.props.loadMessages(this.props.user.user.id, this.props.activeChat);
     };
 
     render() {
@@ -69,11 +69,13 @@ class MessageList extends Component {
 };
 
 
-const mapState = ({ messagesReducer }) => ({
-    messages: messagesReducer.messages
+const mapState = ({ messagesReducer, userReducer, chatsReducer }) => ({
+    messages: messagesReducer.messages,
+    user: userReducer,
+    activeChat: chatsReducer.activeChat
 });
 
-const mapActions = dispatch => bindActionCreators({ load: loadMessages }, dispatch);
+const mapActions = dispatch => bindActionCreators({  loadMessages, send: sendMessages }, dispatch);
 
 
-export default connect(mapState, null)(MessageList);
+export default connect(mapState, mapActions)(MessageList);

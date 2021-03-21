@@ -16,22 +16,27 @@ import Avatar from '@material-ui/core/Avatar';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadChats, addChats } from '@actions/chats'
+import { addChats } from '@actions/chats'
 
 class ChatsList extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        };
     }
 
-    addChat = (value) => {
-        this.props.add(value);
-    }
+    addChat = (name, chatId) => {
+        const userId = this.props.user.user.id;
+        const payload = {
+            name: name,
+            text: '',
+            id: chatId,
+            img: ''
+        }
+        this.props.addChats(payload, userId);
+    };
 
     render() {
-        const { activeChats } = this.props;
-        const Chats = activeChats.map((el, i) => <ListItem key={ i }>
+        const { chats } = this.props;
+        const Chats = chats.map((el, i) => <ListItem key={ i }>
             <ListItemAvatar>
                 <Avatar alt={ el.name } src={ el.img }>
                 </Avatar>
@@ -49,10 +54,11 @@ class ChatsList extends Component {
     }
 };
 
-const mapState = ({ chatsReducer }) => ({
-    activeChats: chatsReducer.activeChats
+const mapState = ({ chatsReducer, userReducer }) => ({
+    chats: chatsReducer.chats,
+    user: userReducer
 });
 
-const mapActions = dispatch => bindActionCreators({ load: loadChats, add: addChats }, dispatch);
+const mapActions = dispatch => bindActionCreators({ addChats }, dispatch);
 
 export default connect(mapState, mapActions)(ChatsList);

@@ -1,0 +1,27 @@
+#send-msg {
+    border-top:1px solid black;
+    padding: 10px;
+    box-sizing: border-box;
+    height:50px;
+}
+#msg {
+    width:300px;
+    margin-left:5px;
+    border:1px solid black;
+    border-radius:5px;
+    height:410px;
+    overflow: hidden;
+}
+#msg-list-msg {
+    height:350px;
+    overflow-y: scroll;
+}
+#messagelist-button {
+    margin-left: 5px ;
+    padding: 5px;
+    box-sizing:border-box;
+}
+#messagelist-input {
+    padding: 5px;
+    box-sizing:border-box;
+}

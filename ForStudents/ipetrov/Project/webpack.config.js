@@ -9,7 +9,8 @@ module.exports = {
     },
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: path.join('js', 'bundle.js')
+        filename: path.join('js', 'bundle.js'),
+        publicPath: '/'
     },
     target: 'web',
     module: {
@@ -46,7 +47,8 @@ module.exports = {
             '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
             '@func': path.resolve(__dirname, 'src', 'resources', 'functions'),
             '@lib': path.resolve(__dirname, 'src', 'resources', 'libraries'),
-            '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'actions')
+            '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'actions'),
+            '@middleware': path.resolve(__dirname, 'src', 'Core', 'middleware'),
         }
     },
     plugins: [
@@ -62,6 +64,17 @@ module.exports = {
     devServer: {
         port: 3300,
         hot: true,
-        open: false
+        open: false,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:9090',
+                pathRewrite: { '^/api' : '' },
+                secure: false,
+                changeOrigin: true
+            }
+        },
+        historyApiFallback: {
+            index: '/public/index.html'
+        }
     }
 };

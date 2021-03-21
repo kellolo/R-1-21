@@ -1,0 +1,31 @@
+.chatlist {
+    position: absolute;
+    left: 15px;
+    width: 22%;
+    background-color: #020c1f;
+}
+
+.chatlist button {
+    width: 100%;
+    padding: 10px;
+    background-color: #03060d;
+    border-radius: 0px;
+    border: none;
+}
+
+.chatlist-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chatlist-list li {
+    padding: 15px;
+    border-bottom: 1px solid #0d1430;
+    border-top: 1px solid #05041d;
+}
+
+.chatlist-list li a {
+    text-decoration: none;
+    color: #a2a2bc;
+}

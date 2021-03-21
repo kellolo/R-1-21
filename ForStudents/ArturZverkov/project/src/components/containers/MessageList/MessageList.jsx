@@ -8,7 +8,7 @@ import Message from '@components/Message';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages';
+import { loadMessages, sendMessage } from '@actions/messages';
 
 
 class MessageList extends Component {
@@ -32,18 +32,15 @@ class MessageList extends Component {
     };
 
     sendMessage = () => {
+        this.props.send('Username', this.state.text);
+
         this.setState({
             text: '',
-            // messages: [...this.state.messages,
-            // {
-            //     name: 'User',
-            //     text: this.state.text
-            // }]
         });
     };
 
     componentDidUpdate() {
-        // console.log('Отправлено');
+
     };
 
     render() {
@@ -77,6 +74,6 @@ const mapState = ({ messagesReducer }) => ({
     messages: messagesReducer.messages
 });
 
-const mapAction = dispatch => bindActionCreators({ load: loadMessages }, dispatch);
+const mapAction = dispatch => bindActionCreators({ send: sendMessage }, dispatch);
 
 export default connect(mapState, mapAction)(MessageList);

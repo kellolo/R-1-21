@@ -1,32 +1,35 @@
-// // import React from 'react';
 import React, { Component } from "react";
-// // import ReactDOM from 'react-dom';
 import MsgInput from "@components/MsgInput";
 import MessageList from "@containers/MessageList";
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux'; 
+import { loadMessages, sendMessage} from '@actions/messages';
+
 import "./style.scss";
 
-export default class MessageField extends Component {
+class MessageField extends Component { // export default 
     constructor(props) {
         super(props);
         this.state = {
             input: "",
-            messages: [
-                { name: "Бот", text: "Привет" },
-                { name: "Бот", text: "Как у тебя дела?" },
-            ],
+            // messages: [
+            //     { name: "Бот", text: "Привет" },
+            //     { name: "Бот", text: "Как у тебя дела?" },
+            // ],
         };
         this.chatContainer = React.createRef();
-        this.textInput = React.createRef();
+        // this.textInput = React.createRef(); // change to autofocus
     };
-    componentDidMount() {
-        this.textInput.current.focus();
-    };
+    // componentDidMount() { // change to autofocus
+    //     this.textInput.current.focus();
+    // };
     sendMessage = (message) => {
         if (!message) {
         } else {
+            this.props.send('Анна', this.state.input); //вызов функции отправки через action
             this.setState({
-                messages: [...this.state.messages, { text: message, name: "Анна" }],
+                // messages: [...this.state.messages, { text: message, name: "Анна" }],
                 input: "",
             },
                 () => this.scrollToMyRef(),
@@ -34,9 +37,7 @@ export default class MessageField extends Component {
         };
     };
     scrollToMyRef = () => {
-        const scroll =
-            this.chatContainer.current.scrollHeight -
-            this.chatContainer.current.clientHeight;
+        const scroll = this.chatContainer.current.scrollHeight - this.chatContainer.current.clientHeight;
         // console.log(this.chatContainer.current.scrollHeight);
         // console.log(this.chatContainer.current.clientHeight);
         this.chatContainer.current.scrollTo(0, scroll);
@@ -52,18 +53,19 @@ export default class MessageField extends Component {
     handleChange = (event) => {
         if (event.keyCode !== 13) {
             this.setState({ input: event.target.value });
-        };
-        this.sendMessage();
+        } else {
+            this.sendMessage();
+        }
     };
     render() {
         return (
             <div className="field-chat-list">
                 <MessageList
-                    messages={ this.state.messages }
+                    messages={ this.props.messages }
                     scroll={ this.chatContainer }
                 />
                 <MsgInput
-                    focus={ this.textInput}
+                    // focus={ this.textInput } // change to autofocus
                     clearInput={ this.state.input }
                     click={ () => this.handleClick(this.state.input) }
                     change={ this.handleChange }
@@ -73,3 +75,10 @@ export default class MessageField extends Component {
         );
     };
 };
+
+const mapState = ({ messagesReducer }) => ({ 
+    messages: messagesReducer.messages,
+});
+const mapActions = dispatch => bindActionCreators({ load: loadMessages, send: sendMessage }, dispatch);
+
+export default connect(mapState, mapActions)(MessageField);

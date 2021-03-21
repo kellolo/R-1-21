@@ -2,19 +2,15 @@ import update from 'react-addons-update';
 // import { FILTER_MSG } from '@actions/messages';
 
 const storeMessages = {
-  messages: [
-    { name: 'one', text: 'Hey!', date: '' },
-    { name: 'one', text: 'How are you?', date: '' }
-  ],
+  messages: [],
 };
 
 export default (store = storeMessages, action) => {
   switch(action.type) {
-    case 'LOAD_MSG': {
-      // store.messages = [
-      //   { name: 'one', text: 'Hey!' },
-      //   { name: 'one', text: 'How are you?' }
-      // ];
+    case 'LOAD_MESSAGES_SUCCESS': {
+      return update(store, {
+        messages: { $set: action.payload.data }
+      });
       return store;
     }
 

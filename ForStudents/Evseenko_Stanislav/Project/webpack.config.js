@@ -43,6 +43,9 @@ module.exports = {
       '@containers': path.resolve(__dirname, 'src', 'components', 'containers'),
       '@pages': path.resolve(__dirname, 'src', 'pages'),
       '@img': path.resolve(__dirname, 'src', 'resources', 'img'),
+      '@actions': path.resolve(__dirname, 'src', 'Core', 'Store', 'actions'),
+      '@middleware': path.resolve(__dirname, 'src', 'Core', 'middleware'),
+      '@database': path.resolve(__dirname, 'server', 'db'),
     }
   },
   plugins: [
@@ -58,6 +61,14 @@ module.exports = {
   devServer: {
     port: 3300,
     hot: true,
-    open: false
+    open: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:9090',
+        pathRewrite: { '^/api' : '' },
+        secure: false,
+        changeOrigin: true
+      }
+    }
   }
 };

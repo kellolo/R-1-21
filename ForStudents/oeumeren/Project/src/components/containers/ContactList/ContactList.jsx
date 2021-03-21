@@ -6,34 +6,39 @@ import Avatar from "@material-ui/core/Avatar";
 import PersonIcon from "@material-ui/icons/Person";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
+import {connect} from "react-redux";
 
 const ContactList = (props) => {
     const { onClick, contacts } = props;
 
-    const handleListItemClick = (value, i) => {
-        onClick(value);
+    const handleListItemClick = (name, id) => {
+        onClick(name, id);
     };
 
+    const renderContacts = () => (
+        contacts.map((contact) => (
+            <ListItem button onClick={() => handleListItemClick(contact.name, contact.id)} key={contact.id}>
+
+                <ListItemAvatar>
+
+                    <Avatar>
+                        <PersonIcon />
+                    </Avatar>
+
+                </ListItemAvatar>
+
+                <ListItemText primary={contact.name} />
+            </ListItem>
+        ))
+    );
+
     return (
-        <List>
-
-            {contacts.map((name) => (
-                <ListItem button onClick={() => handleListItemClick(name)} key={name}>
-
-                    <ListItemAvatar>
-
-                        <Avatar>
-                            <PersonIcon />
-                        </Avatar>
-
-                    </ListItemAvatar>
-
-                    <ListItemText primary={name} />
-                </ListItem>
-            ))}
-
-        </List>
+        <List>{ renderContacts() }</List>
     )
 }
 
-export default ContactList;
+const mapStateToProps = ({ contactsReducer }) => ({
+    contacts: contactsReducer.contacts
+});
+
+export default connect(mapStateToProps, {})(ContactList);

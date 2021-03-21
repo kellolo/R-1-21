@@ -1,81 +1,60 @@
 import React, { Component } from 'react';
-import ContactList from '@containers/ContactList';
+import Modal from '@components/Modal';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 
-import { Link } from 'react-router-dom';
-
 import './style.scss';
 
-export default class ChatList extends Component {
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loadChats } from '@actions/chats';
+
+import { push } from 'connected-react-router';
+
+class ChatList extends Component {
 
   constructor(props) {
     super(props);
-    
-    this.state = {
-      activeChats: [
-        {
-          name: 'Гена',
-          id: '1',
-          text: 'Привет!',
-          avatar: 'src/resources/img/avatar.jpg'
-        },
-        {
-          name: 'Чебурашка',
-          id: '2',
-          text: 'Да зачем тебе этот React?!',
-          avatar: 'src/resources/img/avatar2.jpg'
-        },
-        {
-          name: 'Шапокляк',
-          id: '3',
-          text: 'Приходи вечером на чай!',
-          avatar: 'src/resources/img/avatar3.jpg'
-        }
-      ]
-    };
   };
 
-  addChat = (name, id) => {
-    this.setState({
-      activeChats: [...this.state.activeChats,
-        {
-          name,
-          id: `${ id }`,
-          text: `Начните чат c ${ name }`,
-          avatar: ''
-        }]
-    });
+  handleNavigate = (link) => {
+    this.props.push(link);
   };
+
+  componentDidMount() {
+    this.props.loadChats();
+  }
 
   render () {
-    const { activeChats } = this.state;
+    const { activeChats } = this.props;
     const chats = activeChats.map((el, i) => {
       return (
-        <Link to={`/chat/${ el.id }`}  key={ 'chat_' + i } className="chat" >
-          <ListItem button onClick={ () => { console.log(el.name + el.id) } }>
-            <ListItemAvatar>
-              <Avatar
-                src={ el.avatar }
-              />
-            </ListItemAvatar>
-            <ListItemText
-              className="chat__text"
-              primary={ el.name }
-              secondary={ el.text }
+        <ListItem
+          button
+          className="chat"
+          key={ `chat_${i}` }
+          onClick={ () => this.handleNavigate(`/chat/${ el.id }`) }
+        >
+          <ListItemAvatar>
+            <Avatar
+              src={ el.avatar }
             />
-          </ListItem>
-        </Link>
-        
+          </ListItemAvatar>
+          <ListItemText
+            className="chat__text"
+            primary={ el.name }
+            secondary={ el.text }
+          />
+        </ListItem>
       );
     });
 
     return (
       <div className="chat-list">
-        <ContactList add={ this.addChat } />
+        <Modal />
         <List
           className="chats"
           children={ chats }
@@ -84,3 +63,12 @@ export default class ChatList extends Component {
     );
   };
 };
+
+const mapStateToProps = ({ chatsReducer }) => ({
+  activeChats: chatsReducer.activeChats,
+  chats: chatsReducer.chats
+});
+
+const mapActions = dispatch => bindActionCreators({ loadChats, push }, dispatch);
+
+export default connect(mapStateToProps, mapActions)(ChatList);

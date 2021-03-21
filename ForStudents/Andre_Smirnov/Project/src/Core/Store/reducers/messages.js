@@ -1,3 +1,4 @@
+import update from 'react-addons-update';
 
 const storeMessages = {
   messages: [
@@ -18,6 +19,10 @@ export default (store = storeMessages, action) => {
       return store;
     }
 
+    case 'SEND_MSG': {
+      const msg = action.payload;
+      return update(store, { messages: { $push: [ msg ] } });
+    }  
     // case 'FILTER_MSG': {
     //   reg = new RegExp(action.searchWord, 'i');
     //   return store.messages.filter(msg => reg.test(msg.text));

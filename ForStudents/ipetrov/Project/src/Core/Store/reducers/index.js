@@ -2,14 +2,8 @@ import { combineReducers } from "redux";
 import messagesReducer from './messages';
 import chatsReducer from './chats';
 import contactsReducer from './contacts';
+import userReducer from './user';
 
-export default combineReducers({ messagesReducer, chatsReducer, contactsReducer });
+import { connectRouter } from 'connected-react-router';
 
-
-/*
-{
-    'messageReducer': messageReducer,
-    'chatsReducer': chatsReducer
-
-}
-*/
+export default history => combineReducers({ userReducer, messagesReducer, chatsReducer, contactsReducer, router: connectRouter(history) });

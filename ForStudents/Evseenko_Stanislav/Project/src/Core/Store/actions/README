@@ -1,0 +1,6 @@
+messages.js
+
+export const filterMessages = (searchWord) => ({
+  type: 'FILTER_MSG',
+  searchWord
+});

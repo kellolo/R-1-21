@@ -6,61 +6,61 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Divider from '@material-ui/core/Divider';
 import { Link } from 'react-router-dom';
+import { push } from 'connected-react-router';
 import './style.scss';
 
 import ChatsDialog from '@components/ChatsDialog';
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { addChat } from '@actions/chats';
+import { loadUser } from '@actions/user';
+import { loadContacts } from '@actions/contacts';
+import { loadChats } from '@actions/chats';
+import { getActiveChat } from '@actions/chats';
 
 
-export default class Chatslist extends Component {
+class Chatslist extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeChats: [
-                { id: '1', name: "User1" },
-                { id: '2', name: "User2" },
-                { id: '3', name: "User3" },
-            ],
-            contactList: [
-                { id: '4', name: "User4" },
-                { id: '5', name: "User5" },
-            ]
-
+           
         };
     }
 
-    addChat = (id) => {
-        const { contactList } = this.state;
-        const { activeChats } = this.state;
-        const ind = contactList.findIndex(item => item.id === id);
-        activeChats.push(...contactList.splice(ind, 1));
-
-        this.setState({ activeChats });
-        this.setState({ contactList });
+    async componentDidMount() {
+        await this.props.loadUser(this.props.userLogin);
+        await this.props.loadChats(this.props.user.id);
+        await this.props.loadContacts(this.props.user.id);
+        this.props.getActiveChat(this.props.chatId);
+        
     }
+
     render() {
-        const { activeChats } = this.state;
-        const ActiveChats = activeChats.map(chat =>
-            <Link to={`/chat/${chat.id}`} key={chat.id}>
-                <ListItemText primary={chat.name} />
+        
+        const { chats } = this.props;
+        const Chats = chats.map(chat =>
+            <Link to={ `/chat/${chat.id}` } key={ chat.id }>
+                <ListItemText primary={ chat.name } />
                 <Divider />
             </Link>
-
-        );
+       );
         return <div className="chatslist">
-
-            {/* <List component="nav" aria-label="secondary mailbox folders"> */}
-
+            <h2 className="chatslist--title">Чаты </h2>
             <List className="chatlist--items">
-                {ActiveChats}
+                { Chats }
             </List>
-
-
-
-
-            {/* </List> */}
-
-            <ChatsDialog add={this.addChat} list={[...this.state.contactList]} />
+            <ChatsDialog add={this.props.addChat} list={ [...this.props.contactList] } />
         </div>;
     }
 };
+
+const mapStateToProps = ({ chatsReducer, userReducer, contactsReducer }) => ({
+    chats: chatsReducer.chats,
+    contactList: contactsReducer.contacts,
+    userLogin: userReducer.login,
+    user: userReducer.user,
+
+});
+const mapActions = dispatch => bindActionCreators({ addChat, loadUser, loadContacts, loadChats, getActiveChat }, dispatch);
+export default connect(mapStateToProps, mapActions)(Chatslist);

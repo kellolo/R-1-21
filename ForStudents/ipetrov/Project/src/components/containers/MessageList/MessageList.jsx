@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 // import ReactDom from 'react-dom';
 import './style.scss';
 import Message from '@components/Message';
-//stateFull
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { loadMessages } from '@actions/messages';
+import { loadMessages, sendMessage } from '@actions/messages';
 
 class MessageList extends Component {
     constructor (props) {
@@ -16,7 +15,11 @@ class MessageList extends Component {
             yourMessage: ''
         };
         this.chatContainer = React.createRef();
-    }
+    };
+
+    async componentDidMount() {
+        await this.props.load(this.props.userId, this.props.chatId);
+    };
     
     changeHandler = (event) => {
         if (event.keyCode !== 13) {
@@ -24,45 +27,19 @@ class MessageList extends Component {
         } else {
             this.sendMessage();
         }
-    }
+    };
 
     sendMessage = () => {
         if (this.state.yourMessage !== '') {
 //            this.textInput.current.disabled = true;
+            this.props.send('You', this.state.yourMessage, this.props.chatId, this.props.userId);
             this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'You', text: this.state.yourMessage },
-                    // имитация раздумий
-    //                { name: 'Bot-Sociopath', text: '#$#$#$#$#$#' }
-                ],
                 yourMessage: ''
             },
-                
                 () => this.scrollToMyRef()
-                
             );
         }        
-    }
-
-/*    
-    componentDidUpdate() {
-        var regexp = /[а-яё]/i;
-        var answer = regexp.test( this.state.yourMessage ) ? 'Parle français?' : 'Ай донт спик инглиш';
-        // после апдейта проверим, кто написал последним, если бот, то удалим раздумия и ответим
-        const last = this.state.messages[this.state.messages.length - 1];
-        if (last.name == 'Bot-Sociopath' && last.text == '#$#$#$#$#$#') { 
-            this.state.messages.pop();
-            this.textInput.current.disabled = false;
-            setTimeout(() =>  
-            this.setState({
-                messages: [...this.state.messages, 
-                    { name: 'Bot-Sociopath', text: answer }
-                ] 
-            })
-            , 1000);          
-        }
-    }
-*/
+    };
 
     scrollToMyRef = () => {
         const scroll =
@@ -72,14 +49,15 @@ class MessageList extends Component {
     };
 
     render() {
-        const { messages } = this.props;
+        const messages = this.props.messages;
         const Messages = messages.map((el, i) => 
             <Message 
                 key={ 'msg_' + i } 
                 name={ el.name } 
                 text={ el.text }
+                date={ el.date }
             />);
-
+        
         return <div className="messagelist">
                     <div className="controls">
                         <input
@@ -91,14 +69,16 @@ class MessageList extends Component {
                             />
                         <button className="sendbutton" onClick={ this.sendMessage }>Send</button>
                     </div>
-                    <div className="messages" ref={this.chatContainer}>{ Messages }</div>
+                    <div className="messages" ref={ this.chatContainer }>{ Messages }</div>
                 </div>;
-
+        
     }
 };
 
 const mapState = ({ messagesReducer }) => ({ 
     messages: messagesReducer.messages
-})
+});
 
-export default connect(mapState, null)(MessageList);
+const mapActions = dispatch => bindActionCreators({ load: loadMessages, send: sendMessage }, dispatch);
+
+export default connect(mapState, mapActions)(MessageList);

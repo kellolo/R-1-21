@@ -1,19 +1,16 @@
+import update from 'react-addons-update';
+
 const storeContacts = {
-  contacts: [
-    'User01@gmail.com',
-    'User02@gmail.com', 
-    'User03@gmail.com'
-  ]
+  contacts: [],
 };
 
 export default (store = storeContacts, action) => {
   switch (action.type) {
-      case 'LOAD_CONTACTS': {
-          // store.messages.push(action.par);
-          // return store.messages;
-          return store;
+      case 'LOAD_CONTACTS_SUCCESS': {
+        return update(store, {
+          contacts: { $set: action.payload.data }
+        })
       }
-
       default: {
           return store;
       }

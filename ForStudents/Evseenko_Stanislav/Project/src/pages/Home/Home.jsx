@@ -10,7 +10,7 @@ export default (props) => {
   return (
     <StylesProvider>
       <div className="layout">
-        <Header heading={ props.chatId } />
+        <Header heading={ props.name } />
         <div className="main">
           <ChatList />
           <MessageList chatId={ props.chatId } />

@@ -1,11 +1,8 @@
+import update from "react-addons-update";
 
 const storeContacts = {
-    inactiveChats: [
-        {name:'Вась Васич', id: '4'}, 
-        {name:'Оль Олич', id: '5'}, 
-        {name:'Дим Димыч', id: '6'}, 
-        {name:'Халк Халкыч', id: '7'}
-    ]
+    inactiveChats: {
+    }
 };
 
 export default (store = storeContacts, action) => {
@@ -14,8 +11,31 @@ export default (store = storeContacts, action) => {
             return store;
         }
 
+        case 'LOAD_CONTACTS_SUCCESS': {
+            return update(store, { inactiveChats: { $set: action.payload.data }});
+        }   
+
+        case 'REMOVE_CTC': {
+            return update(store, {
+                inactiveChats: {
+                    [action.payload.chatId]: {
+                        $set: null
+                    }
+                }
+            });
+        }
+
+        case 'ADD_CTC': {
+            const newChat = { [action.payload.chatId]: {name: action.payload.name, styleList: {}}};
+            return update(store, {
+                inactiveChats: {
+                    $merge: newChat
+                }
+            });
+        }
+
         default: {
             return store;
         }
-    }
+    };
 };
