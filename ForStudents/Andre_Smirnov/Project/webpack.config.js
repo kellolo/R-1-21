@@ -43,7 +43,8 @@ module.exports = {
       "@func": path.resolve(__dirname, "src", "resources", "functions"),
       "@lib": path.resolve(__dirname, "src", "resources", "libraries"),
       "@actions": path.resolve(__dirname, "src", "Core", "Store", "actions"),
-      "@core": path.resolve(__dirname, "src", "Core")
+      "@core": path.resolve(__dirname, "src", "Core"),
+      '@middleware': path.resolve(__dirname, 'src', 'core', 'middleware'),
     },
   },
   plugins: [
