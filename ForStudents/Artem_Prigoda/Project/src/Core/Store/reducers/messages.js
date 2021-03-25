@@ -8,10 +8,11 @@ const storeMessages = {
 
 export default (store = storeMessages, action) => {
 	switch (action.type) {
-		case 'SEND_MSG': {
-			return update(store, {messages: {$push: [{name: action.name, text: action.text, id: action.messageId}]}});
+	case 'SEND_MESSAGE_SUCCESS': {
+		const msg = action.payload.data;
+		return update(store, { messages: { $push: [ msg ] } });
 		}
-		case 'START_MESSAGES_LOADING': {
+	case 'START_MESSAGES_LOADING': {
 			return update(store, {
 				 isLoading: { $set: true },
 			});

@@ -15,7 +15,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
 import PersonIcon from '@material-ui/icons/Person';
 import AddIcon from '@material-ui/icons/Add';
-import Typography from '@material-ui/core/Typography';
 import { blue } from '@material-ui/core/colors';
 
 const emails = ['username@gmail.com', 'user02@gmail.com'];
@@ -43,18 +42,18 @@ function SimpleDialog(props) {
         <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
             <DialogTitle id="simple-dialog-title">Список доступных контактов</DialogTitle>
             <List>
-                {props.list.map((item) => (
-                    <ListItem button onClick={() => handleListItemClick(item.id)} key={item.id}>
+                { props.list.map((item) => (
+                    <ListItem button onClick={ () => handleListItemClick(item.id) } key={ item.id }>
                         <ListItemAvatar>
-                            <Avatar className={classes.avatar}>
+                            <Avatar className={ classes.avatar }>
                                 <PersonIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={item.name} />
+                        <ListItemText primary={ item.name } />
                     </ListItem>
-                ))}
+                )) }
 
-                <ListItem autoFocus button onClick={() => handleListItemClick('addAccount')}>
+                <ListItem autoFocus button onClick={ () => handleListItemClick('addAccount') }>
                     <ListItemAvatar>
                         <Avatar>
                             <AddIcon />
